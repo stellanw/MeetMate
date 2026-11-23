@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
@@ -6,7 +5,6 @@ import { useSession, signOut } from "next-auth/react";
 import { FiLogOut, FiUser, FiX } from "react-icons/fi";
 import Logo from "@/Icons/Logo";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { Row } from "@/components/ui/Layout";
 import { PageTitle } from "@/components/ui/Typography";
 
 /*
@@ -22,7 +20,7 @@ export default function PageHeader({ title, close }) {
 
   return (
     <StyledHeader>
-      <Row $gap="s">
+      <StyledBrand>
         <Link href="/" aria-label="MeetMate – Startseite">
           <Logo />
         </Link>
@@ -31,7 +29,7 @@ export default function PageHeader({ title, close }) {
         ) : (
           <StyledAppName>MEET MATE</StyledAppName>
         )}
-      </Row>
+      </StyledBrand>
 
       {close ? (
         <CloseButton close={close} router={router} />
@@ -43,13 +41,9 @@ export default function PageHeader({ title, close }) {
             <FiLogOut />
           </Button>
         ) : (
-          <StyledProfileLink href="/profil" $square aria-label="Mein Profil">
-            {session.user.image ? (
-              <Image src={session.user.image} alt="" width={80} height={80} />
-            ) : (
-              <FiUser />
-            )}
-          </StyledProfileLink>
+          <ButtonLink href="/profil" $square aria-label="Mein Profil">
+            <FiUser />
+          </ButtonLink>
         ))
       )}
     </StyledHeader>
@@ -91,13 +85,8 @@ const StyledAppName = styled(PageTitle)`
   text-transform: none;
 `;
 
-/* Avatar fills the square button, frame stays the button border */
-const StyledProfileLink = styled(ButtonLink)`
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+const StyledBrand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--logo-gap);
 `;

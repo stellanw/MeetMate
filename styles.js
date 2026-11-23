@@ -98,6 +98,7 @@ const tokens = css`
     --icon-xl: 2rem;
     --avatar-size: var(--button-height);
     --logo-size: 2rem;
+    --logo-gap: 0.375rem; /* off the 4px grid on purpose: logo + wordmark read as one */
     --badge-size: 2rem;
     --card-height-compact: 3.5rem;
     --calendar-tile-height: 3.5rem;
