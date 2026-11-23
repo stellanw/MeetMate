@@ -61,7 +61,7 @@ export default function DetailsCard() {
   ];
 
   return (
-    <PageLayout showHeader={false} showNavigation={false}>
+    <PageLayout title={activity.name} showHeader={false} showNavigation={false}>
       <TitleCard $category={activity.category}>
         <JoinBadge together={joined} />
         <CardTitle as="h2" $size="l">
