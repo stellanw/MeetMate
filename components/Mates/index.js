@@ -85,7 +85,7 @@ export default function Mates() {
   return (
     <Stack as="section" $gap="m">
       <div>
-        <Row $gap="m">
+        <Row>
           <SearchField
             label="Mates suchen"
             onChange={handleSearch}

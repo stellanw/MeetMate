@@ -150,7 +150,7 @@ export default function HomePage() {
     <PageLayout>
       <Stack $gap="s">
         <div>
-          <Row $gap="m">
+          <Row>
             <SearchField
               label="Aktivitäten suchen"
               onChange={(event) => handleSearch(event.target.value)}
