@@ -59,6 +59,7 @@ export const SplitCardMain = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-s);
   min-width: 0;
   padding: var(--space-s) var(--space-m);
 `;

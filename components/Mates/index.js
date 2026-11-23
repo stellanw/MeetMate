@@ -8,11 +8,11 @@ import FriendCard from "@/components/FriendCard";
 import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
 import { Row, Stack } from "@/components/ui/Layout";
-import { SectionTitle, StatusText } from "@/components/ui/Typography";
+import { StatusText } from "@/components/ui/Typography";
 import handleDeleteClick from "@/utils/pages/friendlist/handleDeleteClick";
 import handleSendFriendRequest from "@/utils/pages/friendlist/handleSendFriendRequest";
 
-/* "Meine Mates" section on the profile page: search, requests, friend list */
+/* Content of the "Meine Mates" page: search, requests, friend list */
 const fuseOptions = {
   // isCaseSensitive: false,
   // includeScore: false,
@@ -84,8 +84,6 @@ export default function Mates() {
 
   return (
     <Stack as="section" $gap="l">
-      <SectionTitle>Meine Mates</SectionTitle>
-
       <div>
         <Row $gap="m">
           <SearchField

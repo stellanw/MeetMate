@@ -1,35 +1,48 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { FiCalendar, FiHome, FiPlus } from "react-icons/fi";
+import { FiCalendar, FiHome, FiPlus, FiUsers } from "react-icons/fi";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
 
 /*
- * Bottom tab bar – every button always does the same thing.
+ * Bottom tab bar – four equal icon tabs, every tab always does the same.
  * The tab of the current page is shown pressed (aria-current).
  */
+const TABS = [
+  { href: "/", label: "Startseite", icon: <FiHome /> },
+  { href: "/mates", label: "Meine Mates", icon: <FiUsers /> },
+  { create: true, label: "Neue Aktivität", icon: <FiPlus /> },
+  { href: "/kalender", label: "Kalender", icon: <FiCalendar /> },
+];
+
 export default function Navigation({ onCreateClick }) {
   const { pathname } = useRouter();
-  const current = (path) => (pathname === path ? "page" : undefined);
 
   return (
     <StyledNavigation aria-label="Hauptnavigation">
       <StyledNavInner>
-        <ButtonLink href="/" $square aria-label="Startseite" aria-current={current("/")}>
-          <FiHome />
-        </ButtonLink>
-        <Button onClick={onCreateClick} $fill>
-          Neue Aktivität
-          <FiPlus />
-        </Button>
-        <ButtonLink
-          href="/kalender"
-          $square
-          aria-label="Kalender"
-          aria-current={current("/kalender")}
-        >
-          <FiCalendar />
-        </ButtonLink>
+        {TABS.map(({ href, create, label, icon }) =>
+          create ? (
+            <Button
+              key={label}
+              onClick={onCreateClick}
+              $fill
+              aria-label={label}
+            >
+              {icon}
+            </Button>
+          ) : (
+            <ButtonLink
+              key={label}
+              href={href}
+              $fill
+              aria-label={label}
+              aria-current={pathname === href ? "page" : undefined}
+            >
+              {icon}
+            </ButtonLink>
+          )
+        )}
       </StyledNavInner>
     </StyledNavigation>
   );

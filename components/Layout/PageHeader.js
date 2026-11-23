@@ -13,7 +13,7 @@ import { PageTitle } from "@/components/ui/Typography";
  * PageHeader – same on every page
  * --------------------------------
  * left   logo (links home) + page title; without title: app name
- * right  pages:        profile (+ sign out on the profile page only)
+ * right  pages:        profile link; on the profile page: sign out
  *        opened views: close (X) – pass `close` as href, function or true (= back)
  */
 export default function PageHeader({ title, close }) {
@@ -36,27 +36,21 @@ export default function PageHeader({ title, close }) {
       {close ? (
         <CloseButton close={close} router={router} />
       ) : (
-        session && (
-          <Row $gap="m">
-            <StyledProfileLink
-              href="/profil"
-              $square
-              aria-label="Ich & meine Mates"
-              aria-current={router.pathname === "/profil" ? "page" : undefined}
-            >
-              {session.user.image ? (
-                <Image src={session.user.image} alt="" width={80} height={80} />
-              ) : (
-                <FiUser />
-              )}
-            </StyledProfileLink>
-            {router.pathname === "/profil" && (
-              <Button onClick={() => signOut()} $square aria-label="Abmelden">
-                <FiLogOut />
-              </Button>
+        session &&
+        (router.pathname === "/profil" ? (
+          /* on the profile page itself: sign out instead of the profile link */
+          <Button onClick={() => signOut()} $square aria-label="Abmelden">
+            <FiLogOut />
+          </Button>
+        ) : (
+          <StyledProfileLink href="/profil" $square aria-label="Mein Profil">
+            {session.user.image ? (
+              <Image src={session.user.image} alt="" width={80} height={80} />
+            ) : (
+              <FiUser />
             )}
-          </Row>
-        )
+          </StyledProfileLink>
+        ))
       )}
     </StyledHeader>
   );

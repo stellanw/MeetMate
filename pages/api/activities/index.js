@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import dbConnect from "@/db/connect";
 import Activity from "@/db/models/Activity";
 
@@ -10,20 +12,26 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "POST") {
+    const session = await getServerSession(request, response, authOptions);
+    if (!session) {
+      return response.status(401).json({ message: "Not signed in" });
+    }
+
     try {
-      const activityData = request.body;
-      // whoever creates an activity is always part of it
+      // author is always the signed-in user – never taken from the request
+      const { author, authorId, participants, ...activityData } = request.body;
       await Activity.create({
         ...activityData,
-        participants: [activityData.authorId],
+        author: session.user.name,
+        authorId: session.user.id,
+        participants: [session.user.id],
       });
-
-      response.status(201).json({ status: "Activity created" });
+      return response.status(201).json({ status: "Activity created" });
     } catch (error) {
-      console.log(error);
-      response.status(400).json({ error: error.message });
+      console.error(error);
+      return response.status(400).json({ error: error.message });
     }
-  } else {
-    return response.status(405).json({ message: "Method not allowed" });
   }
+
+  return response.status(405).json({ message: "Method not allowed" });
 }

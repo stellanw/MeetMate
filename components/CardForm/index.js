@@ -19,6 +19,7 @@ import {
 import {
   FormGrid,
   FormLabel,
+  FormValue,
   PickerField,
   PickerToggle,
   TextArea,
@@ -149,15 +150,11 @@ export default function CardForm({
         <Card $padded>
           <Stack $gap="l">
             <FormGrid>
-              <FormLabel htmlFor="author">Von:</FormLabel>
-              <TextInput
-                type="text"
-                id="author"
-                name="author"
-                autoComplete="off"
-                defaultValue={existingActivityData?.author || ""}
-                required
-              />
+              {/* author is always the signed-in user – shown, not editable */}
+              <FormLabel as="span">Von:</FormLabel>
+              <FormValue>
+                {existingActivityData?.author || session?.user?.name}
+              </FormValue>
 
               <FormLabel htmlFor="date">Datum:</FormLabel>
               <PickerField ref={datePickerRef}>

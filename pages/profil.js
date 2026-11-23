@@ -1,21 +1,24 @@
+import { useState } from "react";
 import PageLayout from "@/components/Layout/PageLayout";
 import UserProfile from "@/components/UserProfile";
-import Mates from "@/components/Mates";
-import JoinedActivities from "@/components/JoinedActivities/joined";
-import { Divider, Stack } from "@/components/ui/Layout";
-import { SectionTitle } from "@/components/ui/Typography";
+import ProfileForm from "@/components/ProfileForm";
+import MyActivities from "@/components/MyActivities";
+import { Divider, Overlay } from "@/components/ui/Layout";
 
 export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
-    <PageLayout title="Ich & meine Mates">
-      <Stack as="section" $gap="l">
-        <SectionTitle>Das bin ich</SectionTitle>
-        <UserProfile />
-      </Stack>
+    <PageLayout title="Mein Profil">
+      <UserProfile onEdit={() => setIsEditing(true)} />
       <Divider />
-      <Mates />
-      <Divider />
-      <JoinedActivities />
+      <MyActivities />
+
+      {isEditing && (
+        <Overlay>
+          <ProfileForm onClose={() => setIsEditing(false)} />
+        </Overlay>
+      )}
     </PageLayout>
   );
 }
