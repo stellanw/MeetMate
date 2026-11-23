@@ -205,5 +205,10 @@ export default function HomePage() {
 
 const StyledWeather = styled(Row)`
   font-family: var(--font-heading);
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-s);
+
+  img {
+    width: var(--control-s);
+    height: var(--control-s);
+  }
 `;
