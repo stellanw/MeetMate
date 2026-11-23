@@ -5,9 +5,9 @@ import { StatusText } from "@/components/ui/Typography";
 export default function DetailsCardPage() {
   const { authenticated, loading } = useAuthentication();
 
-  if (loading) return <StatusText>Loading...</StatusText>;
+  if (loading) return <StatusText>Lädt …</StatusText>;
   if (!authenticated) {
-    return <StatusText>You must be signed in to view this page.</StatusText>;
+    return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
   }
 
   return <DetailsCard />;

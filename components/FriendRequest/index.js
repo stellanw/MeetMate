@@ -21,7 +21,7 @@ export default function FriendRequest({
   return (
     <Collapsible open={showRequestWindow}>
       <Stack as="section" $gap="l">
-        <SectionTitle>We wanna be your mates!</SectionTitle>
+        <SectionTitle>Wir wollen deine Mates sein!</SectionTitle>
         {friendRequestList.length > 0 ? (
           <Stack as="ul" $gap="l">
             {friendRequestList.map((request) => (
@@ -30,7 +30,7 @@ export default function FriendRequest({
                   $size="s"
                   $square
                   $variant="confirm"
-                  aria-label="Accept"
+                  aria-label="Annehmen"
                   onClick={() => {
                     handleAccept(request, session, setMyMates, myMates);
                     handleRemoveFromFriendRequests(request, userId);
@@ -42,7 +42,7 @@ export default function FriendRequest({
                   $size="s"
                   $square
                   $variant="alert"
-                  aria-label="Decline"
+                  aria-label="Ablehnen"
                   onClick={() => handleRemoveFromFriendRequests(request, userId)}
                 >
                   <FiX />
@@ -51,7 +51,7 @@ export default function FriendRequest({
             ))}
           </Stack>
         ) : (
-          <StatusText>No open friend requests.</StatusText>
+          <StatusText>Keine offenen Anfragen.</StatusText>
         )}
       </Stack>
     </Collapsible>

@@ -31,21 +31,21 @@ export default function Filter({ onSubmit, showFilterWindow }) {
         <Stack $gap="l">
           <SectionTitle>Filter</SectionTitle>
           <FormGrid>
-            <FormLabel htmlFor="author">Author:</FormLabel>
+            <FormLabel htmlFor="author">Von:</FormLabel>
             <TextInput
               type="search"
               id="author"
-              placeholder="Search..."
+              placeholder="Name …"
               value={author}
               onChange={handleAuthorChange}
             />
-            <FormLabel htmlFor="category">Category:</FormLabel>
+            <FormLabel htmlFor="category">Kategorie:</FormLabel>
             <Select
               id="category"
               value={category}
               onChange={handleCategoryChange}
             >
-              <option value="">All categories</option>
+              <option value="">Alle Kategorien</option>
               {CATEGORIES.map(({ value, label }) => (
                 <option key={value} value={value}>
                   {label}
@@ -54,7 +54,7 @@ export default function Filter({ onSubmit, showFilterWindow }) {
             </Select>
           </FormGrid>
           <Button type="submit" $wide>
-            Apply
+            Anwenden
           </Button>
         </Stack>
       </Card>

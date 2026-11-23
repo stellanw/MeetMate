@@ -9,17 +9,17 @@ export default function JoinedActivities() {
   const { data: activities, isLoading } = useSWR("/api/activities");
   const { authenticated, loading } = useAuthentication();
 
-  if (isLoading || loading) return <StatusText>Loading...</StatusText>;
-  if (!activities) return <StatusText>Failed to load.</StatusText>;
+  if (isLoading || loading) return <StatusText>Lädt …</StatusText>;
+  if (!activities) return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
   if (!authenticated) {
-    return <StatusText>You must be signed in to view this page.</StatusText>;
+    return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
   }
 
   const joinedActivities = activities.filter((activity) => activity.joined);
 
   return (
     <Stack as="section" $gap="l">
-      <SectionTitle>My joined activities</SectionTitle>
+      <SectionTitle>Hier bin ich dabei</SectionTitle>
       {joinedActivities.length > 0 ? (
         joinedActivities.map((activity) => (
           <Link key={activity._id} href={`/${activity._id}`}>
@@ -33,7 +33,7 @@ export default function JoinedActivities() {
           </Link>
         ))
       ) : (
-        <StatusText>You haven&apos;t joined any activities yet.</StatusText>
+        <StatusText>Du bist noch bei keiner Aktivität dabei.</StatusText>
       )}
     </Stack>
   );

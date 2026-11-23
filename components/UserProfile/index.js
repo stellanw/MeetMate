@@ -21,7 +21,7 @@ export default function UserProfile() {
       <SplitCardAside>
         <StyledAvatar
           src={session.user.image}
-          alt={`Profile picture of ${session.user.name}`}
+          alt={`Profilbild von ${session.user.name}`}
           width={96}
           height={96}
         />

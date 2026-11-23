@@ -20,7 +20,7 @@ export default function NextActivity({ activities }) {
 
   return (
     <Stack as="section" $gap="l">
-      <SectionTitle>Your next activity</SectionTitle>
+      <SectionTitle>Deine nächste Aktivität</SectionTitle>
       {nextActivity ? (
         <Link href={`/${nextActivity._id}`}>
           <ActivityCard
@@ -33,7 +33,7 @@ export default function NextActivity({ activities }) {
         </Link>
       ) : (
         <StatusText>
-          No upcoming activity yet – join your friends!
+          Noch nichts geplant – schließ dich deinen Freund*innen an!
         </StatusText>
       )}
       <Divider />

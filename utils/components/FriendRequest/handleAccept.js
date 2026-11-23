@@ -16,9 +16,9 @@ export default async function handleAccept(
     });
     if (response.ok) {
       setMyMates([userId, ...myMates]);
-      return toast.success(`User successfully added!`);
+      return toast.success(`Neuer Mate hinzugefügt!`);
     } else {
-      toast.error(`This User is already your friend!`);
+      toast.error(`Ihr seid schon Mates!`);
       console.error("Failed to update user.");
     }
   } catch (error) {

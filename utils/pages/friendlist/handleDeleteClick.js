@@ -17,7 +17,7 @@ export default async function handleDeleteClick(
     if (response.ok) {
       const filteredMates = myMates.filter((mate) => mate !== id);
       setMyMates(filteredMates);
-      return toast.success(`Friend successfully deleted!`);
+      return toast.success(`Mate entfernt.`);
     } else {
       console.error("Failed to delete friend.");
     }

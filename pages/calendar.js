@@ -33,10 +33,10 @@ const CalendarPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, activities]);
 
-  if (isLoading || loading) return <StatusText>Loading...</StatusText>;
-  if (!activities) return <StatusText>Failed to load.</StatusText>;
+  if (isLoading || loading) return <StatusText>Lädt …</StatusText>;
+  if (!activities) return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
   if (!authenticated) {
-    return <StatusText>You must be signed in to view this page.</StatusText>;
+    return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
   }
 
   const renderTileContent = ({ date, view }) => {
@@ -64,15 +64,15 @@ const CalendarPage = () => {
   };
 
   return (
-    <PageLayout title="Calendar">
+    <PageLayout title="Kalender">
       <StyledCalendarCard>
         <Calendar
           tileContent={renderTileContent}
           onClickDay={handleDateClick}
-          locale="en-GB"
+          locale="de-DE"
         />
       </StyledCalendarCard>
-      <Stack as="section" $gap="l" aria-label="Activities on the selected day">
+      <Stack as="section" $gap="l" aria-label="Aktivitäten am gewählten Tag">
         {selectedDateActivities.length > 0 ? (
           selectedDateActivities.map((activity) => (
             <Link key={activity._id} href={`/${activity._id}`}>
@@ -86,7 +86,7 @@ const CalendarPage = () => {
             </Link>
           ))
         ) : (
-          <StatusText>No activities on this day.</StatusText>
+          <StatusText>An diesem Tag ist nichts geplant.</StatusText>
         )}
       </Stack>
     </PageLayout>

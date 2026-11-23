@@ -4,7 +4,7 @@ import styled from "styled-components";
  * Typography
  * ----------
  * PageTitle     one per page, centered
- * SectionTitle  label above a group of content ("Your next activity", …)
+ * SectionTitle  label above a group of content ("Deine nächste Aktivität", …)
  * StatusText    loading, empty and error states
  */
 

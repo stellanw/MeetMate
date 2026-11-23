@@ -14,6 +14,7 @@ import { StatusText } from "@/components/ui/Typography";
 import handleDelete from "@/utils/components/DetailsCard/handleDelete";
 import handleJoin from "@/utils/components/DetailsCard/handleJoin";
 import { categoryLabel } from "@/utils/categories";
+import formatLongDate from "@/utils/formatLongDate";
 
 export default function DetailsCard() {
   const router = useRouter();
@@ -50,23 +51,23 @@ export default function DetailsCard() {
     fetchData();
   }, [id, endpoint]);
 
-  if (isLoading) return <StatusText>Loading...</StatusText>;
+  if (isLoading) return <StatusText>Lädt …</StatusText>;
   if (!activities || error) {
-    return <StatusText>Oops! Something went wrong...</StatusText>;
+    return <StatusText>Hoppla, da ist etwas schiefgelaufen …</StatusText>;
   }
 
   const details = [
-    ["Author", activities.author],
-    ["Date", activities.date],
-    ["Time", activities.time],
-    ["Location", activities.location],
-    ["Category", categoryLabel(activities.category)],
+    ["Von", activities.author],
+    ["Datum", formatLongDate(activities.date)],
+    ["Uhrzeit", activities.time],
+    ["Ort", activities.location],
+    ["Kategorie", categoryLabel(activities.category)],
   ];
 
   return (
-    <PageLayout title="Join your friend!" back>
+    <PageLayout title="Bist du dabei?" close>
       <StyledNameCard $category={activities.category}>
-        {joinState.isJoined && <JoinBadge aria-label="Joined">XX</JoinBadge>}
+        {joinState.isJoined && <JoinBadge aria-label="Dabei">XX</JoinBadge>}
         <CardTitle as="h2">{activities.name}</CardTitle>
       </StyledNameCard>
 
@@ -80,7 +81,7 @@ export default function DetailsCard() {
 
           {activities.description && (
             <Stack $gap="s">
-              <FormLabel as="span">Description:</FormLabel>
+              <FormLabel as="span">Beschreibung:</FormLabel>
               <p>{activities.description}</p>
             </Stack>
           )}
@@ -90,19 +91,19 @@ export default function DetailsCard() {
             $variant={joinState.isJoined ? "alert" : "confirm"}
             onClick={() => handleJoin(setJoinState, joinState, endpoint, mutate)}
           >
-            {joinState.isJoined ? "Disjoin" : "XX Join"}
+            {joinState.isJoined ? "Doch nicht dabei" : "XX Ich bin dabei"}
           </Button>
 
           <Row $justify="center" $gap="m">
-            <Button onClick={handleEditClick} $square aria-label="Edit activity">
+            <Button onClick={handleEditClick} $square aria-label="Aktivität bearbeiten">
               <FiEdit3 />
             </Button>
             <Button
               $square
-              aria-label="Delete activity"
+              aria-label="Aktivität löschen"
               onClick={() => {
                 if (
-                  window.confirm("Do you really want to delete this activity?")
+                  window.confirm("Möchtest du diese Aktivität wirklich löschen?")
                 ) {
                   handleDelete(endpoint, router);
                 }
@@ -119,7 +120,7 @@ export default function DetailsCard() {
           <CardForm
             onCancel={() => setIsEditMode(false)}
             existingActivityData={activities}
-            pageTitle="Edit your activity"
+            pageTitle="Aktivität bearbeiten"
           />
         </Overlay>
       )}

@@ -113,13 +113,13 @@ const StyledSearchInput = styled.input`
   }
 `;
 
-export function SearchField({ label = "Search", ...inputProps }) {
+export function SearchField({ label = "Suchen", ...inputProps }) {
   return (
     <StyledSearchField>
       <IoSearch aria-hidden="true" />
       <StyledSearchInput
         type="search"
-        placeholder="Search..."
+        placeholder="Suchen …"
         aria-label={label}
         {...inputProps}
       />

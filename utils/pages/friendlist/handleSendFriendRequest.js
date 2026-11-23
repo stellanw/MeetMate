@@ -21,9 +21,9 @@ export default async function handleSendFriendRequest(
     });
     if (response.ok) {
       setFriendRequests([userId, ...friendRequests]);
-      return toast.success(`Friend Request successfully send!`);
+      return toast.success(`Anfrage gesendet!`);
     } else {
-      toast.error(`Friend Request has already been send!`);
+      toast.error(`Anfrage wurde schon gesendet.`);
       console.error("Friend Request has already been send!");
     }
   } catch (error) {

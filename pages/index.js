@@ -33,7 +33,7 @@ export default function HomePage() {
   useEffect(() => {
     const hasDisplayedToast = sessionStorage.getItem("hasDisplayedToast");
     if (session && !hasDisplayedToast) {
-      toast.success(`Signed in as ${session.user.email}`);
+      toast.success(`Angemeldet als ${session.user.email}`);
       sessionStorage.setItem("hasDisplayedToast", true);
     }
 
@@ -77,9 +77,9 @@ export default function HomePage() {
     appUsersIsLoading ||
     !appUsers
   )
-    return <StatusText>Loading...</StatusText>;
+    return <StatusText>Lädt …</StatusText>;
 
-  if (!activities) return <StatusText>Failed to load.</StatusText>;
+  if (!activities) return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
 
   if (!session) {
     return <LoginPage />;
@@ -151,7 +151,7 @@ export default function HomePage() {
       <Stack>
         <Row $gap="m">
           <SearchField
-            label="Search activities"
+            label="Aktivitäten suchen"
             onChange={(event) => handleSearch(event.target.value)}
           />
           <Button
@@ -173,7 +173,7 @@ export default function HomePage() {
             src={`https:${condition}`}
             width={48}
             height={48}
-            alt="Current weather"
+            alt="Aktuelles Wetter"
           />
         )}
         <span>{city}</span>
@@ -181,7 +181,7 @@ export default function HomePage() {
 
       <NextActivity activities={activities} />
 
-      <Stack as="section" $gap="l" aria-label="Activities of your friends">
+      <Stack as="section" $gap="l" aria-label="Aktivitäten deiner Freund*innen">
         {friendsActivities.length > 0 ? (
           friendsActivities.map((activity) => (
             <Link key={activity._id} href={`/${activity._id}`}>
@@ -195,7 +195,7 @@ export default function HomePage() {
             </Link>
           ))
         ) : (
-          <StatusText>No activities from your friends yet.</StatusText>
+          <StatusText>Deine Freund*innen haben noch nichts geplant.</StatusText>
         )}
       </Stack>
     </PageLayout>

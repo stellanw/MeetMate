@@ -7,10 +7,10 @@ import { SectionTitle } from "@/components/ui/Typography";
 
 export default function ProfilePage() {
   return (
-    <PageLayout title="My Profile">
+    <PageLayout title="Mein Profil">
       <Stack as="section" $gap="l">
-        <SectionTitle>This is me</SectionTitle>
-        <Link href="/friendlist" aria-label="My profile – show my mates">
+        <SectionTitle>Das bin ich</SectionTitle>
+        <Link href="/friendlist" aria-label="Meine Mates anzeigen">
           <UserProfile />
         </Link>
       </Stack>

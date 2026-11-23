@@ -18,7 +18,7 @@ export default function PageHeader() {
 
   return (
     <StyledHeader>
-      <StyledBrand href="/" aria-label="MeetMate – home">
+      <StyledBrand href="/" aria-label="MeetMate – Startseite">
         <Logo />
         <StyledAppName>MeetMate</StyledAppName>
       </StyledBrand>
@@ -27,7 +27,7 @@ export default function PageHeader() {
           <StyledProfileLink
             href="/profilepage"
             $square
-            aria-label="My profile"
+            aria-label="Mein Profil"
             aria-current={pathname === "/profilepage" ? "page" : undefined}
           >
             {session.user.image ? (
@@ -36,7 +36,7 @@ export default function PageHeader() {
               <FiUser />
             )}
           </StyledProfileLink>
-          <Button onClick={() => signOut()} $square aria-label="Sign out">
+          <Button onClick={() => signOut()} $square aria-label="Abmelden">
             <FiLogOut />
           </Button>
         </Row>

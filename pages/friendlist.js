@@ -70,9 +70,9 @@ export default function FriendList() {
     setShowRequestWindow(!showRequestWindow);
   };
 
-  if (isLoading || loading) return <StatusText>Loading...</StatusText>;
+  if (isLoading || loading) return <StatusText>Lädt …</StatusText>;
   if (!authenticated) {
-    return <StatusText>You must be signed in to view this page.</StatusText>;
+    return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
   }
 
   const isFriend = (mateId) =>
@@ -83,10 +83,10 @@ export default function FriendList() {
   );
 
   return (
-    <PageLayout title="Me and my Mates" back="/profilepage">
+    <PageLayout title="Ich & meine Mates" back="/profilepage">
       <Stack as="section" $gap="l">
-        <SectionTitle>This is me</SectionTitle>
-        <Link href="/profilepage" aria-label="My profile">
+        <SectionTitle>Das bin ich</SectionTitle>
+        <Link href="/profilepage" aria-label="Mein Profil">
           <UserProfile />
         </Link>
       </Stack>
@@ -94,14 +94,14 @@ export default function FriendList() {
       <Stack>
         <Row $gap="m">
           <SearchField
-            label="Search for mates"
+            label="Mates suchen"
             onChange={handleSearch}
             onKeyDown={handleKeyPress}
           />
           <Button
             onClick={toggleRequestWindow}
             $square
-            aria-label="Friend requests"
+            aria-label="Freundschaftsanfragen"
             aria-expanded={showRequestWindow}
           >
             <FiUserPlus />
@@ -123,19 +123,19 @@ export default function FriendList() {
 
       {isSearching && (
         <Stack as="section" $gap="l">
-          <SectionTitle>Potential mates</SectionTitle>
+          <SectionTitle>Gefundene Personen</SectionTitle>
           {mates.length > 0 ? (
             <Stack as="ul" $gap="l">
               {mates.map((mate) => (
                 <FriendCard key={mate._id} name={mate.name}>
                   {isFriend(mate._id) ? (
-                    <span>Mates</span>
+                    <span>Mate ✓</span>
                   ) : (
                     <Button
                       $size="s"
                       $square
                       $variant="confirm"
-                      aria-label={`Send friend request to ${mate.name}`}
+                      aria-label={`Freundschaftsanfrage an ${mate.name} senden`}
                       onClick={() =>
                         handleSendFriendRequest(
                           mate._id,
@@ -152,7 +152,7 @@ export default function FriendList() {
               ))}
             </Stack>
           ) : (
-            <StatusText>No users matching your search.</StatusText>
+            <StatusText>Niemand gefunden.</StatusText>
           )}
         </Stack>
       )}
@@ -160,7 +160,7 @@ export default function FriendList() {
       <Divider />
 
       <Stack as="section" $gap="l">
-        <SectionTitle>These are my mates</SectionTitle>
+        <SectionTitle>Meine Mates</SectionTitle>
         {friends.length > 0 ? (
           <Stack as="ul" $gap="l">
             {friends.map((user) => (
@@ -169,7 +169,7 @@ export default function FriendList() {
                   $size="s"
                   $square
                   $variant="alert"
-                  aria-label={`Remove ${user.name} from my mates`}
+                  aria-label={`${user.name} aus meinen Mates entfernen`}
                   onClick={() =>
                     handleDeleteClick(user._id, userId, myMates, setMyMates)
                   }
@@ -180,7 +180,7 @@ export default function FriendList() {
             ))}
           </Stack>
         ) : (
-          <StatusText>No mates yet – search for your friends above.</StatusText>
+          <StatusText>Noch keine Mates – such oben nach deinen Freund*innen.</StatusText>
         )}
       </Stack>
     </PageLayout>

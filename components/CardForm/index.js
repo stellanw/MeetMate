@@ -4,13 +4,13 @@ import useSWR from "swr";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { FiCalendar, FiSave } from "react-icons/fi";
-import { TbArrowBack } from "react-icons/tb";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { enGB } from "date-fns/locale";
+import { de } from "date-fns/locale";
 import { format } from "date-fns";
 import useStore from "@/store";
 import PageHeader from "@/components/Layout/PageHeader";
+import PageTitleBar from "@/components/Layout/PageTitleBar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -20,8 +20,7 @@ import {
   TextArea,
   TextInput,
 } from "@/components/ui/Form";
-import { Container, Row, Stack } from "@/components/ui/Layout";
-import { PageTitle } from "@/components/ui/Typography";
+import { Container, Stack } from "@/components/ui/Layout";
 import handleSubmit from "@/utils/components/CardForm/handleSubmit";
 import getCurrentDate from "@/utils/components/CardForm/getCurrentDate";
 import getCurrentTime from "@/utils/components/CardForm/getCurrentTime";
@@ -115,7 +114,7 @@ export default function CardForm({
         }
       >
         <PageHeader />
-        {pageTitle && <PageTitle>{pageTitle}</PageTitle>}
+        <PageTitleBar title={pageTitle} close={onCancel} />
 
         <StyledNameCard $category={selectedCategory}>
           <StyledNameInput
@@ -123,11 +122,11 @@ export default function CardForm({
             type="text"
             id="name"
             name="name"
-            aria-label="Activity name"
+            aria-label="Name der Aktivität"
             autoComplete="off"
             minLength="3"
             maxLength="18"
-            placeholder="My activity"
+            placeholder="Meine Aktivität"
             defaultValue={existingActivityData?.name || ""}
             autoFocus
             required
@@ -137,7 +136,7 @@ export default function CardForm({
         <Card $padded>
           <Stack $gap="l">
             <FormGrid>
-              <FormLabel htmlFor="author">Author:</FormLabel>
+              <FormLabel htmlFor="author">Von:</FormLabel>
               <TextInput
                 type="text"
                 id="author"
@@ -147,7 +146,7 @@ export default function CardForm({
                 required
               />
 
-              <FormLabel htmlFor="date">Date:</FormLabel>
+              <FormLabel htmlFor="date">Datum:</FormLabel>
               <StyledDateField>
                 <TextInput
                   type="text"
@@ -169,7 +168,7 @@ export default function CardForm({
                 <StyledIconToggle
                   type="button"
                   onClick={toggleDayPicker}
-                  aria-label="Choose date"
+                  aria-label="Datum wählen"
                   aria-expanded={showDayPicker}
                 >
                   <FiCalendar />
@@ -179,12 +178,12 @@ export default function CardForm({
                     onDayClick={handleDayClick}
                     selected={selectedDate}
                     modifiers={{ disabled: { before: new Date() } }}
-                    locale={enGB}
+                    locale={de}
                   />
                 )}
               </StyledDateField>
 
-              <FormLabel htmlFor="time">Time:</FormLabel>
+              <FormLabel htmlFor="time">Uhrzeit:</FormLabel>
               <TextInput
                 type="time"
                 id="time"
@@ -194,7 +193,7 @@ export default function CardForm({
                 required
               />
 
-              <FormLabel htmlFor="location">Location:</FormLabel>
+              <FormLabel htmlFor="location">Ort:</FormLabel>
               <TextInput
                 type="text"
                 id="location"
@@ -204,7 +203,7 @@ export default function CardForm({
                 required
               />
 
-              <FormLabel htmlFor="category">Category:</FormLabel>
+              <FormLabel htmlFor="category">Kategorie:</FormLabel>
               <Select
                 id="category"
                 name="category"
@@ -212,7 +211,7 @@ export default function CardForm({
                 onChange={handleCategoryChange}
                 required
               >
-                <option value="">Choose…</option>
+                <option value="">Bitte wählen …</option>
                 {CATEGORIES.map(({ value, label }) => (
                   <option key={value} value={value}>
                     {label}
@@ -222,9 +221,7 @@ export default function CardForm({
             </FormGrid>
 
             <Stack $gap="s">
-              <FormLabel htmlFor="description" as="label">
-                Description:
-              </FormLabel>
+              <FormLabel htmlFor="description">Beschreibung:</FormLabel>
               <TextArea
                 ref={textareaRef}
                 onChange={handleChange}
@@ -232,20 +229,16 @@ export default function CardForm({
                 id="description"
                 name="description"
                 defaultValue={existingActivityData?.description || ""}
-                placeholder="Add more details..."
+                placeholder="Was ist geplant? Was sollte man mitbringen?"
               />
             </Stack>
           </Stack>
         </Card>
 
-        <Row $justify="center" $gap="m">
-          <Button onClick={onCancel} $square aria-label="Cancel">
-            <TbArrowBack />
-          </Button>
-          <Button type="submit" $square aria-label="Save activity">
-            <FiSave />
-          </Button>
-        </Row>
+        <Button type="submit" $wide>
+          Speichern
+          <FiSave />
+        </Button>
       </Stack>
     </Container>
   );

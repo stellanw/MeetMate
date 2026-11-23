@@ -13,19 +13,20 @@ export default function Navigation({ onCreateClick }) {
   const current = (path) => (pathname === path ? "page" : undefined);
 
   return (
-    <StyledNavigation aria-label="Main">
+    <StyledNavigation aria-label="Hauptnavigation">
       <StyledNavInner>
-        <ButtonLink href="/" $size="l" $square aria-label="Home" aria-current={current("/")}>
+        <ButtonLink href="/" $size="l" $square aria-label="Startseite" aria-current={current("/")}>
           <FiHome />
         </ButtonLink>
-        <StyledCreateButton onClick={onCreateClick} $size="l" aria-label="Create activity">
+        <StyledCreateButton onClick={onCreateClick} $size="l">
+          Neue Aktivität
           <FiPlus />
         </StyledCreateButton>
         <ButtonLink
           href="/calendar"
           $size="l"
           $square
-          aria-label="Calendar"
+          aria-label="Kalender"
           aria-current={current("/calendar")}
         >
           <FiCalendar />
