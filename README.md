@@ -1,99 +1,57 @@
-# New Next Project
+# MeetMate
 
-##Easy meet up with friends
+**Easy meetups with friends.** MeetMate is a mobile-first web app that lets groups of friends suggest activities, plan them and sign up – without endless back-and-forth in group chats.
 
-# Description
+## About this project
 
-This app aims to eliminate the logistical hurdles often associated with planning meetups, encouraging more frequent and enjoyable gatherings among friends by leveraging technology to handle the details.
+MeetMate started as the **capstone project of our web development bootcamp** (March – May 2024), built by a team of four:
 
-# MVP
+- [Stellan Wetzig](https://github.com/stellanw) – visual design & UI system, calendar, activity form (date & time pickers), navigation, toasts, login page, Zustand state refactor
+- Alexander Stracke ([alex96dev](https://github.com/alex96dev)) – friends & friend requests, search, weather, refactoring
+- Timur Sakalli – filters, user profile, friends page, sorting & hiding expired activities
+- Justin Caze – navigation, weekday display
 
-  (Create) Activity Suggestion: Allows the user to create a new activity idea which he wants to share with friends. 
-                                                  
-Activity Sharing: Enables users to share proposed activities and time slots with friends, facilitating easy group coordination. (Share-Button which includes URL)
-                                            
+The original team repository lives at [alex96dev/MeetMate](https://github.com/alex96dev/MeetMate). This repository contains the full shared history.
 
-(Read) Activity Overview: User can see all activities with short infos in a list. (Name activity, date, location)
-                            
-Activity Detail Page:  User can see more detailed information about the activity. 
-Including: 
-- Creator
-- Date
-- Time: Beginning and end of activity
-- Location
-- Category: e.g., sports, nature, indoors, creative,...
-- Description of activity
-- Min. and Max. number of people
-- Tags: #outdoor #indoor #lowbudget #nobudget 
+**Team work ends at the tag [`team-final`](../../tree/team-final).** Everything after that tag is my own continued development. See [all changes since then](../../compare/team-final...main).
 
-(Update) Edit Activity Details: Users have the ability to edit the details of the activity or the proposed time slots as plans evolve or more information becomes available.
-   
-(Delete) Delete Activity: Provides the option to remove an activity from the list if it is canceled or if the user changes their mind.
+## Features
 
-Accessability: Dark Mode
+- Sign in with GitHub
+- Create, edit, delete and join activities (name, date, time, location, category, description)
+- Color-coded categories: sports, culture, food, outdoor
+- Feed of your friends' upcoming activities, sorted by date; expired ones are hidden
+- Search and filter by category or author
+- "Next activity" highlight and current weather
+- Calendar view with all activities per day
+- Friends list with fuzzy search, friend requests (send / accept / deny) and removing friends
 
-# Additional Features
+## Tech stack
 
-Favorites: An option for users to mark certain activities as favorites for quicker planning in the future, without needing user accounts, but perhaps through device-local storage.   
+Next.js 13 (Pages Router) · React 18 · Styled Components · SWR · Zustand · MongoDB with Mongoose · NextAuth (GitHub provider) · Fuse.js · react-day-picker · Jest & React Testing Library
 
-Activity Categorization: Activities can be organized (filtered) into categories (e.g., sports, nature, indoors, creative), making it easier to browse and decide.
+## Local development
 
-Calendar: Second Activity Overview. By swiping to the left, user can see all activities in a calendar.
+```bash
+npm install
+cp .env.example .env.local   # fill in your own values
+npm run dev
+```
 
-Weather: Shows current weather. 
-   
-Random Activity Selector: A fun feature that randomly selects an activity from the proposed options to help indecisive groups decide what to do.
+You need:
 
-Advanced Filters: Filtering capabilities for activities based on category, proposed date, and time slots to help users narrow down the options according to their preferences.
+| Variable | Where to get it |
+| --- | --- |
+| `MONGODB_URI` | A MongoDB database, e.g. a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster |
+| `GITHUB_ID`, `GITHUB_SECRET` | A [GitHub OAuth App](https://github.com/settings/developers) with callback URL `http://localhost:3000/api/auth/callback/github` |
+| `NEXTAUTH_SECRET` | `openssl rand -base64 32` |
+| `NEXTAUTH_URL` | `http://localhost:3000` (or your production URL) |
+| `WEATHER_API_KEY` | A free key from [weatherapi.com](https://www.weatherapi.com) |
 
-External Sharing: Allows users to share activity details outside the app.
-In-App Notifications: To keep all participants updated on changes or new proposals related to the meetup activities, without relying on personal accounts, using device notifications.
+## Scripts
 
-Time Slot Proposal: Users can suggest multiple time slots for when they are available to participate in the activity.
-
-##Easy meet up with friends App
-
-An App to make it easy to meet up with friends. 
-Share your wanted activity, possible time slots 
-and invite yours friends to join.
-
-Main Features
-- Add the activity you feel like doing
-- Add friends to join
-- Add possible time slots for the activity
-- Add category for your activity (sports, nature, inside, creative, ...)
-- Share activity-card + time slots to invited friends
-- Delete activity-card
-- Change time slots 
-- Dark-Mode
-
-
-"Nice to have" - Features
-- Add and save your favorite activities
-- Random selector for activity 
-  in Case there are more than one option
-- filter friends, dates, activities 
-- share activity 
-- User Accounts
-- Friends-List
-
-
-
-### Local Development
-
-To work locally, please install the dependencies using `npm i` first.
-
-Run `npm run dev` to start a development server and open the displayed URL in a browser.
-
-Use `npm run test` to run the tests.
-
-### Scripts
-
-You can use the following commands:
-
-- `npm run dev` to start a development server
-- `npm run build` to build the project
-- `npm run start` to start a production server
-- `npm run test` to run the tests
-- `npm run lint` to run the linter
-# Easy-Meetup-with-Friends
+- `npm run dev` – start the development server
+- `npm run build` – build for production
+- `npm run start` – start the production server
+- `npm run test` – run the tests
+- `npm run lint` – run the linter

@@ -49,7 +49,7 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetchData() {
-      const url = `https://api.weatherapi.com/v1/current.json?key=27d7a8c529bf4b43af9113412242203&q=${city}&aqi=no`;
+      const url = `/api/weather?city=${encodeURIComponent(city)}`;
 
       try {
         const response = await fetch(url);
