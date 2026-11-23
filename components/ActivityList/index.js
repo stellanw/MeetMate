@@ -5,7 +5,8 @@ import { Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 import { isParticipant } from "@/utils/participation";
 
-/* List of linked activity cards, sorted by date – or a message if empty */
+/* List of linked activity cards, sorted by date – or a message if empty.
+   Larger gap than other lists: join badges stick out above the cards. */
 export default function ActivityList({ activities, emptyText, label }) {
   const { data: session } = useSession();
   const userId = session?.user?.id;
@@ -19,7 +20,7 @@ export default function ActivityList({ activities, emptyText, label }) {
   );
 
   return (
-    <Stack as="ul" $gap="m" aria-label={label}>
+    <Stack as="ul" $gap="l" aria-label={label}>
       {sorted.map((activity) => (
         <li key={activity._id}>
           <Link href={`/${activity._id}`}>

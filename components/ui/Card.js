@@ -4,6 +4,32 @@ import Face from "@/Icons/Face";
 import { IconButton } from "./Button";
 
 /*
+ * JoinBadge – the Face on the top edge of a card.
+ * Alone (one X) or together (XX + smile); switching is animated.
+ */
+export function JoinBadge({ together = true }) {
+  return (
+    <StyledJoinBadge
+      aria-label={together ? "Du bist dabei" : "Du bist nicht dabei"}
+    >
+      <Face together={together} />
+    </StyledJoinBadge>
+  );
+}
+
+const StyledJoinBadge = styled.span`
+  position: absolute;
+  top: calc(-1 * var(--space-m));
+  left: var(--space-m);
+  width: var(--badge-size);
+  height: var(--badge-size);
+  padding: var(--space-xs);
+  background-color: var(--color-highlight);
+  border: var(--border-medium) solid var(--color-text);
+  border-radius: var(--radius-s);
+`;
+
+/*
  * Card
  * ----
  * The only box style in the app (border + radius).
@@ -53,6 +79,11 @@ export const SplitCard = styled(Card)`
   grid-template-columns: minmax(0, 1fr) var(--card-aside-width);
   min-height: ${({ $compact }) =>
     $compact ? "var(--card-height-compact)" : "var(--card-height)"};
+
+  /* the join badge sticks out above the card – a little extra room */
+  &:has(> ${StyledJoinBadge}) {
+    margin-top: var(--space-s);
+  }
 `;
 
 export const SplitCardMain = styled.div`
@@ -89,32 +120,6 @@ export const CardTitle = styled.h2`
   text-align: center;
   overflow-wrap: anywhere;
   hyphens: auto;
-`;
-
-/*
- * JoinBadge – the Face on the top edge of a card.
- * Alone (one X) or together (XX + smile); switching is animated.
- */
-export function JoinBadge({ together = true }) {
-  return (
-    <StyledJoinBadge
-      aria-label={together ? "Du bist dabei" : "Du bist nicht dabei"}
-    >
-      <Face together={together} />
-    </StyledJoinBadge>
-  );
-}
-
-const StyledJoinBadge = styled.span`
-  position: absolute;
-  top: calc(-1 * var(--space-m));
-  left: var(--space-m);
-  width: var(--badge-size);
-  height: var(--badge-size);
-  padding: var(--space-xs);
-  background-color: var(--color-highlight);
-  border: var(--border-medium) solid var(--color-text);
-  border-radius: var(--radius-s);
 `;
 
 /*
