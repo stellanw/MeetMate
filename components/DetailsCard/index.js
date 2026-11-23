@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import styled from "styled-components";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
-import { TbArrowBackUp } from "react-icons/tb";
 import useStore from "@/store";
 import CardForm from "../CardForm";
 import PageLayout from "@/components/Layout/PageLayout";
@@ -14,6 +13,7 @@ import { Overlay, Row, Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 import handleDelete from "@/utils/components/DetailsCard/handleDelete";
 import handleJoin from "@/utils/components/DetailsCard/handleJoin";
+import { categoryLabel } from "@/utils/categories";
 
 export default function DetailsCard() {
   const router = useRouter();
@@ -60,11 +60,11 @@ export default function DetailsCard() {
     ["Date", activities.date],
     ["Time", activities.time],
     ["Location", activities.location],
-    ["Category", activities.category],
+    ["Category", categoryLabel(activities.category)],
   ];
 
   return (
-    <PageLayout title="Join your friend!" showNavigation={false}>
+    <PageLayout title="Join your friend!" back>
       <StyledNameCard $category={activities.category}>
         {joinState.isJoined && <JoinBadge aria-label="Joined">XX</JoinBadge>}
         <CardTitle as="h2">{activities.name}</CardTitle>
@@ -93,10 +93,7 @@ export default function DetailsCard() {
             {joinState.isJoined ? "Disjoin" : "XX Join"}
           </Button>
 
-          <Row $justify="space-between">
-            <Button onClick={() => router.back()} $square aria-label="Back">
-              <TbArrowBackUp />
-            </Button>
+          <Row $justify="center" $gap="m">
             <Button onClick={handleEditClick} $square aria-label="Edit activity">
               <FiEdit3 />
             </Button>

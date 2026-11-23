@@ -16,17 +16,20 @@ const boxedStyles = css`
   box-shadow: var(--shadow-s);
 `;
 
-/* Label/value grid used in forms and detail views */
+export const FormLabel = styled.label`
+  font-family: var(--font-heading);
+`;
+
+/* Label/value grid used in forms and detail views – labels align right */
 export const FormGrid = styled.div`
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   align-items: end;
   gap: var(--space-m);
-`;
 
-export const FormLabel = styled.label`
-  font-family: var(--font-heading);
-  text-align: right;
+  > ${FormLabel} {
+    text-align: right;
+  }
 `;
 
 /* Read-only value in a FormGrid (detail view) */

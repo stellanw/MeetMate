@@ -18,7 +18,7 @@ The original team repository lives at [alex96dev/MeetMate](https://github.com/al
 
 - Sign in with GitHub
 - Create, edit, delete and join activities (name, date, time, location, category, description)
-- Color-coded categories: sports, culture, food, outdoor
+- Color-coded categories: sports, outdoor, food & drinks, culture, party, cozy, other
 - Feed of your friends' upcoming activities, sorted by date; expired ones are hidden
 - Search and filter by category or author
 - "Next activity" highlight and current weather

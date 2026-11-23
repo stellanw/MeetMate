@@ -1,36 +1,35 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { FiCalendar, FiPlus } from "react-icons/fi";
-import { TbArrowBackUp } from "react-icons/tb";
+import { FiCalendar, FiHome, FiPlus } from "react-icons/fi";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
 
+/*
+ * Bottom tab bar – every button always does the same thing.
+ * The tab of the current page is shown pressed (aria-current).
+ */
 export default function Navigation({ onCreateClick }) {
-  const router = useRouter();
-  const isCalendar = router.pathname === "/calendar";
+  const { pathname } = useRouter();
+  const current = (path) => (pathname === path ? "page" : undefined);
 
   return (
-    <StyledNavigation>
+    <StyledNavigation aria-label="Main">
       <StyledNavInner>
-        <ButtonLink href="/profilepage" $size="l" $square aria-label="Profile">
-          XX
+        <ButtonLink href="/" $size="l" $square aria-label="Home" aria-current={current("/")}>
+          <FiHome />
         </ButtonLink>
-        <StyledCreateButton
-          onClick={onCreateClick}
-          $size="l"
-          aria-label="Create activity"
-        >
+        <StyledCreateButton onClick={onCreateClick} $size="l" aria-label="Create activity">
           <FiPlus />
         </StyledCreateButton>
-        {isCalendar ? (
-          <ButtonLink href="/" $size="l" $square aria-label="Back to home">
-            <TbArrowBackUp />
-          </ButtonLink>
-        ) : (
-          <ButtonLink href="/calendar" $size="l" $square aria-label="Calendar">
-            <FiCalendar />
-          </ButtonLink>
-        )}
+        <ButtonLink
+          href="/calendar"
+          $size="l"
+          $square
+          aria-label="Calendar"
+          aria-current={current("/calendar")}
+        >
+          <FiCalendar />
+        </ButtonLink>
       </StyledNavInner>
     </StyledNavigation>
   );

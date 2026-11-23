@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { FormGrid, FormLabel, Select, TextInput } from "@/components/ui/Form";
 import { Collapsible, Stack } from "@/components/ui/Layout";
 import { SectionTitle } from "@/components/ui/Typography";
+import { CATEGORIES } from "@/utils/categories";
 
 export default function Filter({ onSubmit, showFilterWindow }) {
   const [author, setAuthor] = useState("");
@@ -45,10 +46,11 @@ export default function Filter({ onSubmit, showFilterWindow }) {
               onChange={handleCategoryChange}
             >
               <option value="">All categories</option>
-              <option value="Sports">Sports</option>
-              <option value="Culture">Culture</option>
-              <option value="Food">Food</option>
-              <option value="Outdoor">Outdoor</option>
+              {CATEGORIES.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
             </Select>
           </FormGrid>
           <Button type="submit" $wide>

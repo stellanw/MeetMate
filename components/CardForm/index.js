@@ -25,8 +25,7 @@ import { PageTitle } from "@/components/ui/Typography";
 import handleSubmit from "@/utils/components/CardForm/handleSubmit";
 import getCurrentDate from "@/utils/components/CardForm/getCurrentDate";
 import getCurrentTime from "@/utils/components/CardForm/getCurrentTime";
-
-const CATEGORIES = ["Sports", "Culture", "Food", "Outdoor", "Others"];
+import { CATEGORIES } from "@/utils/categories";
 
 export default function CardForm({
   onCancel,
@@ -214,9 +213,9 @@ export default function CardForm({
                 required
               >
                 <option value="">Choose…</option>
-                {CATEGORIES.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                {CATEGORIES.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
                   </option>
                 ))}
               </Select>

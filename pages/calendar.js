@@ -9,7 +9,7 @@ import ActivityCard from "@/components/ActivityCard";
 import { Card } from "@/components/ui/Card";
 import { Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
-import categoryColor from "@/utils/categoryColor";
+import { categoryColor } from "@/utils/categories";
 
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 

@@ -3,9 +3,8 @@ import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
-import { FiLogOut } from "react-icons/fi";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import LoginPage from "./loginpage";
 import PageLayout from "@/components/Layout/PageLayout";
@@ -148,13 +147,7 @@ export default function HomePage() {
   );
 
   return (
-    <PageLayout
-      headerActions={
-        <Button onClick={() => signOut()} $square aria-label="Sign out">
-          <FiLogOut />
-        </Button>
-      }
-    >
+    <PageLayout>
       <Stack>
         <Row $gap="m">
           <SearchField

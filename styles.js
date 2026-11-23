@@ -48,6 +48,8 @@ const tokens = css`
     --color-category-culture: #c16b6b;
     --color-category-food: #e2aa60;
     --color-category-outdoor: #96ad8c;
+    --color-category-party: #b87fa3;
+    --color-category-cozy: #d6bf94;
     --color-category-default: var(--color-bg);
 
     /* Typography */

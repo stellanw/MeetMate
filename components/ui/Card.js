@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import categoryColor from "@/utils/categoryColor";
+import { categoryColor } from "@/utils/categories";
 
 /*
  * Card

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import Fuse from "fuse.js";
-import { FiHome, FiUserPlus, FiPlus, FiX } from "react-icons/fi";
+import { FiUserPlus, FiPlus, FiX } from "react-icons/fi";
 import useAuthentication from "./api/auth/useAuthentication";
 import PageLayout from "@/components/Layout/PageLayout";
 import UserProfile from "@/components/UserProfile";
 import FriendRequest from "@/components/FriendRequest";
 import FriendCard from "@/components/FriendCard";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
 import { Divider, Row, Stack } from "@/components/ui/Layout";
 import { SectionTitle, StatusText } from "@/components/ui/Typography";
@@ -83,14 +83,7 @@ export default function FriendList() {
   );
 
   return (
-    <PageLayout
-      title="Me and my Mates"
-      headerActions={
-        <ButtonLink href="/" $square aria-label="Home">
-          <FiHome />
-        </ButtonLink>
-      }
-    >
+    <PageLayout title="Me and my Mates" back="/profilepage">
       <Stack as="section" $gap="l">
         <SectionTitle>This is me</SectionTitle>
         <Link href="/profilepage" aria-label="My profile">

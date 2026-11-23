@@ -9,6 +9,8 @@ import styled, { css } from "styled-components";
  *   $variant  "default" | "confirm" | "alert" (default "default")
  *   $square   true → icon button, width = height
  *   $wide     true → full width of the parent
+ *
+ * Current page: set aria-current="page" → pressed look (no shadow, confirm color)
  */
 
 const sizes = {
@@ -52,6 +54,11 @@ export const buttonStyles = css`
       }
 
       &:active {
+        box-shadow: none;
+      }
+
+      &[aria-current="page"] {
+        background-color: var(--color-confirm);
         box-shadow: none;
       }
 
