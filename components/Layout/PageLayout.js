@@ -1,4 +1,6 @@
+import Head from "next/head";
 import styled from "styled-components";
+import { pageTitle } from "@/utils/site";
 import useStore from "@/store";
 import Navigation from "@/components/Navigation";
 import CardForm from "@/components/CardForm";
@@ -11,7 +13,7 @@ import { Container, Overlay } from "@/components/ui/Layout";
  * Shared frame for every page: header, title, content column,
  * bottom tab bar and the "create activity" overlay.
  *
- *   title           page title in the header (home: app name instead)
+ *   title           page title in the header and the browser tab (home: app name instead)
  *   close           opened views: close button (X) instead of profile/sign out
  *   showHeader      false hides the header (activity details: close sits in the card)
  *   showNavigation  false hides the tab bar (login, opened views with close)
@@ -27,6 +29,9 @@ export default function PageLayout({
 
   return (
     <>
+      <Head>
+        <title key="title">{pageTitle(title)}</title>
+      </Head>
       <StyledMain $withNavigation={showNavigation}>
         {showHeader && <PageHeader title={title} close={close} />}
         {children}

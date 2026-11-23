@@ -1,5 +1,7 @@
 import { Archivo, Averia_Serif_Libre, Noto_Serif } from "next/font/google";
+import Head from "next/head";
 import GlobalStyle from "../styles";
+import { SITE_DESCRIPTION, pageTitle } from "@/utils/site";
 import { SWRConfig } from "swr";
 import { StyleSheetManager } from "styled-components";
 import { SessionProvider } from "next-auth/react";
@@ -32,6 +34,13 @@ export default function App({
 }) {
   return (
     <>
+      {/* defaults – pages override the title via PageLayout (same key) */}
+      <Head>
+        <title key="title">{pageTitle()}</title>
+        <meta name="description" content={SITE_DESCRIPTION} key="description" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
+        <meta name="theme-color" content="#efe8d8" />
+      </Head>
       <GlobalStyle
         $fontHeading={fontHeading.style.fontFamily}
         $fontText={fontText.style.fontFamily}
