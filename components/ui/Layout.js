@@ -17,6 +17,7 @@ const gaps = {
   xs: "var(--space-xs)",
   s: "var(--space-s)",
   m: "var(--space-m)",
+  ml: "var(--space-ml)",
   l: "var(--space-l)",
   xl: "var(--space-xl)",
 };

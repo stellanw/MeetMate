@@ -82,7 +82,7 @@ export const SplitCard = styled(Card)`
 
   /* the join badge sticks out above the card – a little extra room */
   &:has(> ${StyledJoinBadge}) {
-    margin-top: var(--space-s);
+    margin-top: var(--space-xs);
   }
 `;
 

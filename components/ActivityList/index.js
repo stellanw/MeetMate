@@ -20,7 +20,7 @@ export default function ActivityList({ activities, emptyText, label }) {
   );
 
   return (
-    <Stack as="ul" $gap="l" aria-label={label}>
+    <Stack as="ul" $gap="ml" aria-label={label}>
       {sorted.map((activity) => (
         <li key={activity._id}>
           <Link href={`/${activity._id}`}>

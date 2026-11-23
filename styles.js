@@ -7,7 +7,7 @@ import { createGlobalStyle, css } from "styled-components";
  * Components only use `var(--token)` – no raw px/rem/hex values.
  *
  * Scales:
- *   spacing   xs · s · m · l · xl · xxl   (4px grid)
+ *   spacing   xs · s · m · ml · l · xl · xxl   (4px grid)
  *             vertical rhythm between elements is m everywhere
  *   font-size xs · s · m · l · xl
  *   button    one height for every button (40px)
@@ -75,6 +75,7 @@ const tokens = css`
     --space-xs: 0.25rem;
     --space-s: 0.5rem;
     --space-m: 1rem;
+    --space-ml: 1.25rem;
     --space-l: 1.5rem;
     --space-xl: 2rem;
     --space-xxl: 3rem;
