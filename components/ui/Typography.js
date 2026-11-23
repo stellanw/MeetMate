@@ -14,7 +14,7 @@ export const PageTitle = styled.h1`
 `;
 
 export const SectionTitle = styled.h2`
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
 `;
 
 export const StatusText = styled.p`

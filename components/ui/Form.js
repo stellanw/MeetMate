@@ -6,14 +6,14 @@ import { IoSearch } from "react-icons/io5";
  * -------------
  * Two input looks only:
  *   - "line"  → TextInput: underlined, sits inside cards/forms
- *   - "boxed" → Select, TextArea, SearchField: border + small shadow
+ *   - "boxed" → SelectMenu, TextArea, SearchField: border + small shadow
  *
  * Focus never adds an outline on top of the border (no double lines):
  *   line  → the underline turns solid
  *   boxed → the shadow grows one step
  */
 
-const boxedStyles = css`
+export const boxedStyles = css`
   background-color: var(--color-bg);
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-s);
@@ -67,14 +67,6 @@ export const TextInput = styled.input`
   }
 `;
 
-export const Select = styled.select`
-  ${boxedStyles}
-  width: 100%;
-  height: var(--field-height);
-  padding: 0 var(--space-s);
-  font-family: var(--font-heading);
-`;
-
 export const TextArea = styled.textarea`
   ${boxedStyles}
   width: 100%;
@@ -94,7 +86,7 @@ const StyledSearchField = styled.label`
   flex: 1;
   align-items: center;
   gap: var(--space-s);
-  height: var(--field-height);
+  height: var(--button-height);
   padding: 0 var(--space-s);
   border-radius: var(--radius-m);
   cursor: text;
@@ -168,7 +160,8 @@ export const pickerOptionStyles = css`
     background-color: var(--color-confirm-soft);
   }
 
-  &[aria-pressed="true"] {
+  &[aria-pressed="true"],
+  &[aria-selected="true"] {
     background-color: var(--color-confirm);
   }
 `;

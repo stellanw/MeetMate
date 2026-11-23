@@ -56,6 +56,9 @@ const tokens = css`
     /* Typography */
     --font-heading: ${({ $fontHeading }) => $fontHeading}, serif;
     --font-text: ${({ $fontText }) => $fontText}, serif;
+    --font-brand: ${({ $fontBrand }) => $fontBrand}, sans-serif; /* wordmark only */
+    --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* all headings */
+    --font-weight-title: 700;
 
     --font-size-xs: 0.8rem;
     --font-size-s: 1rem;
@@ -139,8 +142,8 @@ export default createGlobalStyle`
   h3,
   h4 {
     margin: 0;
-    font-family: var(--font-heading);
-    font-weight: 400;
+    font-family: var(--font-title);
+    font-weight: var(--font-weight-title);
     line-height: var(--line-height-tight);
   }
 
@@ -210,12 +213,17 @@ export default createGlobalStyle`
     background-color: var(--color-alert);
   }
 
-  .Toastify__toast--success svg,
-  .Toastify__toast--info svg {
+  /* only the status icon is colored, not the close button */
+  .Toastify__toast--success .Toastify__toast-icon svg,
+  .Toastify__toast--info .Toastify__toast-icon svg {
     fill: var(--color-confirm);
   }
 
-  .Toastify__toast--error svg {
+  .Toastify__toast--error .Toastify__toast-icon svg {
     fill: var(--color-alert);
+  }
+
+  .Toastify__close-button svg {
+    fill: currentColor;
   }
 `;

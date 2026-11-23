@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import useDismiss from "@/hooks/useDismiss";
 import styled from "styled-components";
 import { FiClock } from "react-icons/fi";
 import {
@@ -21,6 +22,8 @@ const MINUTES = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "
 export default function TimePicker({ id, name, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef(null);
+  const fieldRef = useRef(null);
+  useDismiss(fieldRef, isOpen, () => setIsOpen(false));
   const [hour = "12", minute = "00"] = (value || "").split(":");
 
   // center the selected hour/minute in its column when opening
@@ -38,7 +41,7 @@ export default function TimePicker({ id, name, value, onChange }) {
   const toggle = () => setIsOpen((open) => !open);
 
   return (
-    <PickerField>
+    <PickerField ref={fieldRef}>
       <TextInput id={id} value={value} readOnly onClick={toggle} />
       <input type="hidden" name={name} value={value} />
       <PickerToggle onClick={toggle} aria-label="Uhrzeit wählen" aria-expanded={isOpen}>

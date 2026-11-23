@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled, { css } from "styled-components";
 
 /*
@@ -67,7 +68,7 @@ const StyledCollapsible = styled.div`
 
 const StyledCollapsibleClip = styled.div`
   min-height: 0;
-  overflow: hidden;
+  overflow: ${({ $clip }) => ($clip ? "hidden" : "visible")};
 `;
 
 /* leaves room for the card shadow inside the clipped area */
@@ -75,10 +76,20 @@ const StyledCollapsibleContent = styled.div`
   padding: 0 var(--space-s) var(--space-s) 0;
 `;
 
+/* clips only while animating or closed, so popovers inside can overflow when open */
 export function Collapsible({ open, children }) {
+  const [isSettled, setIsSettled] = useState(false);
+
   return (
-    <StyledCollapsible $open={open} aria-hidden={!open} inert={open ? undefined : ""}>
-      <StyledCollapsibleClip>
+    <StyledCollapsible
+      $open={open}
+      aria-hidden={!open}
+      inert={open ? undefined : ""}
+      onTransitionEnd={(event) => {
+        if (event.target === event.currentTarget) setIsSettled(open);
+      }}
+    >
+      <StyledCollapsibleClip $clip={!(open && isSettled)}>
         <StyledCollapsibleContent>{children}</StyledCollapsibleContent>
       </StyledCollapsibleClip>
     </StyledCollapsible>

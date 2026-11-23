@@ -17,13 +17,14 @@ import {
   FormLabel,
   PickerField,
   PickerToggle,
-  Select,
   TextArea,
   TextInput,
   pickerOptionStyles,
   popoverStyles,
 } from "@/components/ui/Form";
 import TimePicker from "@/components/TimePicker";
+import SelectMenu from "@/components/ui/SelectMenu";
+import useDismiss from "@/hooks/useDismiss";
 import { Container, Stack } from "@/components/ui/Layout";
 import handleSubmit from "@/utils/components/CardForm/handleSubmit";
 import getCurrentDate from "@/utils/components/CardForm/getCurrentDate";
@@ -58,6 +59,8 @@ export default function CardForm({
 
   const inputRef = useRef(null);
   const textareaRef = useRef(null);
+  const datePickerRef = useRef(null);
+  useDismiss(datePickerRef, showDayPicker, () => setShowDayPicker(false));
 
   useEffect(() => {
     if (existingActivityData) {
@@ -68,6 +71,8 @@ export default function CardForm({
       setSelectedCategory(category || "");
       setSelectedTime(existingActivityData.time || getCurrentTime());
     } else {
+      setSelectedDate(null);
+      setSelectedCategory("");
       setSelectedTime(getCurrentTime());
     }
     handleChange();
@@ -88,10 +93,6 @@ export default function CardForm({
   };
 
   const toggleDayPicker = () => setShowDayPicker((prev) => !prev);
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
 
   const handleChange = () => {
     const textarea = textareaRef.current;
@@ -151,7 +152,7 @@ export default function CardForm({
               />
 
               <FormLabel htmlFor="date">Datum:</FormLabel>
-              <PickerField>
+              <PickerField ref={datePickerRef}>
                 <TextInput
                   type="text"
                   id="date"
@@ -205,20 +206,14 @@ export default function CardForm({
               />
 
               <FormLabel htmlFor="category">Kategorie:</FormLabel>
-              <Select
+              <SelectMenu
                 id="category"
                 name="category"
-                defaultValue={existingActivityData?.category || ""}
-                onChange={handleCategoryChange}
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+                options={CATEGORIES}
                 required
-              >
-                <option value="">Bitte wählen …</option>
-                {CATEGORIES.map(({ value, label }) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </Select>
+              />
             </FormGrid>
 
             <Stack $gap="s">

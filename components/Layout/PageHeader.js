@@ -50,11 +50,7 @@ export default function PageHeader({ title, close }) {
                 <FiUser />
               )}
             </StyledProfileLink>
-            <Button
-              onClick={() => signOut()}
-              $square
-              aria-label="Abmelden"
-            >
+            <Button onClick={() => signOut()} $square aria-label="Abmelden">
               <FiLogOut />
             </Button>
           </Row>
@@ -93,8 +89,10 @@ const StyledHeader = styled.header`
 `;
 
 /* app name on the home page – same size as page titles */
+/* wordmark – always the brand font, whatever the headings use */
 const StyledAppName = styled(PageTitle)`
-  font-weight: 700;
+  font-family: var(--font-brand);
+  font-weight: 400;
   text-transform: none;
 `;
 

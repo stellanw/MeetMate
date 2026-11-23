@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { FormGrid, FormLabel, Select, TextInput } from "@/components/ui/Form";
+import { FormGrid, FormLabel, TextInput } from "@/components/ui/Form";
+import SelectMenu from "@/components/ui/SelectMenu";
 import { Collapsible, Stack } from "@/components/ui/Layout";
 import { SectionTitle } from "@/components/ui/Typography";
 import { CATEGORIES } from "@/utils/categories";
@@ -15,11 +16,6 @@ export default function Filter({ onSubmit, showFilterWindow }) {
     setAuthor(value);
   };
 
-  const handleCategoryChange = (event) => {
-    const value = event.target.value;
-    setCategory(value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit({ author, category });
@@ -31,27 +27,21 @@ export default function Filter({ onSubmit, showFilterWindow }) {
         <Stack $gap="l">
           <SectionTitle>Filter</SectionTitle>
           <FormGrid>
-            <FormLabel htmlFor="author">Von:</FormLabel>
+            <FormLabel htmlFor="filter-author">Von:</FormLabel>
             <TextInput
               type="search"
-              id="author"
+              id="filter-author"
               placeholder="Name …"
               value={author}
               onChange={handleAuthorChange}
             />
-            <FormLabel htmlFor="category">Kategorie:</FormLabel>
-            <Select
-              id="category"
+            <FormLabel htmlFor="filter-category">Kategorie:</FormLabel>
+            <SelectMenu
+              id="filter-category"
               value={category}
-              onChange={handleCategoryChange}
-            >
-              <option value="">Alle Kategorien</option>
-              {CATEGORIES.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </Select>
+              onChange={setCategory}
+              options={[{ value: "", label: "Alle Kategorien" }, ...CATEGORIES]}
+            />
           </FormGrid>
           <Button type="submit" $wide>
             Anwenden
