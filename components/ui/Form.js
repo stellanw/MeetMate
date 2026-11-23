@@ -29,7 +29,8 @@ export const boxedStyles = css`
 `;
 
 export const FormLabel = styled.label`
-  font-family: var(--font-heading);
+  font-family: var(--font-title);
+  font-weight: var(--font-weight-label);
 `;
 
 /* Label/value grid used in forms and detail views */

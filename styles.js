@@ -59,6 +59,7 @@ const tokens = css`
     --font-brand: ${({ $fontBrand }) => $fontBrand}, sans-serif; /* wordmark only */
     --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* all headings */
     --font-weight-title: 700;
+    --font-weight-label: 500;
 
     --font-size-xs: 0.8rem;
     --font-size-s: 1rem;

@@ -67,3 +67,29 @@ export const Button = styled.button.attrs(({ type }) => ({
 export const ButtonLink = styled(Link)`
   ${buttonStyles}
 `;
+
+/*
+ * IconButton
+ * ----------
+ * Bare icon without frame or shadow, for secondary actions inside a card
+ * (e.g. close). Keeps the full button height as tap area.
+ */
+export const IconButton = styled.button.attrs(({ type }) => ({
+  type: type ?? "button",
+}))`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-height);
+  height: var(--button-height);
+  padding: 0;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    width: var(--icon-m);
+    height: var(--icon-m);
+  }
+`;

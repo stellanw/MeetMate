@@ -29,7 +29,7 @@ export default function PageHeader({ title, close }) {
         {title ? (
           <PageTitle>{title}</PageTitle>
         ) : (
-          <StyledAppName>MEET</StyledAppName>
+          <StyledAppName>MEET MATE</StyledAppName>
         )}
       </Row>
 

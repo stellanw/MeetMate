@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import useSWR, { useSWRConfig } from "swr";
 import { useSession } from "next-auth/react";
 import styled from "styled-components";
-import { FiEdit3, FiTrash2 } from "react-icons/fi";
+import { FiEdit3, FiTrash2, FiX } from "react-icons/fi";
 import useStore from "@/store";
 import CardForm from "../CardForm";
 import PageLayout from "@/components/Layout/PageLayout";
-import { Button } from "@/components/ui/Button";
+import { Button, IconButton } from "@/components/ui/Button";
 import { Card, CardTitle, JoinBadge } from "@/components/ui/Card";
 import Face from "@/Icons/Face";
 import { FormGrid, FormLabel, FormValue } from "@/components/ui/Form";
@@ -55,12 +55,15 @@ export default function DetailsCard() {
   ];
 
   return (
-    <PageLayout title="Bist du dabei?" close showNavigation={false}>
+    <PageLayout showHeader={false} showNavigation={false}>
       <StyledNameCard $category={activity.category}>
         <JoinBadge together={joined} />
         <CardTitle as="h2" $size="l">
           {activity.name}
         </CardTitle>
+        <StyledClose onClick={() => router.back()} aria-label="Schließen">
+          <FiX />
+        </StyledClose>
       </StyledNameCard>
 
       <Card $padded>
@@ -149,11 +152,18 @@ function DetailRow({ label, value }) {
   );
 }
 
+/* room on both sides so the title never runs under badge or close button */
 const StyledNameCard = styled(Card)`
   display: flex;
   align-items: center;
   min-height: var(--card-height);
-  padding-inline: var(--space-m);
+  padding-inline: var(--button-height);
+`;
+
+const StyledClose = styled(IconButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
 
 const StyledOwnActivity = styled.div`

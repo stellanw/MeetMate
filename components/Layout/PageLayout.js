@@ -13,11 +13,13 @@ import { Container, Overlay } from "@/components/ui/Layout";
  *
  *   title           page title in the header (home: app name instead)
  *   close           opened views: close button (X) instead of profile/sign out
+ *   showHeader      false hides the header (activity details: close sits in the card)
  *   showNavigation  false hides the tab bar (login, opened views with close)
  */
 export default function PageLayout({
   title,
   close,
+  showHeader = true,
   showNavigation = true,
   children,
 }) {
@@ -26,7 +28,7 @@ export default function PageLayout({
   return (
     <>
       <StyledMain $withNavigation={showNavigation}>
-        <PageHeader title={title} close={close} />
+        {showHeader && <PageHeader title={title} close={close} />}
         {children}
       </StyledMain>
 
