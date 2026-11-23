@@ -126,6 +126,11 @@ export const TitleCard = styled(Card)`
   align-items: center;
   min-height: var(--card-height);
   padding-inline: var(--button-height);
+
+  /* the join badge sticks out above the card – make room for it */
+  &:has(> ${StyledJoinBadge}) {
+    margin-top: var(--space-m);
+  }
 `;
 
 /* Bare close icon in the top right corner of a card */
