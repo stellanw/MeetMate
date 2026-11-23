@@ -14,6 +14,9 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
       scope: "read:user",
+      // GitHub now sends an `iss` parameter in the OAuth callback (RFC 9207).
+      // Without a matching issuer, next-auth v4 rejects the login.
+      issuer: "https://github.com/login/oauth",
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
