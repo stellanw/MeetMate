@@ -22,7 +22,7 @@ export default function PageHeader({ title, close }) {
 
   return (
     <StyledHeader>
-      <Row $gap="m">
+      <Row $gap="s">
         <Link href="/" aria-label="MeetMate – Startseite">
           <Logo />
         </Link>

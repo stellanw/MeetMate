@@ -97,6 +97,7 @@ const tokens = css`
     --icon-l: 1.5rem;
     --icon-xl: 2rem;
     --avatar-size: var(--button-height);
+    --logo-size: 2rem;
     --badge-size: 2rem;
     --card-height-compact: 3.5rem;
     --calendar-tile-height: 3.5rem;
