@@ -305,7 +305,6 @@ const StyledDayPicker = styled(DayPicker)`
   background-color: var(--color-bg);
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-m);
-  box-shadow: var(--shadow-m);
 
   .rdp-caption_label {
     font-size: var(--font-size-s);

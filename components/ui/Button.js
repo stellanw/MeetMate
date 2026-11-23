@@ -10,7 +10,7 @@ import styled, { css } from "styled-components";
  *   $square   true → icon button, width = height
  *   $wide     true → full width of the parent
  *
- * Current page: set aria-current="page" → pressed look (no shadow, highlight color)
+ * Current page: set aria-current="page" → pressed look (no shadow)
  */
 
 const sizes = {
@@ -58,7 +58,6 @@ export const buttonStyles = css`
       }
 
       &[aria-current="page"] {
-        background-color: var(--color-highlight);
         box-shadow: none;
       }
 

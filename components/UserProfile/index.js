@@ -14,7 +14,7 @@ export default function UserProfile() {
   if (!session) return null;
 
   return (
-    <SplitCard $interactive>
+    <SplitCard>
       <SplitCardMain>
         <CardTitle>{session.user.name}</CardTitle>
       </SplitCardMain>

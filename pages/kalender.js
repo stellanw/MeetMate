@@ -160,14 +160,14 @@ const StyledCalendarCard = styled(Card)`
     background-color: var(--color-confirm-soft);
   }
 
-  .react-calendar__tile--now {
+  /* scoped under .react-calendar to win over the button reset above */
+  .react-calendar .react-calendar__tile--now {
     background-color: var(--color-confirm-soft);
   }
 
-  .react-calendar__tile--active,
-  .react-calendar__tile--active:enabled:hover {
+  .react-calendar .react-calendar__tile--active,
+  .react-calendar .react-calendar__tile--active:enabled:hover {
     background-color: var(--color-confirm);
-    box-shadow: var(--shadow-s);
   }
 `;
 
@@ -189,5 +189,4 @@ const StyledEntry = styled.span`
   background-color: ${({ $category }) => categoryColor($category)};
   border: var(--border-thin) solid var(--color-text);
   border-radius: var(--radius-s);
-  box-shadow: var(--shadow-s);
 `;

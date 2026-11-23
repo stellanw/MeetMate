@@ -25,10 +25,10 @@ export default function PageHeader() {
       {session && (
         <Row>
           <StyledProfileLink
-            href="/profilepage"
+            href="/profil"
             $square
-            aria-label="Mein Profil"
-            aria-current={pathname === "/profilepage" ? "page" : undefined}
+            aria-label="Ich & meine Mates"
+            aria-current={pathname === "/profil" ? "page" : undefined}
           >
             {session.user.image ? (
               <Image src={session.user.image} alt="" width={80} height={80} />
@@ -51,6 +51,8 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   gap: var(--space-m);
   min-height: var(--control-m);
+  padding-bottom: var(--space-m);
+  border-bottom: var(--border-thin) solid var(--color-text);
 `;
 
 const StyledBrand = styled(Link)`

@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import useSWR from "swr";
 import Fuse from "fuse.js";
 import { FiUserPlus, FiPlus, FiX } from "react-icons/fi";
-import useAuthentication from "./api/auth/useAuthentication";
-import PageLayout from "@/components/Layout/PageLayout";
-import UserProfile from "@/components/UserProfile";
+import useAuthentication from "@/pages/api/auth/useAuthentication";
 import FriendRequest from "@/components/FriendRequest";
 import FriendCard from "@/components/FriendCard";
 import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
-import { Divider, Row, Stack } from "@/components/ui/Layout";
+import { Row, Stack } from "@/components/ui/Layout";
 import { SectionTitle, StatusText } from "@/components/ui/Typography";
 import handleDeleteClick from "@/utils/pages/friendlist/handleDeleteClick";
 import handleSendFriendRequest from "@/utils/pages/friendlist/handleSendFriendRequest";
 
+/* "Meine Mates" section on the profile page: search, requests, friend list */
 const fuseOptions = {
   // isCaseSensitive: false,
   // includeScore: false,
@@ -32,7 +30,7 @@ const fuseOptions = {
   keys: ["name"],
 };
 
-export default function FriendList() {
+export default function Mates() {
   const { authenticated, loading, session } = useAuthentication();
   const userId = session?.user?.id;
   const [myMates, setMyMates] = useState([]);
@@ -83,13 +81,8 @@ export default function FriendList() {
   );
 
   return (
-    <PageLayout title="Ich & meine Mates" back="/profilepage">
-      <Stack as="section" $gap="l">
-        <SectionTitle>Das bin ich</SectionTitle>
-        <Link href="/profilepage" aria-label="Mein Profil">
-          <UserProfile />
-        </Link>
-      </Stack>
+    <Stack as="section" $gap="l">
+      <SectionTitle>Meine Mates</SectionTitle>
 
       <Stack>
         <Row $gap="m">
@@ -121,47 +114,40 @@ export default function FriendList() {
         )}
       </Stack>
 
-      {isSearching && (
-        <Stack as="section" $gap="l">
-          <SectionTitle>Gefundene Personen</SectionTitle>
-          {mates.length > 0 ? (
-            <Stack as="ul" $gap="l">
-              {mates.map((mate) => (
-                <FriendCard key={mate._id} name={mate.name}>
-                  {isFriend(mate._id) ? (
-                    <span>Mate ✓</span>
-                  ) : (
-                    <Button
-                      $size="s"
-                      $square
-                      $variant="confirm"
-                      aria-label={`Freundschaftsanfrage an ${mate.name} senden`}
-                      onClick={() =>
-                        handleSendFriendRequest(
-                          mate._id,
-                          userId,
-                          setFriendRequests,
-                          friendRequests
-                        )
-                      }
-                    >
-                      <FiPlus />
-                    </Button>
-                  )}
-                </FriendCard>
-              ))}
-            </Stack>
-          ) : (
-            <StatusText>Niemand gefunden.</StatusText>
-          )}
-        </Stack>
-      )}
+      {isSearching &&
+        (mates.length > 0 ? (
+          <Stack as="ul" $gap="l" aria-label="Suchergebnisse">
+            {mates.map((mate) => (
+              <FriendCard key={mate._id} name={mate.name}>
+                {isFriend(mate._id) ? (
+                  <span>Mate ✓</span>
+                ) : (
+                  <Button
+                    $size="s"
+                    $square
+                    $variant="confirm"
+                    aria-label={`Freundschaftsanfrage an ${mate.name} senden`}
+                    onClick={() =>
+                      handleSendFriendRequest(
+                        mate._id,
+                        userId,
+                        setFriendRequests,
+                        friendRequests
+                      )
+                    }
+                  >
+                    <FiPlus />
+                  </Button>
+                )}
+              </FriendCard>
+            ))}
+          </Stack>
+        ) : (
+          <StatusText>Niemand gefunden.</StatusText>
+        ))}
 
-      <Divider />
-
-      <Stack as="section" $gap="l">
-        <SectionTitle>Meine Mates</SectionTitle>
-        {friends.length > 0 ? (
+      {!isSearching &&
+        (friends.length > 0 ? (
           <Stack as="ul" $gap="l">
             {friends.map((user) => (
               <FriendCard key={user._id} name={user.name}>
@@ -181,8 +167,7 @@ export default function FriendList() {
           </Stack>
         ) : (
           <StatusText>Noch keine Mates – such oben nach deinen Freund*innen.</StatusText>
-        )}
-      </Stack>
-    </PageLayout>
+        ))}
+    </Stack>
   );
 }

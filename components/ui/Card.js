@@ -4,9 +4,10 @@ import { categoryColor } from "@/utils/categories";
 /*
  * Card
  * ----
- * The only box style in the app (border + radius + hard shadow).
+ * The only box style in the app (border + radius).
  *   $category     activity category → background color
- *   $interactive  true → hover/active feedback (for linked cards)
+ *   $interactive  true → clickable: hard shadow + hover/active feedback.
+ *                 Rule: only clickable elements get a shadow.
  *   $padded       true → inner padding for content cards
  */
 export const Card = styled.div`
@@ -15,7 +16,6 @@ export const Card = styled.div`
   background-color: ${({ $category }) => categoryColor($category)};
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-m);
-  box-shadow: var(--shadow-l);
 
   ${({ $padded }) =>
     $padded &&
@@ -26,6 +26,7 @@ export const Card = styled.div`
   ${({ $interactive }) =>
     $interactive &&
     css`
+      box-shadow: var(--shadow-l);
       transition: box-shadow var(--transition-fast);
 
       &:hover {
@@ -99,5 +100,4 @@ export const JoinBadge = styled.span`
   background-color: var(--color-highlight);
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-s);
-  box-shadow: var(--shadow-s);
 `;

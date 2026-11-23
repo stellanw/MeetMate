@@ -1,19 +1,20 @@
-import Link from "next/link";
 import PageLayout from "@/components/Layout/PageLayout";
 import UserProfile from "@/components/UserProfile";
+import Mates from "@/components/Mates";
 import JoinedActivities from "@/components/JoinedActivities/joined";
-import { Stack } from "@/components/ui/Layout";
+import { Divider, Stack } from "@/components/ui/Layout";
 import { SectionTitle } from "@/components/ui/Typography";
 
 export default function ProfilePage() {
   return (
-    <PageLayout title="Mein Profil">
+    <PageLayout title="Ich & meine Mates">
       <Stack as="section" $gap="l">
         <SectionTitle>Das bin ich</SectionTitle>
-        <Link href="/friendlist" aria-label="Meine Mates anzeigen">
-          <UserProfile />
-        </Link>
+        <UserProfile />
       </Stack>
+      <Divider />
+      <Mates />
+      <Divider />
       <JoinedActivities />
     </PageLayout>
   );

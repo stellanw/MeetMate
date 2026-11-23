@@ -23,11 +23,11 @@ export default function Navigation({ onCreateClick }) {
           <FiPlus />
         </StyledCreateButton>
         <ButtonLink
-          href="/calendar"
+          href="/kalender"
           $size="l"
           $square
           aria-label="Kalender"
-          aria-current={current("/calendar")}
+          aria-current={current("/kalender")}
         >
           <FiCalendar />
         </ButtonLink>
