@@ -1,7 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import { FiEdit3 } from "react-icons/fi";
 import {
   CardTitle,
   SplitCard,
@@ -25,7 +24,6 @@ export default function UserProfile({ onEdit }) {
     >
       <SplitCardMain>
         <CardTitle as="span">{session.user.name}</CardTitle>
-        <StyledEditIcon aria-hidden="true" />
       </SplitCardMain>
       <SplitCardAside>
         <StyledAvatar
@@ -43,12 +41,6 @@ const StyledProfileCard = styled(SplitCard)`
   padding: 0;
   text-align: inherit;
   cursor: pointer;
-`;
-
-const StyledEditIcon = styled(FiEdit3)`
-  flex-shrink: 0;
-  width: var(--icon-s);
-  height: var(--icon-s);
 `;
 
 const StyledAvatar = styled(Image)`

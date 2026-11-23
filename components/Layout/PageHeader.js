@@ -85,10 +85,9 @@ const StyledHeader = styled.header`
 `;
 
 /* app name on the home page – same size as page titles */
-/* wordmark – always the brand font, whatever the headings use */
+/* wordmark – title font, a bit heavier than headings */
 const StyledAppName = styled(PageTitle)`
-  font-family: var(--font-brand);
-  font-weight: 400;
+  font-weight: var(--font-weight-brand);
   text-transform: none;
 `;
 

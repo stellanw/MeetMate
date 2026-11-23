@@ -56,8 +56,8 @@ const tokens = css`
     /* Typography */
     --font-heading: ${({ $fontHeading }) => $fontHeading}, serif;
     --font-text: ${({ $fontText }) => $fontText}, serif;
-    --font-brand: ${({ $fontBrand }) => $fontBrand}, sans-serif; /* wordmark only */
-    --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* all headings */
+    --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* headings, labels, wordmark */
+    --font-weight-brand: 800;
     --font-weight-title: 700;
     --font-weight-label: 500;
 
