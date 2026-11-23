@@ -149,6 +149,18 @@ export default function HomePage() {
   return (
     <PageLayout>
       <Stack $gap="s">
+        <StyledWeather>
+          {weather !== null && <span>{weather}°C</span>}
+          {condition !== null && (
+            <Image
+              src={`https:${condition}`}
+              width={48}
+              height={48}
+              alt="Aktuelles Wetter"
+            />
+          )}
+          <span>{city}</span>
+        </StyledWeather>
         <div>
           <Row>
             <SearchField
@@ -166,19 +178,6 @@ export default function HomePage() {
           </Row>
           <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
         </div>
-
-        <StyledWeather>
-          {weather !== null && <span>{weather}°C</span>}
-          {condition !== null && (
-            <Image
-              src={`https:${condition}`}
-              width={48}
-              height={48}
-              alt="Aktuelles Wetter"
-            />
-          )}
-          <span>{city}</span>
-        </StyledWeather>
       </Stack>
 
       <NextActivity activities={activities} />
