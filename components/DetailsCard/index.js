@@ -73,7 +73,7 @@ export default function DetailsCard() {
       </TitleCard>
 
       <Card $padded>
-        <Stack $gap="l">
+        <Stack $gap="m">
           <FormGrid>
             {details.map(([label, value]) => (
               <DetailRow key={label} label={label} value={value} />

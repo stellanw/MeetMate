@@ -20,10 +20,10 @@ export default function FriendRequest({
 
   return (
     <Collapsible open={showRequestWindow}>
-      <Stack as="section" $gap="l">
+      <Stack as="section" $gap="m">
         <SectionTitle>Wir wollen deine Mates sein!</SectionTitle>
         {friendRequestList.length > 0 ? (
-          <Stack as="ul" $gap="l">
+          <Stack as="ul" $gap="m">
             {friendRequestList.map((request) => (
               <FriendCard key={request} name={getUserName(request)}>
                 <Button

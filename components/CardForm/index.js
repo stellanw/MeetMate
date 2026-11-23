@@ -111,7 +111,7 @@ export default function CardForm({
     <Container>
       <Stack
         as="form"
-        $gap="l"
+        $gap="m"
         aria-label={pageTitle}
         onSubmit={(event) =>
           handleSubmit(
@@ -148,7 +148,7 @@ export default function CardForm({
         </TitleCard>
 
         <Card $padded>
-          <Stack $gap="l">
+          <Stack $gap="m">
             <FormGrid>
               {/* author is always the signed-in user – shown, not editable */}
               <FormLabel as="span">Von:</FormLabel>

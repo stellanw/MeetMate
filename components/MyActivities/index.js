@@ -24,7 +24,7 @@ export default function MyActivities() {
 
   return (
     <>
-      <Stack as="section" $gap="l">
+      <Stack as="section" $gap="m">
         <SectionTitle>Von mir geplant</SectionTitle>
         <ActivityList
           activities={planned}
@@ -33,7 +33,7 @@ export default function MyActivities() {
         />
       </Stack>
       <Divider />
-      <Stack as="section" $gap="l">
+      <Stack as="section" $gap="m">
         <SectionTitle>Hier bin ich dabei</SectionTitle>
         <ActivityList
           activities={joined}

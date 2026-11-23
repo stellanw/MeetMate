@@ -24,7 +24,7 @@ export default function Filter({ onSubmit, showFilterWindow }) {
   return (
     <Collapsible open={showFilterWindow}>
       <Card as="form" $padded onSubmit={handleSubmit}>
-        <Stack $gap="l">
+        <Stack $gap="m">
           <SectionTitle>Filter</SectionTitle>
           <FormGrid>
             <FormLabel htmlFor="filter-author">Von:</FormLabel>

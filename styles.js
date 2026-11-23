@@ -8,6 +8,7 @@ import { createGlobalStyle, css } from "styled-components";
  *
  * Scales:
  *   spacing   xs · s · m · l · xl · xxl   (4px grid)
+ *             vertical rhythm between elements is m everywhere
  *   font-size xs · s · m · l · xl
  *   button    one height for every button (40px)
  *   field     one height for inputs and picker options

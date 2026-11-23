@@ -41,7 +41,7 @@ export default function ProfileForm({ onClose }) {
 
   return (
     <Container>
-      <Stack as="form" $gap="l" aria-label="Profil bearbeiten" onSubmit={handleSubmit}>
+      <Stack as="form" $gap="m" aria-label="Profil bearbeiten" onSubmit={handleSubmit}>
         <TitleCard>
           <StyledNameInput
             name="name"
@@ -59,7 +59,7 @@ export default function ProfileForm({ onClose }) {
         </TitleCard>
 
         <Card $padded>
-          <Stack $gap="l">
+          <Stack $gap="m">
             <StatusText as="p">
               Dein Profilbild kommt von deinem GitHub-Account.
             </StatusText>

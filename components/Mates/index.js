@@ -83,7 +83,7 @@ export default function Mates() {
   );
 
   return (
-    <Stack as="section" $gap="l">
+    <Stack as="section" $gap="m">
       <div>
         <Row $gap="m">
           <SearchField
@@ -116,7 +116,7 @@ export default function Mates() {
 
       {isSearching &&
         (mates.length > 0 ? (
-          <Stack as="ul" $gap="l" aria-label="Suchergebnisse">
+          <Stack as="ul" $gap="m" aria-label="Suchergebnisse">
             {mates.map((mate) => (
               <FriendCard key={mate._id} name={mate.name}>
                 {isFriend(mate._id) ? (
@@ -147,7 +147,7 @@ export default function Mates() {
 
       {!isSearching &&
         (friends.length > 0 ? (
-          <Stack as="ul" $gap="l">
+          <Stack as="ul" $gap="m">
             {friends.map((user) => (
               <FriendCard key={user._id} name={user.name}>
                 <Button

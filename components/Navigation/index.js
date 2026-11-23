@@ -5,7 +5,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
 
 /*
- * Bottom tab bar – five square icon tabs, "+" in the middle,
+ * Bottom tab bar – square icon tabs, "+" in the middle fills the free space,
  * every tab always does the same.
  * The tab of the current page is shown pressed (aria-current).
  */
@@ -28,7 +28,7 @@ export default function Navigation({ onCreateClick }) {
             <Button
               key={label}
               onClick={onCreateClick}
-              $square
+              $fill
               aria-label={label}
             >
               {icon}
@@ -59,7 +59,7 @@ const StyledNavigation = styled.nav`
 
 const StyledNavInner = styled(Container)`
   display: flex;
-  justify-content: space-between;
+  gap: var(--space-s);
   padding-block: var(--space-m);
   border-top: var(--border-thin) solid var(--color-text);
 `;

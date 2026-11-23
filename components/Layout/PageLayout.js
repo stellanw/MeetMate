@@ -51,10 +51,10 @@ export default function PageLayout({
 const StyledMain = styled(Container).attrs({ as: "main" })`
   display: flex;
   flex-direction: column;
-  gap: var(--space-l);
-  padding-top: var(--space-l);
+  gap: var(--space-m);
+  padding-top: var(--space-m);
   padding-bottom: ${({ $withNavigation }) =>
     $withNavigation
-      ? "calc(var(--nav-height) + var(--space-xl))"
-      : "var(--space-xl)"};
+      ? "calc(var(--nav-height) + var(--space-m))"
+      : "var(--space-m)"};
 `;

@@ -57,7 +57,7 @@ export const Overlay = styled.div`
   inset: 0;
   z-index: var(--z-overlay);
   overflow-y: auto;
-  padding-block: var(--space-l);
+  padding-block: var(--space-m);
   background-color: var(--color-bg);
 `;
 

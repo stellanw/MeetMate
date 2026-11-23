@@ -19,7 +19,7 @@ export const SectionTitle = styled.h2`
 `;
 
 export const StatusText = styled.p`
-  padding-block: var(--space-l);
+  padding-block: var(--space-m);
   color: var(--color-text-muted);
   text-align: center;
 `;
