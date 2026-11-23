@@ -214,6 +214,19 @@ export default createGlobalStyle`
     background-color: var(--color-alert);
   }
 
+  /* phones: react-toastify goes edge to edge – keep the page gutter instead */
+  @media (max-width: ${breakpoints.tablet}) {
+    .Toastify__toast-container {
+      width: 100%;
+      padding: var(--page-gutter);
+    }
+
+    .Toastify__toast {
+      margin-bottom: var(--space-s);
+      border-radius: var(--radius-m);
+    }
+  }
+
   /* only the status icon is colored, not the close button */
   .Toastify__toast--success .Toastify__toast-icon svg,
   .Toastify__toast--info .Toastify__toast-icon svg {
