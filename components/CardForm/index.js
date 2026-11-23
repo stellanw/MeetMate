@@ -236,7 +236,7 @@ export default function CardForm({
           </Stack>
         </Card>
 
-        <Button type="submit" $size="l" $wide>
+        <Button type="submit" $wide>
           Speichern
           <FiSave />
         </Button>

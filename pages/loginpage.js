@@ -13,7 +13,7 @@ export default function LoginPage() {
         <Stack $gap="l" $center>
           <SectionTitle as="h1">Triff dich mit deinen Freund*innen</SectionTitle>
           <p>Melde dich mit deinem GitHub-Account an, um loszulegen.</p>
-          <Button onClick={() => signIn("github")} $size="l" $wide>
+          <Button onClick={() => signIn("github")} $wide>
             Mit GitHub anmelden
             <FiLogIn />
           </Button>

@@ -15,16 +15,15 @@ export default function Navigation({ onCreateClick }) {
   return (
     <StyledNavigation aria-label="Hauptnavigation">
       <StyledNavInner>
-        <ButtonLink href="/" $size="l" $square aria-label="Startseite" aria-current={current("/")}>
+        <ButtonLink href="/" $square aria-label="Startseite" aria-current={current("/")}>
           <FiHome />
         </ButtonLink>
-        <Button onClick={onCreateClick} $size="l" $fill>
+        <Button onClick={onCreateClick} $fill>
           Neue Aktivität
           <FiPlus />
         </Button>
         <ButtonLink
           href="/kalender"
-          $size="l"
           $square
           aria-label="Kalender"
           aria-current={current("/kalender")}

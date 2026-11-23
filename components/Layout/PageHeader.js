@@ -26,7 +26,11 @@ export default function PageHeader({ title, close }) {
         <Link href="/" aria-label="MeetMate – Startseite">
           <Logo />
         </Link>
-        {title ? <PageTitle>{title}</PageTitle> : <StyledAppName>MeetMate</StyledAppName>}
+        {title ? (
+          <PageTitle>{title}</PageTitle>
+        ) : (
+          <StyledAppName>MEET</StyledAppName>
+        )}
       </Row>
 
       {close ? (
@@ -36,7 +40,6 @@ export default function PageHeader({ title, close }) {
           <Row $gap="m">
             <StyledProfileLink
               href="/profil"
-              $size="l"
               $square
               aria-label="Ich & meine Mates"
               aria-current={router.pathname === "/profil" ? "page" : undefined}
@@ -47,7 +50,11 @@ export default function PageHeader({ title, close }) {
                 <FiUser />
               )}
             </StyledProfileLink>
-            <Button onClick={() => signOut()} $size="l" $square aria-label="Abmelden">
+            <Button
+              onClick={() => signOut()}
+              $square
+              aria-label="Abmelden"
+            >
               <FiLogOut />
             </Button>
           </Row>
@@ -80,7 +87,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   gap: var(--space-m);
-  min-height: var(--button-l);
+  min-height: var(--button-height);
   padding-bottom: var(--space-m);
   border-bottom: var(--border-thin) solid var(--color-text);
 `;
@@ -88,7 +95,7 @@ const StyledHeader = styled.header`
 /* app name on the home page – same size as page titles */
 const StyledAppName = styled(PageTitle)`
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: none;
 `;
 
 /* Avatar fills the square button, frame stays the button border */

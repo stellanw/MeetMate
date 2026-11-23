@@ -53,7 +53,7 @@ export default function Filter({ onSubmit, showFilterWindow }) {
               ))}
             </Select>
           </FormGrid>
-          <Button type="submit" $size="l" $wide>
+          <Button type="submit" $wide>
             Anwenden
           </Button>
         </Stack>

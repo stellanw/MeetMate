@@ -27,7 +27,6 @@ export default function FriendRequest({
             {friendRequestList.map((request) => (
               <FriendCard key={request} name={getUserName(request)}>
                 <Button
-                  $size="s"
                   $square
                   $variant="confirm"
                   aria-label="Annehmen"
@@ -39,7 +38,6 @@ export default function FriendRequest({
                   <FiCheck />
                 </Button>
                 <Button
-                  $size="s"
                   $square
                   $variant="alert"
                   aria-label="Ablehnen"

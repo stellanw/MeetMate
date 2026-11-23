@@ -123,7 +123,6 @@ export default function Mates() {
                   <span>Mate ✓</span>
                 ) : (
                   <Button
-                    $size="s"
                     $square
                     $variant="confirm"
                     aria-label={`Freundschaftsanfrage an ${mate.name} senden`}
@@ -152,7 +151,6 @@ export default function Mates() {
             {friends.map((user) => (
               <FriendCard key={user._id} name={user.name}>
                 <Button
-                  $size="s"
                   $square
                   $variant="alert"
                   aria-label={`${user.name} aus meinen Mates entfernen`}

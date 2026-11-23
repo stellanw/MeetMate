@@ -9,7 +9,7 @@ import { createGlobalStyle, css } from "styled-components";
  * Scales:
  *   spacing   xs · s · m · l · xl · xxl   (4px grid)
  *   font-size xs · s · m · l · xl
- *   button    s (20px) · l (40px)          small actions · navigation & card actions
+ *   button    one height for every button (40px)
  *   field     one height for inputs and picker options
  *   icon      s · m · l · xl
  *   shadow    s · m · l                   (hard offset shadow, hover = one step smaller)
@@ -86,15 +86,13 @@ const tokens = css`
     --shadow-l: 5px 5px 0 var(--color-text);
 
     /* Fixed sizes */
-    --button-s: 1.25rem;
-    --button-l: 2.5rem;
-    --touch-target: 2.5rem; /* min. tap area, also for small buttons */
+    --button-height: 2.5rem;
     --field-height: 2rem;
     --icon-s: 0.75rem;
     --icon-m: 1.25rem;
     --icon-l: 1.5rem;
     --icon-xl: 2rem;
-    --avatar-size: var(--button-l);
+    --avatar-size: var(--button-height);
     --badge-size: 2rem;
     --card-height-compact: 3.5rem;
     --calendar-tile-height: 3.5rem;
@@ -104,7 +102,7 @@ const tokens = css`
     /* Layout */
     --content-width: 28rem;
     --page-gutter: var(--space-m);
-    --nav-height: calc(var(--button-l) + 2 * var(--space-m));
+    --nav-height: calc(var(--button-height) + 2 * var(--space-m));
 
     /* Layers */
     --z-popover: 10;
@@ -197,8 +195,10 @@ export default createGlobalStyle`
     box-shadow: var(--shadow-m);
   }
 
-  .Toastify__close-button {
+  .Toastify__close-button,
+  .Toastify__close-button--light {
     color: var(--color-text);
+    opacity: 1;
   }
 
   .Toastify__progress-bar--success,

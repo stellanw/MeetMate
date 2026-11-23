@@ -18,8 +18,8 @@ export default function Logo() {
 const StyledLogo = styled.span`
   display: inline-flex;
   flex-shrink: 0;
-  width: var(--button-l);
-  height: var(--button-l);
+  width: var(--button-height);
+  height: var(--button-height);
   color: var(--color-text);
   background-color: var(--color-bg);
   border: var(--border-medium) solid currentColor;

@@ -91,7 +91,7 @@ function TimeColumn({ label, options, selected, onSelect }) {
 const StyledPopover = styled.div`
   ${popoverStyles}
   display: grid;
-  grid-template-columns: repeat(2, var(--button-l));
+  grid-template-columns: repeat(2, var(--button-height));
   gap: var(--space-s);
 `;
 
