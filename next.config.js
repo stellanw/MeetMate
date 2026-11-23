@@ -16,6 +16,15 @@ const nextConfig = {
   },
 
   reactStrictMode: false,
+
+  async redirects() {
+    return [
+      // old English routes; friend list was merged into the profile page
+      { source: "/profilepage", destination: "/profil", permanent: true },
+      { source: "/friendlist", destination: "/profil", permanent: true },
+      { source: "/calendar", destination: "/kalender", permanent: true },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

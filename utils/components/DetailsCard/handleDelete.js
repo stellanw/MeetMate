@@ -4,9 +4,9 @@ export default async function handleDelete(endpoint, router) {
     method: "DELETE",
   });
   if (response.ok) {
-    toast.success("Activity deleted successfully!");
+    toast.success("Aktivität gelöscht.");
     router.back();
   } else {
-    toast.error("Failed to delete activity");
+    toast.error("Löschen fehlgeschlagen.");
   }
 }

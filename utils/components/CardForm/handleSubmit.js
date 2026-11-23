@@ -28,11 +28,11 @@ export default async function handleSubmit(
     setIsEditMode(false);
     event.target.reset();
     if (isEditMode) {
-      toast.success("Activity updated successfully!");
+      toast.success("Aktivität gespeichert!");
     } else {
-      toast.success("Activity created successfully!");
+      toast.success("Aktivität erstellt!");
     }
   } else {
-    toast.error("Failed to save changes. Please try again.");
+    toast.error("Speichern fehlgeschlagen. Bitte versuch es noch einmal.");
   }
 }

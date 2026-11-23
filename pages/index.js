@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import styled from "styled-components";
-import Logo from "@/Icons/Logo";
-import Navigation from "@/components/Navigation";
-import { theme } from "@/styles";
-import SearchBar from "/components/SearchBar";
 import Image from "next/image";
+import styled from "styled-components";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import LoginPage from "./loginpage";
+import PageLayout from "@/components/Layout/PageLayout";
 import Filter from "@/components/Filter/Index";
 import ActivityCard from "@/components/ActivityCard";
-import { useSession, signOut } from "next-auth/react";
-import LoginPage from "./loginpage";
-import { FiLogOut } from "react-icons/fi";
-import CardForm from "@/components/CardForm";
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
-import useStore from "@/store";
 import NextActivity from "@/components/NextActivity";
-import { toast } from "react-toastify";
+import { Button } from "@/components/ui/Button";
+import { SearchField } from "@/components/ui/Form";
+import { Row, Stack } from "@/components/ui/Layout";
+import { StatusText } from "@/components/ui/Typography";
+import { isParticipant } from "@/utils/participation";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -31,12 +30,11 @@ export default function HomePage() {
   const [authorFilter, setAuthorFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [showFilterWindow, setShowFilterWindow] = useState(false);
-  const { isCreateMode, handleCreateClick, handleCloseClick } = useStore();
 
   useEffect(() => {
     const hasDisplayedToast = sessionStorage.getItem("hasDisplayedToast");
     if (session && !hasDisplayedToast) {
-      toast.success(`Signed in as ${session.user.email}`);
+      toast.success(`Angemeldet als ${session.user.email}`);
       sessionStorage.setItem("hasDisplayedToast", true);
     }
 
@@ -80,9 +78,10 @@ export default function HomePage() {
     appUsersIsLoading ||
     !appUsers
   )
-    return <div>loading...</div>;
+    return <StatusText>Lädt …</StatusText>;
 
-  if (!activities) return <div>failed to load</div>;
+  if (!activities)
+    return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
 
   if (!session) {
     return <LoginPage />;
@@ -145,173 +144,74 @@ export default function HomePage() {
     setShowFilterWindow(!showFilterWindow);
   };
 
+  const friendsActivities = displayedActivities.filter((activity) =>
+    appUserFriendsList?.find((user) => user === activity.authorId)
+  );
+
   return (
-    <>
-      <StyledHeadlineBox>
-        <StyledLogoWrapper>
-          <Logo />
-        </StyledLogoWrapper>
-        <StyledHeadline>MeetMate</StyledHeadline>
-      </StyledHeadlineBox>
-      <StyledSearchFilterBox>
-        <SearchBar onSearch={handleSearch} />
-        <StyledUpperButtonWrapper>
-          <StyledFilterButton onClick={toggleFilterWindow}>
-            <StyledHiOutlineAdjustmentsHorizontal
-              size={theme.button.xs}
-              color={theme.textColor}
+    <PageLayout>
+      <Stack $gap="s">
+        <div>
+          <Row $gap="m">
+            <SearchField
+              label="Aktivitäten suchen"
+              onChange={(event) => handleSearch(event.target.value)}
             />
-          </StyledFilterButton>
-          <StyledLogoutButton onClick={() => signOut()}>
-            <StyledFiLogOut size={theme.button.xs} color={theme.textColor} />
-          </StyledLogoutButton>
-        </StyledUpperButtonWrapper>
-      </StyledSearchFilterBox>
-      <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
-      <StyledWeather>
-        {weather !== null && `${weather}°C`}
-        {condition !== null && (
-          <Image
-            src={`https:${condition}`}
-            width={50}
-            height={50}
-            alt="Weather Icon"
-          />
-        )}
-        <StyledWeatherLocation>Berlin</StyledWeatherLocation>
-      </StyledWeather>
+            <Button
+              onClick={toggleFilterWindow}
+              $square
+              aria-label="Filter"
+              aria-expanded={showFilterWindow}
+            >
+              <HiOutlineAdjustmentsHorizontal />
+            </Button>
+          </Row>
+          <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
+        </div>
+
+        <StyledWeather>
+          {weather !== null && <span>{weather}°C</span>}
+          {condition !== null && (
+            <Image
+              src={`https:${condition}`}
+              width={48}
+              height={48}
+              alt="Aktuelles Wetter"
+            />
+          )}
+          <span>{city}</span>
+        </StyledWeather>
+      </Stack>
+
       <NextActivity activities={activities} />
-      <StyledCardSection>
-        {displayedActivities.length > 0 ? (
-          displayedActivities
-            .filter((activity) =>
-              appUserFriendsList?.find((user) => user === activity.authorId)
-            )
-            .map((activity) => (
-              <Link key={activity._id} href={`/${activity._id}`}>
-                <ActivityCard
-                  name={activity.name}
-                  date={activity.date}
-                  time={activity.time}
-                  joined={activity.joined}
-                  category={activity.category}
-                />
-              </Link>
-            ))
+
+      <Stack as="section" $gap="l" aria-label="Aktivitäten deiner Freund*innen">
+        {friendsActivities.length > 0 ? (
+          friendsActivities.map((activity) => (
+            <Link key={activity._id} href={`/${activity._id}`}>
+              <ActivityCard
+                name={activity.name}
+                date={activity.date}
+                time={activity.time}
+                joined={isParticipant(activity, session.user.id)}
+                category={activity.category}
+              />
+            </Link>
+          ))
         ) : (
-          <div>No results found</div>
+          <StatusText>Deine Freund*innen haben noch nichts geplant.</StatusText>
         )}
-      </StyledCardSection>
-      {!isCreateMode && <Navigation onCreateClick={handleCreateClick} />}
-      {isCreateMode && (
-        <Overlay>
-          <CardForm
-            pageTitle="Create your activity!"
-            onCancel={handleCloseClick}
-          />
-        </Overlay>
-      )}
-    </>
+      </Stack>
+    </PageLayout>
   );
 }
 
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-bottom: ${theme.spacing.large};
-  width: 100%;
-  height: 100%;
-  background-color: ${theme.primaryColor};
-  overflow-y: auto;
-`;
+const StyledWeather = styled(Row)`
+  font-family: var(--font-heading);
+  font-size: var(--font-size-s);
 
-const StyledHeadlineBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: ${theme.box.width};
-  margin: 0 auto;
-  gap: ${theme.spacing.xs};
-  padding-bottom: ${theme.spacing.medium};
-  padding-top: ${theme.spacing.large};
-`;
-
-const StyledLogoWrapper = styled.div`
-  width: 1.8rem;
-  height: 1.8rem;
-  margin: 0;
-  padding: 0.15rem;
-`;
-
-const StyledHeadline = styled.h1`
-  margin: 0;
-`;
-
-const StyledSearchFilterBox = styled.div`
-  display: flex;
-  position: relative;
-  gap: ${theme.spacing.small};
-  margin: 0 auto;
-  margin-bottom: 0;
-  width: 20rem;
-  height: 3rem;
-`;
-
-const StyledUpperButtonWrapper = styled.div`
-  display: flex;
-  right: 0;
-  top: 0;
-  bottom: ${theme.spacing.small};
-
-  gap: ${theme.spacing.small};
-`;
-
-const StyledLogoutButton = styled.button`
-  padding: ${theme.spacing.xs};
-  height: ${theme.button.small};
-  min-width: ${theme.button.small};
-  box-shadow: ${theme.box.shadowSmall};
-`;
-
-const StyledFilterButton = styled.button`
-  height: ${theme.button.small};
-  min-width: ${theme.button.small};
-  padding: 0.25rem;
-  box-shadow: ${theme.box.shadowSmall};
-`;
-
-const StyledFiLogOut = styled(FiLogOut)`
-  width: 100%;
-  height: 100%;
-`;
-
-const StyledHiOutlineAdjustmentsHorizontal = styled(
-  HiOutlineAdjustmentsHorizontal
-)`
-  width: 100%;
-  height: 100%;
-`;
-
-const StyledWeather = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  margin: 0 auto;
-  margin-top: -1.5rem;
-  margin-bottom: ${theme.spacing.small};
-  width: ${theme.box.width};
-  font-size: ${theme.fontSizes.medium};
-  font-family: ${theme.fonts.heading};
-`;
-
-const StyledWeatherLocation = styled.h2`
-  padding-left: ${theme.spacing.small};
-`;
-
-const StyledCardSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-bottom: 6rem;
+  img {
+    width: var(--icon-l);
+    height: var(--icon-l);
+  }
 `;

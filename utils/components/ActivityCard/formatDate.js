@@ -1,10 +1,10 @@
-// check date to display date, weekday, "today" or "tomorrow" //////////////////////////////
+// check date to display date, weekday, "Heute" or "Morgen" //////////////////////////////
 export default function formatDate(date) {
   const eventDate = new Date(date);
   const today = new Date();
 
   if (eventDate.toDateString() === today.toDateString()) {
-    return "Today";
+    return "Heute";
   }
 
   const tomorrow = new Date(today);
@@ -14,12 +14,12 @@ export default function formatDate(date) {
   oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
 
   if (eventDate < today) {
-    return eventDate.toLocaleDateString("en-US");
+    return eventDate.toLocaleDateString("de-DE");
   } else if (eventDate < tomorrow) {
-    return "Tomorrow";
+    return "Morgen";
   } else if (eventDate > oneWeekFromNow) {
-    return eventDate.toLocaleDateString("en-US");
+    return eventDate.toLocaleDateString("de-DE");
   } else {
-    return eventDate.toLocaleDateString("en-US", { weekday: "long" });
+    return eventDate.toLocaleDateString("de-DE", { weekday: "long" });
   }
 }

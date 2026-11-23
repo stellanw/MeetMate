@@ -10,7 +10,8 @@ const activitySchema = new Schema({
   date: { type: String, required: true },
   location: { type: String, required: true },
   description: { type: String, required: false },
-  joined: { type: Boolean, required: false },
+  // user ids of everyone who joined – the author is always the first one
+  participants: { type: [String], default: [] },
   authorId: { type: String, required: true },
 });
 

@@ -13,9 +13,9 @@ export default async function handleRemoveFromFriendRequests(
       },
     });
     if (response.ok) {
-      return toast.success(`User successfully deleted from friend Requests!`);
+      return toast.success(`Anfrage abgelehnt.`);
     } else {
-      toast.error(`User not found in friend Requests!`);
+      toast.error(`Anfrage nicht gefunden.`);
       console.error("Failed to delete user.");
     }
   } catch {
