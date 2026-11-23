@@ -136,3 +136,24 @@ export const CardCloseButton = styled(IconButton).attrs({
   top: 0;
   right: 0;
 `;
+
+/* Editable title in a TitleCard – looks exactly like the saved CardTitle */
+export const CardTitleInput = styled.input`
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-title);
+  font-weight: var(--font-weight-title);
+  font-size: var(--font-size-l);
+  text-align: center;
+  background-color: transparent;
+  border: none;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+`;

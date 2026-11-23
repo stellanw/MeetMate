@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardCloseButton,
+  CardTitleInput,
   JoinBadge,
   TitleCard,
 } from "@/components/ui/Card";
@@ -129,7 +130,7 @@ export default function CardForm({
         {/* same layout as the activity details – only the fields are editable */}
         <TitleCard $category={selectedCategory}>
           <JoinBadge together />
-          <StyledNameInput
+          <CardTitleInput
             ref={inputRef}
             type="text"
             id="name"
@@ -244,24 +245,6 @@ export default function CardForm({
     </Container>
   );
 }
-
-const StyledNameInput = styled.input`
-  width: 100%;
-  padding: 0;
-  font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
-  text-align: center;
-  background-color: transparent;
-  border: none;
-
-  &::placeholder {
-    color: var(--color-text-muted);
-  }
-
-  &:focus-visible {
-    outline: none;
-  }
-`;
 
 const StyledDayPicker = styled(DayPicker)`
   --rdp-cell-size: var(--field-height);

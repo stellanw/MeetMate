@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSWRConfig } from "swr";
-import styled from "styled-components";
 import { toast } from "react-toastify";
 import { FiSave, FiX } from "react-icons/fi";
 import { Button } from "@/components/ui/Button";
-import { Card, CardCloseButton, TitleCard } from "@/components/ui/Card";
+import {
+  Card,
+  CardCloseButton,
+  CardTitleInput,
+  TitleCard,
+} from "@/components/ui/Card";
 import { Container, Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 
@@ -43,7 +47,7 @@ export default function ProfileForm({ onClose }) {
     <Container>
       <Stack as="form" $gap="m" aria-label="Profil bearbeiten" onSubmit={handleSubmit}>
         <TitleCard>
-          <StyledNameInput
+          <CardTitleInput
             name="name"
             aria-label="Dein Name"
             defaultValue={session?.user?.name ?? ""}
@@ -73,19 +77,3 @@ export default function ProfileForm({ onClose }) {
     </Container>
   );
 }
-
-const StyledNameInput = styled.input`
-  width: 100%;
-  padding: 0;
-  font-family: var(--font-title);
-  font-weight: var(--font-weight-title);
-  font-size: var(--font-size-l);
-  text-align: center;
-  background-color: transparent;
-  border: none;
-
-  &:focus,
-  &:focus-visible {
-    outline: none;
-  }
-`;
