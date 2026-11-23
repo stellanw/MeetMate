@@ -10,7 +10,7 @@ export default function FriendCard({ name, children }) {
   return (
     <SplitCard as="li" $compact>
       <SplitCardMain>
-        <CardTitle as="h3" $size="m">
+        <CardTitle as="h3">
           {name}
         </CardTitle>
       </SplitCardMain>

@@ -80,14 +80,13 @@ export const SplitCardAside = styled.div`
     `}
 `;
 
-/* $size "m" for compact cards, default "l" */
+/* Wraps onto several lines if needed. $size: "s" (default) … "xl" */
 export const CardTitle = styled.h2`
   width: 100%;
-  overflow: hidden;
-  font-size: ${({ $size = "l" }) => `var(--font-size-${$size})`};
+  font-size: ${({ $size = "s" }) => `var(--font-size-${$size})`};
   text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 `;
 
 /*

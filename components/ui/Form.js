@@ -32,16 +32,12 @@ export const FormLabel = styled.label`
   font-family: var(--font-heading);
 `;
 
-/* Label/value grid used in forms and detail views – labels align right */
+/* Label/value grid used in forms and detail views */
 export const FormGrid = styled.div`
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   align-items: end;
   gap: var(--space-m);
-
-  > ${FormLabel} {
-    text-align: right;
-  }
 `;
 
 /* Read-only value in a FormGrid (detail view) */
