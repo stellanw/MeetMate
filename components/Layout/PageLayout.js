@@ -15,7 +15,7 @@ import { Container, Overlay } from "@/components/ui/Layout";
  *   title           page title (centered)
  *   back            sub pages: back arrow on the left (see PageTitleBar)
  *   close           opened views: close button on the right (see PageTitleBar)
- *   showNavigation  false hides the tab bar (login)
+ *   showNavigation  false hides the tab bar (login, opened views with close)
  */
 export default function PageLayout({
   title,

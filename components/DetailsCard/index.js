@@ -55,7 +55,7 @@ export default function DetailsCard() {
   ];
 
   return (
-    <PageLayout title="Bist du dabei?" close>
+    <PageLayout title="Bist du dabei?" close showNavigation={false}>
       <StyledNameCard $category={activity.category}>
         <JoinBadge together={joined} />
         <CardTitle as="h2" $size="l">
