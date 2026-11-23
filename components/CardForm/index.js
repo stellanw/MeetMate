@@ -1,23 +1,32 @@
-import { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
-import { theme } from "@/styles";
-import Logo from "@/Icons/Logo";
-import useSWR from "swr";
+import { useRef, useEffect } from "react";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import { FiSave } from "react-icons/fi";
+import { FiCalendar, FiSave } from "react-icons/fi";
 import { TbArrowBack } from "react-icons/tb";
-import "react-toastify/dist/ReactToastify.css";
-import useStore from "@/store";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { enGB } from "date-fns/locale";
 import { format } from "date-fns";
-import { FiCalendar } from "react-icons/fi";
-import TimePicker from "react-time-picker";
-import { FiClock } from "react-icons/fi";
+import useStore from "@/store";
+import PageHeader from "@/components/Layout/PageHeader";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import {
+  FormGrid,
+  FormLabel,
+  Select,
+  TextArea,
+  TextInput,
+} from "@/components/ui/Form";
+import { Container, Row, Stack } from "@/components/ui/Layout";
+import { PageTitle } from "@/components/ui/Typography";
 import handleSubmit from "@/utils/components/CardForm/handleSubmit";
 import getCurrentDate from "@/utils/components/CardForm/getCurrentDate";
+import getCurrentTime from "@/utils/components/CardForm/getCurrentTime";
+
+const CATEGORIES = ["Sports", "Culture", "Food", "Outdoor", "Others"];
 
 export default function CardForm({
   onCancel,
@@ -89,439 +98,229 @@ export default function CardForm({
   };
 
   return (
-    <StyledCardForm
-      onSubmit={(event) =>
-        handleSubmit(
-          event,
-          session,
-          endpoint,
-          method,
-          onCancel,
-          setIsEditMode,
-          isEditMode,
-          mutate
-        )
-      }
-    >
-      <StyledHeadlineBox>
-        <StyledLogoWrapper>
-          <Logo />
-        </StyledLogoWrapper>
-        <StyledAppName> MeetMate</StyledAppName>
-      </StyledHeadlineBox>
-      {pageTitle && <StyledPageTitle>{pageTitle}</StyledPageTitle>}
-      <StyledActivityNameBox category={selectedCategory}>
-        <label htmlFor="name" />
-        <StyledActivityNameInput
-          ref={inputRef}
-          type="text"
-          id="name"
-          name="name"
-          autoComplete="off"
-          minLength="3"
-          maxLength="18"
-          placeholder="My activity"
-          defaultValue={existingActivityData?.name || ""}
-          autoFocus
-          required
-        />
-      </StyledActivityNameBox>
-      <StyledInputBox>
-        <StyledUpperInputBox>
-          <StyledLabel htmlFor="author">Author: </StyledLabel>
-          <StyledInputField
+    <Container>
+      <Stack
+        as="form"
+        $gap="l"
+        onSubmit={(event) =>
+          handleSubmit(
+            event,
+            session,
+            endpoint,
+            method,
+            onCancel,
+            setIsEditMode,
+            isEditMode,
+            mutate
+          )
+        }
+      >
+        <PageHeader />
+        {pageTitle && <PageTitle>{pageTitle}</PageTitle>}
+
+        <StyledNameCard $category={selectedCategory}>
+          <StyledNameInput
+            ref={inputRef}
             type="text"
-            id="author"
-            name="author"
+            id="name"
+            name="name"
+            aria-label="Activity name"
             autoComplete="off"
-            defaultValue={existingActivityData?.author || ""}
+            minLength="3"
+            maxLength="18"
+            placeholder="My activity"
+            defaultValue={existingActivityData?.name || ""}
+            autoFocus
             required
           />
-          <StyledLabel htmlFor="date">Date: </StyledLabel>
-          <StyledDateWrapper>
-            <StyledInputField
-              type="text"
-              id="date"
-              name="date"
-              autoComplete="off"
-              value={
-                selectedDate
-                  ? format(selectedDate, "yyyy-MM-dd")
-                  : existingActivityData?.date
-                  ? existingActivityData.date
-                  : getCurrentDate()
-              }
-              readOnly
-              onClick={toggleDayPicker}
-              onChange={handleInputChange}
-              required
-            />{" "}
-            <StyledFiCalendar onClick={toggleDayPicker} />
-            {showDayPicker && (
-              <StyledDayPicker
-                onDayClick={handleDayClick}
-                selected={selectedDate}
-                modifiers={{ disabled: { before: new Date() } }}
-                locale={enGB}
-                format="yyyy-MM-dd"
-                formatDate={(date) =>
-                  format(date, "yyyy-MM-dd", { locale: enGB })
-                }
+        </StyledNameCard>
+
+        <Card $padded>
+          <Stack $gap="l">
+            <FormGrid>
+              <FormLabel htmlFor="author">Author:</FormLabel>
+              <TextInput
+                type="text"
+                id="author"
+                name="author"
+                autoComplete="off"
+                defaultValue={existingActivityData?.author || ""}
+                required
               />
-            )}
-          </StyledDateWrapper>
-          <StyledLabel htmlFor="time">Time: </StyledLabel>
-          <StyledInputField
-            type="time"
-            id="time"
-            name="time"
-            autoComplete="off"
-            defaultValue={selectedTime || existingActivityData?.location || ""}
-            required
-          />
-          {/* <StyledDateWrapper>
-            <StyledTimePicker
-              id="time"
-              clearIcon={null}
-              value={selectedTime || existingActivityData?.time}
-              onChange={setSelectedTime}
-              disableClock
-              disabled={false}
-            />
-            <StyledFiClock />
-          </StyledDateWrapper> */}
-          <StyledLabel htmlFor="location">Location: </StyledLabel>
-          <StyledInputField
-            type="text"
-            id="location"
-            name="location"
-            autoComplete="off"
-            defaultValue={existingActivityData?.location || ""}
-            required
-          />
-          <StyledLabel htmlFor="category">Category: </StyledLabel>
-          <StyledCategoryInput
-            type="text"
-            id="category"
-            name="category"
-            defaultValue={existingActivityData?.category || ""}
-            onChange={handleCategoryChange}
-            required
-          >
-            <option id="choose" name="chosoe" value="">
-              --choose--
-            </option>
-            <option id="sports" name="sports" value="Sports">
-              Sports
-            </option>
-            <option id="culture" name="culture" value="Culture">
-              Culture
-            </option>
-            <option id="food" name="food" value="Food">
-              Food
-            </option>
-            <option id="outdoor" name="outdoor" value="Outdoor">
-              Outdoor
-            </option>
-            <option id="others" name="others" value="Others">
-              Others
-            </option>
-          </StyledCategoryInput>
-        </StyledUpperInputBox>
-        <StyledDescriptionBox>
-          <label htmlFor="description">Description: </label>
-          <StyledTextArea
-            onChange={handleChange}
-            autoComplete="off"
-            type="text"
-            id="description"
-            name="description"
-            defaultValue={existingActivityData?.description || ""}
-            placeholder={"Add more details..."}
-          />
-        </StyledDescriptionBox>
-        <StyledButtonBox>
-          <StyledButton type="button" onClick={onCancel}>
-            <TbArrowBack size={theme.button.xs} color={theme.textColor} />
-          </StyledButton>
-          <StyledButton type="submit">
-            <FiSave size={theme.button.xs} color={theme.textColor} />
-          </StyledButton>
-        </StyledButtonBox>
-      </StyledInputBox>
-    </StyledCardForm>
+
+              <FormLabel htmlFor="date">Date:</FormLabel>
+              <StyledDateField>
+                <TextInput
+                  type="text"
+                  id="date"
+                  name="date"
+                  autoComplete="off"
+                  value={
+                    selectedDate
+                      ? format(selectedDate, "yyyy-MM-dd")
+                      : existingActivityData?.date
+                      ? existingActivityData.date
+                      : getCurrentDate()
+                  }
+                  readOnly
+                  onClick={toggleDayPicker}
+                  onChange={handleInputChange}
+                  required
+                />
+                <StyledIconToggle
+                  type="button"
+                  onClick={toggleDayPicker}
+                  aria-label="Choose date"
+                  aria-expanded={showDayPicker}
+                >
+                  <FiCalendar />
+                </StyledIconToggle>
+                {showDayPicker && (
+                  <StyledDayPicker
+                    onDayClick={handleDayClick}
+                    selected={selectedDate}
+                    modifiers={{ disabled: { before: new Date() } }}
+                    locale={enGB}
+                  />
+                )}
+              </StyledDateField>
+
+              <FormLabel htmlFor="time">Time:</FormLabel>
+              <TextInput
+                type="time"
+                id="time"
+                name="time"
+                autoComplete="off"
+                defaultValue={existingActivityData?.time || selectedTime}
+                required
+              />
+
+              <FormLabel htmlFor="location">Location:</FormLabel>
+              <TextInput
+                type="text"
+                id="location"
+                name="location"
+                autoComplete="off"
+                defaultValue={existingActivityData?.location || ""}
+                required
+              />
+
+              <FormLabel htmlFor="category">Category:</FormLabel>
+              <Select
+                id="category"
+                name="category"
+                defaultValue={existingActivityData?.category || ""}
+                onChange={handleCategoryChange}
+                required
+              >
+                <option value="">Choose…</option>
+                {CATEGORIES.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Select>
+            </FormGrid>
+
+            <Stack $gap="s">
+              <FormLabel htmlFor="description" as="label">
+                Description:
+              </FormLabel>
+              <TextArea
+                ref={textareaRef}
+                onChange={handleChange}
+                autoComplete="off"
+                id="description"
+                name="description"
+                defaultValue={existingActivityData?.description || ""}
+                placeholder="Add more details..."
+              />
+            </Stack>
+          </Stack>
+        </Card>
+
+        <Row $justify="center" $gap="m">
+          <Button onClick={onCancel} $square aria-label="Cancel">
+            <TbArrowBack />
+          </Button>
+          <Button type="submit" $square aria-label="Save activity">
+            <FiSave />
+          </Button>
+        </Row>
+      </Stack>
+    </Container>
   );
 }
 
-const getCategoryColor = (category, theme) => {
-  switch (category) {
-    case "Sports":
-      return theme.secondaryColors.sports;
-    case "Culture":
-      return theme.secondaryColors.culture;
-    case "Food":
-      return theme.secondaryColors.food;
-    case "Outdoor":
-      return theme.secondaryColors.outdoor;
-    default:
-      return theme.secondaryColors.default;
-  }
-};
-
-const StyledTimePicker = styled(TimePicker)`
+const StyledNameCard = styled(Card)`
   display: flex;
-  position: absolute;
-  justify-content: start;
   align-items: center;
-  font-family: ${theme.fonts.heading};
-  font-size: ${theme.fontSizes.small};
-  width: 8rem;
-  height: 1.6rem;
-  background-color: ${theme.primaryColor};
-  border-bottom: ${theme.borderWidth.thin} solid rgba(0, 0, 0, 0.3);
+  min-height: var(--card-height);
+  padding-inline: var(--space-m);
+`;
 
-  .react-time-picker__inputGroup__input {
-    width: ${theme.button.medium} !important;
-    height: 1.4rem;
-    padding-top: 0;
-    bottom: -0.1rem;
-    background-color: rgba(239, 232, 216, 0);
-    font-family: ${theme.fonts.heading};
-    font-size: ${theme.fontSizes.small};
+const StyledNameInput = styled.input`
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  text-align: center;
+  background-color: transparent;
+  border: none;
+
+  &::placeholder {
+    color: var(--color-text-muted);
   }
 
-  .react-time-picker__inputGroup__divider {
-    font-size: larger;
+  &:focus-visible {
+    outline: none;
   }
 `;
 
-const StyledFiClock = styled(FiClock)`
-  display: flex;
-  position: absolute;
-  width: 1.2rem;
-  height: auto;
-  margin: auto;
-  bottom: -0.7rem;
-  padding: 0.1rem;
-  padding-bottom: 0.6rem;
-  right: 0;
-`;
-
-const StyledDateWrapper = styled.div`
-  display: flex;
+const StyledDateField = styled.div`
   position: relative;
+  display: flex;
+  align-items: end;
 `;
 
-const StyledFiCalendar = styled(FiCalendar)`
-  display: flex;
+const StyledIconToggle = styled.button`
   position: absolute;
   right: 0;
-  &:hover {
-    stroke-width: 2.5;
+  bottom: var(--space-xs);
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+
+  svg {
+    width: var(--icon-m);
+    height: var(--icon-m);
   }
 `;
 
 const StyledDayPicker = styled(DayPicker)`
-  display: flex;
+  --rdp-cell-size: var(--control-m);
+  --rdp-accent-color: var(--color-confirm);
+  --rdp-background-color: var(--color-confirm-soft);
+
   position: absolute;
-  top: 0.15rem;
-  right: -1.2rem;
-  background-color: ${theme.primaryColor};
-  color: ${theme.textColor};
-  border: solid;
-  border-width: ${theme.borderWidth.thin};
-  border-radius: ${theme.borderRadius.small};
-  box-shadow: ${theme.box.shadowSmall};
-  padding: ${theme.spacing.small};
-  width: ${theme.button.xl};
-  z-index: 10;
+  top: calc(100% + var(--space-s));
+  right: 0;
+  z-index: var(--z-popover);
+  margin: 0;
+  padding: var(--space-s);
+  font-family: var(--font-heading);
+  background-color: var(--color-bg);
+  border: var(--border-medium) solid var(--color-text);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-m);
 
   .rdp-caption_label {
-    font-size: ${theme.fontSizes.small};
+    font-size: var(--font-size-s);
   }
 
-  .rdp-nav_button {
-    width: 0.1rem;
-    height: 0.1rem;
-    padding: 0.06rem;
-    border-radius: ${theme.borderRadius.small};
-    box-shadow: ${theme.box.shadowSmall};
-    background-color: none;
+  .rdp-day_selected,
+  .rdp-day_selected:hover {
+    color: var(--color-text);
   }
-
-  .rdp-cell {
-    width: auto;
-    height: auto;
-    padding: 0.06rem;
-  }
-
-  .rdp-day_selected {
-    background-color: ${theme.confirmColor};
-    color: ${theme.primaryColor};
-  }
-
-  .rdp-button_reset {
-    border-radius: ${theme.borderRadius.small};
-    box-shadow: none;
-    width: auto;
-    height: auto;
-  }
-
-  .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-    background-color: rgba(180, 201, 171, 0.5);
-  }
-`;
-
-const StyledHeadlineBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: ${theme.spacing.xs};
-
-  width: ${theme.box.width};
-`;
-
-const StyledLogoWrapper = styled.div`
-  width: ${theme.button.xs};
-  height: ${theme.button.xs};
-`;
-
-const StyledAppName = styled.h1`
-  font-size: ${theme.fontSizes.small};
-  margin: 0;
-  padding-top: 0.3rem;
-`;
-
-const StyledPageTitle = styled.h1`
-  font-size: ${theme.fontSizes.ml};
-  margin: ${theme.spacing.small};
-`;
-
-const StyledCardForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  margin-top: ${theme.spacing.small};
-  width: ${theme.box.width};
-  justify-content: space-evenly;
-`;
-
-const StyledActivityNameBox = styled.div`
-  display: flex;
-  border-style: solid;
-  border-radius: ${theme.borderRadius.medium};
-  border-width: ${theme.borderWidth.medium};
-  box-shadow: ${theme.box.shadow};
-  width: ${theme.box.width};
-  height: ${theme.box.height};
-  background-color: ${({ category }) => getCategoryColor(category, theme)};
-`;
-
-const StyledActivityNameInput = styled.input`
-  display: inline-block;
-  margin: auto;
-  width: 95%;
-  height: 90%;
-  background-color: transparent;
-  border: none;
-  color: ${theme.textColor};
-  font-family: ${theme.fonts.heading};
-  font-size: ${theme.fontSizes.large};
-  text-align: center;
-  padding-top: ${theme.spacing.medium};
-  padding-bottom: ${theme.spacing.medium};
-  &::placeholder {
-    opacity: 0.9;
-    border-bottom: ${theme.borderWidth.thin} solid rgba(0, 0, 0, 0.3);
-  }
-`;
-
-const StyledButton = styled.button`
-  height: ${theme.button.medium};
-  width: ${theme.button.medium};
-`;
-
-const StyledInputBox = styled.div`
-  margin: auto;
-  margin-top: ${theme.spacing.medium};
-  padding: ${theme.spacing.large};
-  padding-bottom: ${theme.spacing.medium};
-  border-style: solid;
-  border-radius: ${theme.borderRadius.medium};
-  border-width: ${theme.borderWidth.medium};
-  box-shadow: ${theme.box.shadow};
-  width: ${theme.box.width};
-  font-family: ${theme.fonts.heading};
-  font-size: ${theme.fontSizes.small};
-`;
-
-const StyledUpperInputBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: ${theme.spacing.medium};
-`;
-
-const StyledLabel = styled.label`
-  display: flex;
-  justify-content: end;
-  width: 5.5rem;
-`;
-
-const StyledInputField = styled.input`
-  display: flex;
-  justify-content: start;
-  font-family: ${theme.fonts.heading};
-  font-size: ${theme.fontSizes.small};
-  width: 8rem;
-  background-color: ${theme.primaryColor};
-  border: none;
-  border-bottom: ${theme.borderWidth.thin} solid rgba(0, 0, 0, 0.3);
-`;
-
-const StyledCategoryInput = styled.select`
-  width: 8rem;
-  font-family: ${theme.fonts.heading};
-  font-size: ${theme.fontSizes.small};
-  text-align: center;
-  background-color: ${theme.primaryColor};
-  border: none;
-  border: ${theme.borderWidth.thin} solid ${theme.textColor};
-  border-radius: ${theme.borderRadius.small};
-  border-width: ${theme.borderWidth.medium};
-  box-shadow: ${theme.box.shadowSmall};
-`;
-
-const StyledDescriptionBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: ${theme.spacing.medium};
-  gap: ${theme.spacing.small};
-`;
-
-const StyledTextArea = styled.textarea`
-  resize: none;
-  overflow: hidden;
-  height: auto;
-  min-height: ${theme.box.height};
-  font-family: ${theme.fonts.text};
-  font-size: ${theme.fontSizes.small};
-  padding: ${theme.spacing.small};
-  border: ${theme.borderWidth.thin} solid ${theme.textColor};
-  border-radius: ${theme.borderRadius.small};
-  border-width: ${theme.borderWidth.medium};
-  box-shadow: ${theme.box.shadowSmall};
-  background-color: ${theme.primaryColor};
-  &::placeholder {
-    font-family: ${theme.fonts.text};
-    font-size: ${theme.fontSizes.small};
-    opacity: 0.5;
-  }
-`;
-const StyledButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: ${theme.spacing.medium};
-  gap: 1rem;
 `;

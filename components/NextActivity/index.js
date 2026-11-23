@@ -1,7 +1,7 @@
-import ActivityCard from "../ActivityCard";
-import { theme } from "@/styles";
-import styled from "styled-components";
 import Link from "next/link";
+import ActivityCard from "../ActivityCard";
+import { Divider, Stack } from "@/components/ui/Layout";
+import { SectionTitle, StatusText } from "@/components/ui/Typography";
 
 export default function NextActivity({ activities }) {
   const joinedFutureActivities = activities.filter((activity) => {
@@ -16,19 +16,13 @@ export default function NextActivity({ activities }) {
     return dateA - dateB;
   });
 
-  if (joinedFutureActivities.length === 0) {
-    return (
-      <div>No upcomming activity found, you should join your friends! </div>
-    );
-  }
-
   const nextActivity = joinedFutureActivities[0];
 
   return (
-    <>
-      <StyledCardSection>
-        <StyledSecondary>Your next Activity:</StyledSecondary>
-        <Link key={nextActivity._id} href={`/${nextActivity._id}`}>
+    <Stack as="section" $gap="l">
+      <SectionTitle>Your next activity</SectionTitle>
+      {nextActivity ? (
+        <Link href={`/${nextActivity._id}`}>
           <ActivityCard
             name={nextActivity.name}
             date={nextActivity.date}
@@ -37,34 +31,12 @@ export default function NextActivity({ activities }) {
             category={nextActivity.category}
           />
         </Link>
-      </StyledCardSection>
-      <StyledLine />
-    </>
+      ) : (
+        <StatusText>
+          No upcoming activity yet – join your friends!
+        </StatusText>
+      )}
+      <Divider />
+    </Stack>
   );
 }
-
-const StyledCardSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-bottom: 1.2rem;
-`;
-
-const StyledLine = styled.div`
-  position: relative;
-  width: ${theme.line.width};
-  height: 1px;
-  background-color: ${theme.textColor};
-  margin-top: -10px;
-  left: 50%;
-  transform: translate(-50%);
-  margin-bottom: 1.2rem;
-`;
-
-const StyledSecondary = styled.div`
-  font-size: ${theme.fontSizes.small};
-  font-family: ${theme.fonts.heading};
-  margin-bottom: 1.2rem;
-  width: ${theme.box.width};
-`;

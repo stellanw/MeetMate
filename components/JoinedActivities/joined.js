@@ -1,90 +1,40 @@
-import ActivityCard from "@/components/ActivityCard";
-import useSWR from "swr";
 import Link from "next/link";
+import useSWR from "swr";
+import ActivityCard from "@/components/ActivityCard";
 import useAuthentication from "../../pages/api/auth/useAuthentication";
-import Navigation from "@/components/Navigation";
-import styled from "styled-components";
-import { theme } from "@/styles";
-import useStore from "@/store";
-import CardForm from "@/components/CardForm";
+import { Stack } from "@/components/ui/Layout";
+import { SectionTitle, StatusText } from "@/components/ui/Typography";
 
 export default function JoinedActivities() {
   const { data: activities, isLoading } = useSWR("/api/activities");
   const { authenticated, loading } = useAuthentication();
-  const { isCreateMode, handleCreateClick, handleCloseClick } = useStore();
 
-  if (isLoading) return <div>loading...</div>;
-  if (!activities) return <div>failed to load</div>;
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
+  if (isLoading || loading) return <StatusText>Loading...</StatusText>;
+  if (!activities) return <StatusText>Failed to load.</StatusText>;
   if (!authenticated) {
-    return <p>You must be signed in to view this page.</p>;
+    return <StatusText>You must be signed in to view this page.</StatusText>;
   }
+
+  const joinedActivities = activities.filter((activity) => activity.joined);
 
   return (
-    <div>
-      <StyledPageDetailTitle>My joined activities</StyledPageDetailTitle>
-      <StyledCardSection>
-        {activities.map((activity) =>
-          activity.joined ? (
-            <Link key={activity._id} href={`/${activity._id}`}>
-              <ActivityCard
-                name={activity.name}
-                date={activity.date}
-                time={activity.time}
-                joined={activity.joined}
-                category={activity.category}
-              />
-            </Link>
-          ) : null
-        )}
-        {!isCreateMode && <Navigation onCreateClick={handleCreateClick} />}
-        {isCreateMode && (
-          <Overlay>
-            <CardForm
-              pageTitle="Create your activity!"
-              onCancel={handleCloseClick}
+    <Stack as="section" $gap="l">
+      <SectionTitle>My joined activities</SectionTitle>
+      {joinedActivities.length > 0 ? (
+        joinedActivities.map((activity) => (
+          <Link key={activity._id} href={`/${activity._id}`}>
+            <ActivityCard
+              name={activity.name}
+              date={activity.date}
+              time={activity.time}
+              joined={activity.joined}
+              category={activity.category}
             />
-          </Overlay>
-        )}
-      </StyledCardSection>
-    </div>
+          </Link>
+        ))
+      ) : (
+        <StatusText>You haven&apos;t joined any activities yet.</StatusText>
+      )}
+    </Stack>
   );
 }
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-bottom: ${theme.spacing.large};
-  width: 100%;
-  height: 100%;
-  background-color: ${theme.primaryColor};
-  overflow-y: auto;
-`;
-
-const StyledPageDetailTitle = styled.h1`
-  font-size: ${theme.fontSizes.ml};
-  text-align: center;
-  margin: ${theme.spacing.medium};
-`;
-
-const StyledCardSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-bottom: 6rem;
-  @media screen and (min-width: 600px) {
-    margin-bottom: 6.5rem;
-  }
-  @media screen and (min-width: 900px) {
-    margin-bottom: 7rem;
-  }
-  @media screen and (min-width: 1200px) {
-    margin-bottom: 7.5rem;
-  }
-`;
