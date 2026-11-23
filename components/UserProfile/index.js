@@ -8,15 +8,22 @@ import {
   SplitCardMain,
 } from "@/components/ui/Card";
 
-export default function UserProfile() {
+/* Own profile card – clickable, opens the profile form */
+export default function UserProfile({ onEdit }) {
   const { data: session } = useSession();
 
   if (!session) return null;
 
   return (
-    <SplitCard>
+    <StyledProfileCard
+      as="button"
+      type="button"
+      onClick={onEdit}
+      $interactive
+      aria-label="Profil bearbeiten"
+    >
       <SplitCardMain>
-        <CardTitle>{session.user.name}</CardTitle>
+        <CardTitle as="span">{session.user.name}</CardTitle>
       </SplitCardMain>
       <SplitCardAside>
         <StyledAvatar
@@ -26,9 +33,15 @@ export default function UserProfile() {
           height={96}
         />
       </SplitCardAside>
-    </SplitCard>
+    </StyledProfileCard>
   );
 }
+
+const StyledProfileCard = styled(SplitCard)`
+  padding: 0;
+  text-align: inherit;
+  cursor: pointer;
+`;
 
 const StyledAvatar = styled(Image)`
   width: var(--avatar-size);

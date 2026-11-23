@@ -10,7 +10,7 @@ export default function LoginPage() {
   return (
     <PageLayout showNavigation={false}>
       <Card $padded>
-        <Stack $gap="l">
+        <Stack $gap="m">
           <SectionTitle as="h1">Triff dich mit deinen Freund*innen</SectionTitle>
           <p>Melde dich mit deinem GitHub-Account an, um loszulegen.</p>
           <Button onClick={() => signIn("github")} $wide>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
@@ -9,13 +8,12 @@ import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import LoginPage from "./loginpage";
 import PageLayout from "@/components/Layout/PageLayout";
 import Filter from "@/components/Filter/Index";
-import ActivityCard from "@/components/ActivityCard";
+import ActivityList from "@/components/ActivityList";
 import NextActivity from "@/components/NextActivity";
 import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
 import { Row, Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
-import { isParticipant } from "@/utils/participation";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -151,8 +149,20 @@ export default function HomePage() {
   return (
     <PageLayout>
       <Stack $gap="s">
+        <StyledWeather>
+          {weather !== null && <span>{weather}°C</span>}
+          {condition !== null && (
+            <Image
+              src={`https:${condition}`}
+              width={48}
+              height={48}
+              alt="Aktuelles Wetter"
+            />
+          )}
+          <span>{city}</span>
+        </StyledWeather>
         <div>
-          <Row $gap="m">
+          <Row>
             <SearchField
               label="Aktivitäten suchen"
               onChange={(event) => handleSearch(event.target.value)}
@@ -168,40 +178,15 @@ export default function HomePage() {
           </Row>
           <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
         </div>
-
-        <StyledWeather>
-          {weather !== null && <span>{weather}°C</span>}
-          {condition !== null && (
-            <Image
-              src={`https:${condition}`}
-              width={48}
-              height={48}
-              alt="Aktuelles Wetter"
-            />
-          )}
-          <span>{city}</span>
-        </StyledWeather>
       </Stack>
 
       <NextActivity activities={activities} />
 
-      <Stack as="section" $gap="l" aria-label="Aktivitäten deiner Freund*innen">
-        {friendsActivities.length > 0 ? (
-          friendsActivities.map((activity) => (
-            <Link key={activity._id} href={`/${activity._id}`}>
-              <ActivityCard
-                name={activity.name}
-                date={activity.date}
-                time={activity.time}
-                joined={isParticipant(activity, session.user.id)}
-                category={activity.category}
-              />
-            </Link>
-          ))
-        ) : (
-          <StatusText>Deine Freund*innen haben noch nichts geplant.</StatusText>
-        )}
-      </Stack>
+      <ActivityList
+        activities={friendsActivities}
+        emptyText="Deine Freund*innen haben noch nichts geplant."
+        label="Aktivitäten deiner Freund*innen"
+      />
     </PageLayout>
   );
 }

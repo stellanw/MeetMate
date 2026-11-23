@@ -21,7 +21,7 @@ const nextConfig = {
     return [
       // old English routes; friend list was merged into the profile page
       { source: "/profilepage", destination: "/profil", permanent: true },
-      { source: "/friendlist", destination: "/profil", permanent: true },
+      { source: "/friendlist", destination: "/mates", permanent: true },
       { source: "/calendar", destination: "/kalender", permanent: true },
     ];
   },

@@ -8,11 +8,11 @@ import FriendCard from "@/components/FriendCard";
 import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
 import { Row, Stack } from "@/components/ui/Layout";
-import { SectionTitle, StatusText } from "@/components/ui/Typography";
+import { StatusText } from "@/components/ui/Typography";
 import handleDeleteClick from "@/utils/pages/friendlist/handleDeleteClick";
 import handleSendFriendRequest from "@/utils/pages/friendlist/handleSendFriendRequest";
 
-/* "Meine Mates" section on the profile page: search, requests, friend list */
+/* Content of the "Meine Mates" page: search, requests, friend list */
 const fuseOptions = {
   // isCaseSensitive: false,
   // includeScore: false,
@@ -83,11 +83,9 @@ export default function Mates() {
   );
 
   return (
-    <Stack as="section" $gap="l">
-      <SectionTitle>Meine Mates</SectionTitle>
-
+    <Stack as="section" $gap="m">
       <div>
-        <Row $gap="m">
+        <Row>
           <SearchField
             label="Mates suchen"
             onChange={handleSearch}
@@ -118,7 +116,7 @@ export default function Mates() {
 
       {isSearching &&
         (mates.length > 0 ? (
-          <Stack as="ul" $gap="l" aria-label="Suchergebnisse">
+          <Stack as="ul" $gap="m" aria-label="Suchergebnisse">
             {mates.map((mate) => (
               <FriendCard key={mate._id} name={mate.name}>
                 {isFriend(mate._id) ? (
@@ -149,7 +147,7 @@ export default function Mates() {
 
       {!isSearching &&
         (friends.length > 0 ? (
-          <Stack as="ul" $gap="l">
+          <Stack as="ul" $gap="m">
             {friends.map((user) => (
               <FriendCard key={user._id} name={user.name}>
                 <Button

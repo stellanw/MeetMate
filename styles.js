@@ -7,7 +7,8 @@ import { createGlobalStyle, css } from "styled-components";
  * Components only use `var(--token)` – no raw px/rem/hex values.
  *
  * Scales:
- *   spacing   xs · s · m · l · xl · xxl   (4px grid)
+ *   spacing   xs · s · m · ml · l · xl · xxl   (4px grid)
+ *             vertical rhythm between elements is m everywhere
  *   font-size xs · s · m · l · xl
  *   button    one height for every button (40px)
  *   field     one height for inputs and picker options
@@ -56,8 +57,8 @@ const tokens = css`
     /* Typography */
     --font-heading: ${({ $fontHeading }) => $fontHeading}, serif;
     --font-text: ${({ $fontText }) => $fontText}, serif;
-    --font-brand: ${({ $fontBrand }) => $fontBrand}, sans-serif; /* wordmark only */
-    --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* all headings */
+    --font-title: ${({ $fontTitle }) => $fontTitle}, sans-serif; /* headings, labels, wordmark */
+    --font-weight-brand: 800;
     --font-weight-title: 700;
     --font-weight-label: 500;
 
@@ -74,6 +75,7 @@ const tokens = css`
     --space-xs: 0.25rem;
     --space-s: 0.5rem;
     --space-m: 1rem;
+    --space-ml: 1.25rem;
     --space-l: 1.5rem;
     --space-xl: 2rem;
     --space-xxl: 3rem;
@@ -97,6 +99,8 @@ const tokens = css`
     --icon-l: 1.5rem;
     --icon-xl: 2rem;
     --avatar-size: var(--button-height);
+    --logo-size: 2rem;
+    --logo-gap: 0.375rem; /* off the 4px grid on purpose: logo + wordmark read as one */
     --badge-size: 2rem;
     --card-height-compact: 3.5rem;
     --calendar-tile-height: 3.5rem;

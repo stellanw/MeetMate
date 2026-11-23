@@ -4,8 +4,9 @@ import Face from "./Face";
 /*
  * MeetMate logo
  * -------------
- * The Face (XX + smile) in a frame with the same size, border, radius
- * and shadow as a large square button – it sits next to them in the header.
+ * The Face (XX + smile) on white, like the join badge – the brand mark.
+ * Same size, border and radius as a button, but deliberately no shadow:
+ * it is the brand, not a control (even though it links home).
  */
 export default function Logo() {
   return (
@@ -18,11 +19,10 @@ export default function Logo() {
 const StyledLogo = styled.span`
   display: inline-flex;
   flex-shrink: 0;
-  width: var(--button-height);
-  height: var(--button-height);
+  width: var(--logo-size);
+  height: var(--logo-size);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background-color: var(--color-highlight);
   border: var(--border-medium) solid currentColor;
   border-radius: var(--radius-m);
-  box-shadow: var(--shadow-m);
 `;

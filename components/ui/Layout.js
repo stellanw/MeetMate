@@ -17,6 +17,7 @@ const gaps = {
   xs: "var(--space-xs)",
   s: "var(--space-s)",
   m: "var(--space-m)",
+  ml: "var(--space-ml)",
   l: "var(--space-l)",
   xl: "var(--space-xl)",
 };
@@ -57,7 +58,7 @@ export const Overlay = styled.div`
   inset: 0;
   z-index: var(--z-overlay);
   overflow-y: auto;
-  padding-block: var(--space-l);
+  padding-block: var(--space-m);
   background-color: var(--color-bg);
 `;
 

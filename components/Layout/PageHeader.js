@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
@@ -6,14 +5,13 @@ import { useSession, signOut } from "next-auth/react";
 import { FiLogOut, FiUser, FiX } from "react-icons/fi";
 import Logo from "@/Icons/Logo";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { Row } from "@/components/ui/Layout";
 import { PageTitle } from "@/components/ui/Typography";
 
 /*
  * PageHeader – same on every page
  * --------------------------------
  * left   logo (links home) + page title; without title: app name
- * right  pages:        profile (+ sign out on the profile page only)
+ * right  pages:        profile link; on the profile page: sign out
  *        opened views: close (X) – pass `close` as href, function or true (= back)
  */
 export default function PageHeader({ title, close }) {
@@ -22,7 +20,7 @@ export default function PageHeader({ title, close }) {
 
   return (
     <StyledHeader>
-      <Row $gap="m">
+      <StyledBrand>
         <Link href="/" aria-label="MeetMate – Startseite">
           <Logo />
         </Link>
@@ -31,32 +29,22 @@ export default function PageHeader({ title, close }) {
         ) : (
           <StyledAppName>MEET MATE</StyledAppName>
         )}
-      </Row>
+      </StyledBrand>
 
       {close ? (
         <CloseButton close={close} router={router} />
       ) : (
-        session && (
-          <Row $gap="m">
-            <StyledProfileLink
-              href="/profil"
-              $square
-              aria-label="Ich & meine Mates"
-              aria-current={router.pathname === "/profil" ? "page" : undefined}
-            >
-              {session.user.image ? (
-                <Image src={session.user.image} alt="" width={80} height={80} />
-              ) : (
-                <FiUser />
-              )}
-            </StyledProfileLink>
-            {router.pathname === "/profil" && (
-              <Button onClick={() => signOut()} $square aria-label="Abmelden">
-                <FiLogOut />
-              </Button>
-            )}
-          </Row>
-        )
+        session &&
+        (router.pathname === "/profil" ? (
+          /* on the profile page itself: sign out instead of the profile link */
+          <Button onClick={() => signOut()} $square aria-label="Abmelden">
+            <FiLogOut />
+          </Button>
+        ) : (
+          <ButtonLink href="/profil" $square aria-label="Mein Profil">
+            <FiUser />
+          </ButtonLink>
+        ))
       )}
     </StyledHeader>
   );
@@ -91,20 +79,14 @@ const StyledHeader = styled.header`
 `;
 
 /* app name on the home page – same size as page titles */
-/* wordmark – always the brand font, whatever the headings use */
+/* wordmark – title font, a bit heavier than headings */
 const StyledAppName = styled(PageTitle)`
-  font-family: var(--font-brand);
-  font-weight: 400;
+  font-weight: var(--font-weight-brand);
   text-transform: none;
 `;
 
-/* Avatar fills the square button, frame stays the button border */
-const StyledProfileLink = styled(ButtonLink)`
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+const StyledBrand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--logo-gap);
 `;

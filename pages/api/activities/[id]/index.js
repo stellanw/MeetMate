@@ -27,7 +27,7 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     // author and participants never change through the edit form
-    const { participants, authorId, ...activityData } = request.body;
+    const { participants, author, authorId, ...activityData } = request.body;
     await Activity.findByIdAndUpdate(id, activityData);
     return response.status(200).json({ status: `Activity ${id} updated!` });
   }

@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import useSWR from "swr";
 import styled from "styled-components";
 import useAuthentication from "./api/auth/useAuthentication";
 import PageLayout from "@/components/Layout/PageLayout";
-import ActivityCard from "@/components/ActivityCard";
+import ActivityList from "@/components/ActivityList";
 import { Card } from "@/components/ui/Card";
-import { Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 import { categoryColor } from "@/utils/categories";
 import Face from "@/Icons/Face";
@@ -75,23 +73,11 @@ const CalendarPage = () => {
           locale="de-DE"
         />
       </StyledCalendarCard>
-      <Stack as="section" $gap="l" aria-label="Aktivitäten am gewählten Tag">
-        {selectedDateActivities.length > 0 ? (
-          selectedDateActivities.map((activity) => (
-            <Link key={activity._id} href={`/${activity._id}`}>
-              <ActivityCard
-                name={activity.name}
-                date={activity.date}
-                time={activity.time}
-                joined={isParticipant(activity, userId)}
-                category={activity.category}
-              />
-            </Link>
-          ))
-        ) : (
-          <StatusText>An diesem Tag ist nichts geplant.</StatusText>
-        )}
-      </Stack>
+      <ActivityList
+        activities={selectedDateActivities}
+        emptyText="An diesem Tag ist nichts geplant."
+        label="Aktivitäten am gewählten Tag"
+      />
     </PageLayout>
   );
 };

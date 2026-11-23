@@ -1,35 +1,50 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { FiCalendar, FiHome, FiPlus } from "react-icons/fi";
+import { FiCalendar, FiHome, FiList, FiPlus, FiUsers } from "react-icons/fi";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
 
 /*
- * Bottom tab bar – every button always does the same thing.
+ * Bottom tab bar – square icon tabs, "+" in the middle fills the free space,
+ * every tab always does the same.
  * The tab of the current page is shown pressed (aria-current).
  */
+const TABS = [
+  { href: "/", label: "Startseite", icon: <FiHome /> },
+  { href: "/aktivitaeten", label: "Meine Aktivitäten", icon: <FiList /> },
+  { create: true, label: "Neue Aktivität", icon: <FiPlus /> },
+  { href: "/mates", label: "Meine Mates", icon: <FiUsers /> },
+  { href: "/kalender", label: "Kalender", icon: <FiCalendar /> },
+];
+
 export default function Navigation({ onCreateClick }) {
   const { pathname } = useRouter();
-  const current = (path) => (pathname === path ? "page" : undefined);
 
   return (
     <StyledNavigation aria-label="Hauptnavigation">
       <StyledNavInner>
-        <ButtonLink href="/" $square aria-label="Startseite" aria-current={current("/")}>
-          <FiHome />
-        </ButtonLink>
-        <Button onClick={onCreateClick} $fill>
-          Neue Aktivität
-          <FiPlus />
-        </Button>
-        <ButtonLink
-          href="/kalender"
-          $square
-          aria-label="Kalender"
-          aria-current={current("/kalender")}
-        >
-          <FiCalendar />
-        </ButtonLink>
+        {TABS.map(({ href, create, label, icon }) =>
+          create ? (
+            <Button
+              key={label}
+              onClick={onCreateClick}
+              $fill
+              aria-label={label}
+            >
+              {icon}
+            </Button>
+          ) : (
+            <ButtonLink
+              key={label}
+              href={href}
+              $square
+              aria-label={label}
+              aria-current={pathname === href ? "page" : undefined}
+            >
+              {icon}
+            </ButtonLink>
+          )
+        )}
       </StyledNavInner>
     </StyledNavigation>
   );
@@ -44,7 +59,7 @@ const StyledNavigation = styled.nav`
 
 const StyledNavInner = styled(Container)`
   display: flex;
-  gap: var(--space-m);
+  gap: var(--space-s);
   padding-block: var(--space-m);
   border-top: var(--border-thin) solid var(--color-text);
 `;

@@ -19,8 +19,8 @@ export default function Face({ together = true, animated = true, className }) {
       $animated={animated}
       aria-hidden="true"
     >
-      <path className="eye eye--left" d="M361 819 L490 1032 M490 819 L361 1032" />
-      <path className="eye eye--right" d="M563 819 L692 1032 M692 819 L563 1032" />
+      <path className="eye eye--left" d="M374 840 L477 1011 M477 840 L374 1011" />
+      <path className="eye eye--right" d="M576 840 L679 1011 M679 840 L576 1011" />
       <path className="smile" d="M432 1090 Q528 1162 624 1090" pathLength="1" />
     </StyledFace>
   );

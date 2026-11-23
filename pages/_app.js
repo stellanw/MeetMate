@@ -1,9 +1,4 @@
-import {
-  Archivo,
-  Archivo_Black,
-  Averia_Serif_Libre,
-  Noto_Serif,
-} from "next/font/google";
+import { Archivo, Averia_Serif_Libre, Noto_Serif } from "next/font/google";
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
 import { StyleSheetManager } from "styled-components";
@@ -13,12 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const fontHeading = Averia_Serif_Libre({
   weight: ["400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const fontBrand = Archivo_Black({
-  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
@@ -46,7 +35,6 @@ export default function App({
       <GlobalStyle
         $fontHeading={fontHeading.style.fontFamily}
         $fontText={fontText.style.fontFamily}
-        $fontBrand={fontBrand.style.fontFamily}
         $fontTitle={fontTitle.style.fontFamily}
       />
       <SWRConfig value={{ fetcher }}>

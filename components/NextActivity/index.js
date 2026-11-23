@@ -24,7 +24,7 @@ export default function NextActivity({ activities }) {
   const nextActivity = joinedFutureActivities[0];
 
   return (
-    <Stack as="section" $gap="l">
+    <Stack as="section" $gap="m">
       <SectionTitle>Deine nächste Aktivität</SectionTitle>
       {nextActivity ? (
         <Link href={`/${nextActivity._id}`}>

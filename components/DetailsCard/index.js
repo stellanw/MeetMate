@@ -17,7 +17,7 @@ import {
 import Face from "@/Icons/Face";
 import { FormGrid, FormLabel, FormValue } from "@/components/ui/Form";
 import { Overlay, Row, Stack } from "@/components/ui/Layout";
-import { StatusText } from "@/components/ui/Typography";
+import { Paragraphs, StatusText } from "@/components/ui/Typography";
 import handleDelete from "@/utils/components/DetailsCard/handleDelete";
 import handleJoin from "@/utils/components/DetailsCard/handleJoin";
 import { categoryLabel } from "@/utils/categories";
@@ -73,7 +73,7 @@ export default function DetailsCard() {
       </TitleCard>
 
       <Card $padded>
-        <Stack $gap="l">
+        <Stack $gap="m">
           <FormGrid>
             {details.map(([label, value]) => (
               <DetailRow key={label} label={label} value={value} />
@@ -83,7 +83,7 @@ export default function DetailsCard() {
           {activity.description && (
             <Stack $gap="s">
               <FormLabel as="span">Beschreibung:</FormLabel>
-              <p>{activity.description}</p>
+              <Paragraphs text={activity.description} />
             </Stack>
           )}
 
