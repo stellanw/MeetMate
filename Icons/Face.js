@@ -6,15 +6,17 @@ import styled, { css } from "styled-components";
  * The MeetMate idea in one icon: an X is a person.
  *   together=false → one X, alone
  *   together=true  → XX with a smile connecting them: you and your friends
- * Switching between both states is animated (second X joins, smile draws).
+ * Switching between both states is animated (second X joins, smile draws);
+ * animated={false} switches instantly (e.g. icons inside buttons).
  * Strokes always use the border width, so it matches buttons and cards.
  */
-export default function Face({ together = true, className }) {
+export default function Face({ together = true, animated = true, className }) {
   return (
     <StyledFace
       viewBox="299 719 458 458"
       className={className}
       $together={together}
+      $animated={animated}
       aria-hidden="true"
     >
       <path className="eye eye--left" d="M361 819 L490 1032 M490 819 L361 1032" />
@@ -71,6 +73,14 @@ const StyledFace = styled.svg`
             stroke-dashoffset: 1;
           }
         `}
+
+  ${({ $animated }) =>
+    !$animated &&
+    css`
+      path {
+        transition: none;
+      }
+    `}
 
   @media (prefers-reduced-motion: reduce) {
     path {

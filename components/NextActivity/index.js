@@ -1,13 +1,18 @@
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { isParticipant } from "@/utils/participation";
 import ActivityCard from "../ActivityCard";
 import { Divider, Stack } from "@/components/ui/Layout";
 import { SectionTitle, StatusText } from "@/components/ui/Typography";
 
 export default function NextActivity({ activities }) {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
   const joinedFutureActivities = activities.filter((activity) => {
     const activityDateTime = new Date(`${activity.date}T${activity.time}`);
     const currentDateTime = new Date();
-    return activity.joined && activityDateTime > currentDateTime;
+    return isParticipant(activity, userId) && activityDateTime > currentDateTime;
   });
 
   joinedFutureActivities.sort((a, b) => {
@@ -27,7 +32,7 @@ export default function NextActivity({ activities }) {
             name={nextActivity.name}
             date={nextActivity.date}
             time={nextActivity.time}
-            joined={nextActivity.joined}
+            joined
             category={nextActivity.category}
           />
         </Link>

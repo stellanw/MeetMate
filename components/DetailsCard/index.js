@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
+import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 import useStore from "@/store";
@@ -16,60 +16,49 @@ import handleDelete from "@/utils/components/DetailsCard/handleDelete";
 import handleJoin from "@/utils/components/DetailsCard/handleJoin";
 import { categoryLabel } from "@/utils/categories";
 import formatLongDate from "@/utils/formatLongDate";
+import { isAuthor, isParticipant } from "@/utils/participation";
 
 export default function DetailsCard() {
   const router = useRouter();
   const { id } = router.query;
   const endpoint = `/api/activities/${id}`;
-  const { data: activities, isLoading, mutate, error } = useSWR(endpoint);
+  const {
+    data: activity,
+    isLoading,
+    mutate,
+    error,
+  } = useSWR(id ? endpoint : null);
+  const { mutate: mutateGlobal } = useSWRConfig();
+  const { data: session } = useSession();
   const { isEditMode, setIsEditMode, handleEditClick } = useStore();
-  const [joinState, setJoinState] = useState({
-    isJoined: false,
-    joinButtonText: "Join",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (id) {
-          const response = await fetch(endpoint);
-          if (!response.ok) {
-            console.error("Error fetching activity:", response.statusText);
-            return;
-          }
-          const activityData = await response.json();
-
-          setJoinState((prevState) => ({
-            ...prevState,
-            isJoined: activityData.joined,
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching activity:", error);
-      }
-    };
-
-    fetchData();
-  }, [id, endpoint]);
+  const userId = session?.user?.id;
 
   if (isLoading) return <StatusText>Lädt …</StatusText>;
-  if (!activities || error) {
+  if (!activity || error) {
     return <StatusText>Hoppla, da ist etwas schiefgelaufen …</StatusText>;
   }
 
+  const joined = isParticipant(activity, userId);
+  const ownActivity = isAuthor(activity, userId);
+
+  const toggleJoin = async () => {
+    await handleJoin(activity, userId, mutate);
+    mutateGlobal("/api/activities");
+  };
+
   const details = [
-    ["Von", activities.author],
-    ["Datum", formatLongDate(activities.date)],
-    ["Uhrzeit", activities.time],
-    ["Ort", activities.location],
-    ["Kategorie", categoryLabel(activities.category)],
+    ["Von", activity.author],
+    ["Datum", formatLongDate(activity.date)],
+    ["Uhrzeit", activity.time],
+    ["Ort", activity.location],
+    ["Kategorie", categoryLabel(activity.category)],
   ];
 
   return (
     <PageLayout title="Bist du dabei?" close>
-      <StyledNameCard $category={activities.category}>
-        <JoinBadge together={joinState.isJoined} />
-        <CardTitle as="h2">{activities.name}</CardTitle>
+      <StyledNameCard $category={activity.category}>
+        <JoinBadge together={joined} />
+        <CardTitle as="h2">{activity.name}</CardTitle>
       </StyledNameCard>
 
       <Card $padded>
@@ -80,39 +69,58 @@ export default function DetailsCard() {
             ))}
           </FormGrid>
 
-          {activities.description && (
+          {activity.description && (
             <Stack $gap="s">
               <FormLabel as="span">Beschreibung:</FormLabel>
-              <p>{activities.description}</p>
+              <p>{activity.description}</p>
             </Stack>
           )}
 
+          {/* own activity: edit · "Deine Aktivität" · delete – others: join/leave */}
           <Row $gap="m">
-            <Button onClick={handleEditClick} $square aria-label="Aktivität bearbeiten">
-              <FiEdit3 />
-            </Button>
-            <Button
-              $fill
-              $variant={joinState.isJoined ? "alert" : "confirm"}
-              onClick={() => handleJoin(setJoinState, joinState, endpoint, mutate)}
-            >
-              {/* icon shows the result: together (XX) or alone again (X) */}
-              <Face together={!joinState.isJoined} />
-              {joinState.isJoined ? "Nicht dabei" : "Bin dabei"}
-            </Button>
-            <Button
-              $square
-              aria-label="Aktivität löschen"
-              onClick={() => {
-                if (
-                  window.confirm("Möchtest du diese Aktivität wirklich löschen?")
-                ) {
-                  handleDelete(endpoint, router);
-                }
-              }}
-            >
-              <FiTrash2 />
-            </Button>
+            {ownActivity && (
+              <Button
+                onClick={handleEditClick}
+                $square
+                aria-label="Aktivität bearbeiten"
+              >
+                <FiEdit3 />
+              </Button>
+            )}
+            {ownActivity ? (
+              /* not clickable → same box as a button, but no shadow */
+              <StyledOwnActivity>
+                <Face together animated={false} />
+                Deine Aktivität
+              </StyledOwnActivity>
+            ) : (
+              <Button
+                $fill
+                $variant={joined ? "alert" : "confirm"}
+                onClick={toggleJoin}
+              >
+                {/* icon shows the result: together (XX) or alone again (X) */}
+                <Face together={!joined} animated={false} />
+                {joined ? "Nicht dabei" : "Bin dabei"}
+              </Button>
+            )}
+            {ownActivity && (
+              <Button
+                $square
+                aria-label="Aktivität löschen"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Möchtest du diese Aktivität wirklich löschen?"
+                    )
+                  ) {
+                    handleDelete(endpoint, router);
+                  }
+                }}
+              >
+                <FiTrash2 />
+              </Button>
+            )}
           </Row>
         </Stack>
       </Card>
@@ -121,7 +129,7 @@ export default function DetailsCard() {
         <Overlay>
           <CardForm
             onCancel={() => setIsEditMode(false)}
-            existingActivityData={activities}
+            existingActivityData={activity}
             pageTitle="Aktivität bearbeiten"
           />
         </Overlay>
@@ -144,4 +152,22 @@ const StyledNameCard = styled(Card)`
   align-items: center;
   min-height: var(--card-height);
   padding-inline: var(--space-m);
+`;
+
+const StyledOwnActivity = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-s);
+  height: var(--control-m);
+  font-family: var(--font-heading);
+  background-color: var(--color-confirm);
+  border: var(--border-medium) solid var(--color-text);
+  border-radius: var(--radius-m);
+
+  svg {
+    width: var(--icon-m);
+    height: var(--icon-m);
+  }
 `;

@@ -4,10 +4,12 @@ import ActivityCard from "@/components/ActivityCard";
 import useAuthentication from "../../pages/api/auth/useAuthentication";
 import { Stack } from "@/components/ui/Layout";
 import { SectionTitle, StatusText } from "@/components/ui/Typography";
+import { isParticipant } from "@/utils/participation";
 
 export default function JoinedActivities() {
   const { data: activities, isLoading } = useSWR("/api/activities");
-  const { authenticated, loading } = useAuthentication();
+  const { authenticated, loading, session } = useAuthentication();
+  const userId = session?.user?.id;
 
   if (isLoading || loading) return <StatusText>Lädt …</StatusText>;
   if (!activities) return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
@@ -15,7 +17,9 @@ export default function JoinedActivities() {
     return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
   }
 
-  const joinedActivities = activities.filter((activity) => activity.joined);
+  const joinedActivities = activities.filter((activity) =>
+    isParticipant(activity, userId)
+  );
 
   return (
     <Stack as="section" $gap="l">
@@ -27,7 +31,7 @@ export default function JoinedActivities() {
               name={activity.name}
               date={activity.date}
               time={activity.time}
-              joined={activity.joined}
+              joined
               category={activity.category}
             />
           </Link>

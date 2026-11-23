@@ -20,7 +20,7 @@ export default function PageHeader() {
     <StyledHeader>
       <StyledBrand href="/" aria-label="MeetMate – Startseite">
         <Logo />
-        <StyledAppName>MeetMate</StyledAppName>
+        <StyledAppName>MEET MATE</StyledAppName>
       </StyledBrand>
       {session && (
         <Row>
@@ -65,6 +65,7 @@ const StyledAppName = styled.span`
   font-family: var(--font-heading);
   font-size: var(--font-size-l);
   font-weight: 700;
+  text-transform: uppercase;
 `;
 
 /* Avatar fills the square button, frame stays the button border */

@@ -12,7 +12,11 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
       const activityData = request.body;
-      await Activity.create(activityData);
+      // whoever creates an activity is always part of it
+      await Activity.create({
+        ...activityData,
+        participants: [activityData.authorId],
+      });
 
       response.status(201).json({ status: "Activity created" });
     } catch (error) {

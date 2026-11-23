@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/Button";
 import { SearchField } from "@/components/ui/Form";
 import { Row, Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
+import { isParticipant } from "@/utils/participation";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -189,7 +190,7 @@ export default function HomePage() {
                 name={activity.name}
                 date={activity.date}
                 time={activity.time}
-                joined={activity.joined}
+                joined={isParticipant(activity, session.user.id)}
                 category={activity.category}
               />
             </Link>

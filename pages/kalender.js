@@ -11,6 +11,7 @@ import { Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 import { categoryColor } from "@/utils/categories";
 import Face from "@/Icons/Face";
+import { isParticipant } from "@/utils/participation";
 
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
@@ -18,7 +19,8 @@ const MAX_ENTRIES_PER_DAY = 3;
 
 const CalendarPage = () => {
   const { data: activities, isLoading } = useSWR("/api/activities");
-  const { authenticated, loading } = useAuthentication();
+  const { authenticated, loading, session } = useAuthentication();
+  const userId = session?.user?.id;
   const [selectedDateActivities, setSelectedDateActivities] = useState([]);
 
   const getActivitiesForDate = (date) =>
@@ -53,7 +55,7 @@ const CalendarPage = () => {
       <StyledEntries>
         {dayActivities.map((activity, index) => (
           <StyledEntry key={activity._id} $index={index} $category={activity.category}>
-            <Face together={activity.joined} />
+            <Face together={isParticipant(activity, userId)} />
           </StyledEntry>
         ))}
       </StyledEntries>
@@ -81,7 +83,7 @@ const CalendarPage = () => {
                 name={activity.name}
                 date={activity.date}
                 time={activity.time}
-                joined={activity.joined}
+                joined={isParticipant(activity, userId)}
                 category={activity.category}
               />
             </Link>
