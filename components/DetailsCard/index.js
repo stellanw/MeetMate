@@ -6,8 +6,14 @@ import { FiEdit3, FiTrash2, FiX } from "react-icons/fi";
 import useStore from "@/store";
 import CardForm from "../CardForm";
 import PageLayout from "@/components/Layout/PageLayout";
-import { Button, IconButton } from "@/components/ui/Button";
-import { Card, CardTitle, JoinBadge } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardCloseButton,
+  CardTitle,
+  JoinBadge,
+  TitleCard,
+} from "@/components/ui/Card";
 import Face from "@/Icons/Face";
 import { FormGrid, FormLabel, FormValue } from "@/components/ui/Form";
 import { Overlay, Row, Stack } from "@/components/ui/Layout";
@@ -56,15 +62,15 @@ export default function DetailsCard() {
 
   return (
     <PageLayout showHeader={false} showNavigation={false}>
-      <StyledNameCard $category={activity.category}>
+      <TitleCard $category={activity.category}>
         <JoinBadge together={joined} />
         <CardTitle as="h2" $size="l">
           {activity.name}
         </CardTitle>
-        <StyledClose onClick={() => router.back()} aria-label="Schließen">
+        <CardCloseButton onClick={() => router.back()}>
           <FiX />
-        </StyledClose>
-      </StyledNameCard>
+        </CardCloseButton>
+      </TitleCard>
 
       <Card $padded>
         <Stack $gap="l">
@@ -151,20 +157,6 @@ function DetailRow({ label, value }) {
     </>
   );
 }
-
-/* room on both sides so the title never runs under badge or close button */
-const StyledNameCard = styled(Card)`
-  display: flex;
-  align-items: center;
-  min-height: var(--card-height);
-  padding-inline: var(--button-height);
-`;
-
-const StyledClose = styled(IconButton)`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
 
 const StyledOwnActivity = styled.div`
   display: flex;

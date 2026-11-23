@@ -9,7 +9,8 @@ import styled, { css } from "styled-components";
  * Row        horizontal group with a token gap
  * Divider    thin full-width line
  * Overlay    full-screen layer (create/edit form)
- * Collapsible  animated open/close panel (filter, friend requests)
+ * Collapsible  animated open/close panel (filter, friend requests);
+ *             place it directly after its trigger, not inside a Stack gap
  */
 
 const gaps = {
@@ -71,9 +72,12 @@ const StyledCollapsibleClip = styled.div`
   overflow: ${({ $clip }) => ($clip ? "hidden" : "visible")};
 `;
 
-/* leaves room for the card shadow inside the clipped area */
+/*
+ * Top space only exists while open – so a closed panel adds no gap.
+ * Right/bottom space leaves room for the card shadow inside the clip.
+ */
 const StyledCollapsibleContent = styled.div`
-  padding: 0 var(--space-s) var(--space-s) 0;
+  padding: var(--space-m) var(--space-s) var(--space-s) 0;
 `;
 
 /* clips only while animating or closed, so popovers inside can overflow when open */

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { categoryColor } from "@/utils/categories";
 import Face from "@/Icons/Face";
+import { IconButton } from "./Button";
 
 /*
  * Card
@@ -95,7 +96,9 @@ export const CardTitle = styled.h2`
  */
 export function JoinBadge({ together = true }) {
   return (
-    <StyledJoinBadge aria-label={together ? "Du bist dabei" : "Du bist nicht dabei"}>
+    <StyledJoinBadge
+      aria-label={together ? "Du bist dabei" : "Du bist nicht dabei"}
+    >
       <Face together={together} />
     </StyledJoinBadge>
   );
@@ -111,4 +114,24 @@ const StyledJoinBadge = styled.span`
   background-color: var(--color-highlight);
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-s);
+`;
+
+/*
+ * TitleCard – colored card with the activity name (details, create, edit).
+ * Room on both sides so the title never runs under the badge or the close icon.
+ */
+export const TitleCard = styled(Card)`
+  display: flex;
+  align-items: center;
+  min-height: var(--card-height);
+  padding-inline: var(--button-height);
+`;
+
+/* Bare close icon in the top right corner of a card */
+export const CardCloseButton = styled(IconButton).attrs({
+  "aria-label": "Schließen",
+})`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;

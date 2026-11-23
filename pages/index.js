@@ -80,7 +80,8 @@ export default function HomePage() {
   )
     return <StatusText>Lädt …</StatusText>;
 
-  if (!activities) return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
+  if (!activities)
+    return <StatusText>Daten konnten nicht geladen werden.</StatusText>;
 
   if (!session) {
     return <LoginPage />;
@@ -149,36 +150,38 @@ export default function HomePage() {
 
   return (
     <PageLayout>
-      <Stack>
-        <Row $gap="m">
-          <SearchField
-            label="Aktivitäten suchen"
-            onChange={(event) => handleSearch(event.target.value)}
-          />
-          <Button
-            onClick={toggleFilterWindow}
-            $square
-            aria-label="Filter"
-            aria-expanded={showFilterWindow}
-          >
-            <HiOutlineAdjustmentsHorizontal />
-          </Button>
-        </Row>
-        <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
-      </Stack>
+      <Stack $gap="s">
+        <div>
+          <Row $gap="m">
+            <SearchField
+              label="Aktivitäten suchen"
+              onChange={(event) => handleSearch(event.target.value)}
+            />
+            <Button
+              onClick={toggleFilterWindow}
+              $square
+              aria-label="Filter"
+              aria-expanded={showFilterWindow}
+            >
+              <HiOutlineAdjustmentsHorizontal />
+            </Button>
+          </Row>
+          <Filter onSubmit={handleFilter} showFilterWindow={showFilterWindow} />
+        </div>
 
-      <StyledWeather>
-        {weather !== null && <span>{weather}°C</span>}
-        {condition !== null && (
-          <Image
-            src={`https:${condition}`}
-            width={48}
-            height={48}
-            alt="Aktuelles Wetter"
-          />
-        )}
-        <span>{city}</span>
-      </StyledWeather>
+        <StyledWeather>
+          {weather !== null && <span>{weather}°C</span>}
+          {condition !== null && (
+            <Image
+              src={`https:${condition}`}
+              width={48}
+              height={48}
+              alt="Aktuelles Wetter"
+            />
+          )}
+          <span>{city}</span>
+        </StyledWeather>
+      </Stack>
 
       <NextActivity activities={activities} />
 
@@ -208,7 +211,7 @@ const StyledWeather = styled(Row)`
   font-size: var(--font-size-s);
 
   img {
-    width: var(--icon-xl);
-    height: var(--icon-xl);
+    width: var(--icon-l);
+    height: var(--icon-l);
   }
 `;

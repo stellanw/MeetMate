@@ -13,7 +13,7 @@ import { PageTitle } from "@/components/ui/Typography";
  * PageHeader – same on every page
  * --------------------------------
  * left   logo (links home) + page title; without title: app name
- * right  pages:        profile · sign out
+ * right  pages:        profile (+ sign out on the profile page only)
  *        opened views: close (X) – pass `close` as href, function or true (= back)
  */
 export default function PageHeader({ title, close }) {
@@ -50,9 +50,11 @@ export default function PageHeader({ title, close }) {
                 <FiUser />
               )}
             </StyledProfileLink>
-            <Button onClick={() => signOut()} $square aria-label="Abmelden">
-              <FiLogOut />
-            </Button>
+            {router.pathname === "/profil" && (
+              <Button onClick={() => signOut()} $square aria-label="Abmelden">
+                <FiLogOut />
+              </Button>
+            )}
           </Row>
         )
       )}

@@ -3,15 +3,19 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import { FiCalendar, FiSave } from "react-icons/fi";
+import { FiCalendar, FiSave, FiX } from "react-icons/fi";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { de } from "date-fns/locale";
 import { format } from "date-fns";
 import useStore from "@/store";
-import PageHeader from "@/components/Layout/PageHeader";
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
+import {
+  Card,
+  CardCloseButton,
+  JoinBadge,
+  TitleCard,
+} from "@/components/ui/Card";
 import {
   FormGrid,
   FormLabel,
@@ -107,6 +111,7 @@ export default function CardForm({
       <Stack
         as="form"
         $gap="l"
+        aria-label={pageTitle}
         onSubmit={(event) =>
           handleSubmit(
             event,
@@ -120,9 +125,9 @@ export default function CardForm({
           )
         }
       >
-        <PageHeader title={pageTitle} close={onCancel} />
-
-        <StyledNameCard $category={selectedCategory}>
+        {/* same layout as the activity details – only the fields are editable */}
+        <TitleCard $category={selectedCategory}>
+          <JoinBadge together />
           <StyledNameInput
             ref={inputRef}
             type="text"
@@ -136,7 +141,10 @@ export default function CardForm({
             autoFocus
             required
           />
-        </StyledNameCard>
+          <CardCloseButton onClick={onCancel}>
+            <FiX />
+          </CardCloseButton>
+        </TitleCard>
 
         <Card $padded>
           <Stack $gap="l">
@@ -162,8 +170,8 @@ export default function CardForm({
                     selectedDate
                       ? format(selectedDate, "yyyy-MM-dd")
                       : existingActivityData?.date
-                      ? existingActivityData.date
-                      : getCurrentDate()
+                        ? existingActivityData.date
+                        : getCurrentDate()
                   }
                   readOnly
                   onClick={toggleDayPicker}
@@ -228,24 +236,17 @@ export default function CardForm({
                 placeholder="Was ist geplant? Was sollte man mitbringen?"
               />
             </Stack>
+
+            <Button type="submit" $wide>
+              Speichern
+              <FiSave />
+            </Button>
           </Stack>
         </Card>
-
-        <Button type="submit" $wide>
-          Speichern
-          <FiSave />
-        </Button>
       </Stack>
     </Container>
   );
 }
-
-const StyledNameCard = styled(Card)`
-  display: flex;
-  align-items: center;
-  min-height: var(--card-height);
-  padding-inline: var(--space-m);
-`;
 
 const StyledNameInput = styled.input`
   width: 100%;

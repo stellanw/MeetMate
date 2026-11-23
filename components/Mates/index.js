@@ -70,7 +70,9 @@ export default function Mates() {
 
   if (isLoading || loading) return <StatusText>Lädt …</StatusText>;
   if (!authenticated) {
-    return <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>;
+    return (
+      <StatusText>Bitte melde dich an, um diese Seite zu sehen.</StatusText>
+    );
   }
 
   const isFriend = (mateId) =>
@@ -84,7 +86,7 @@ export default function Mates() {
     <Stack as="section" $gap="l">
       <SectionTitle>Meine Mates</SectionTitle>
 
-      <Stack>
+      <div>
         <Row $gap="m">
           <SearchField
             label="Mates suchen"
@@ -112,7 +114,7 @@ export default function Mates() {
             userId={userId}
           />
         )}
-      </Stack>
+      </div>
 
       {isSearching &&
         (mates.length > 0 ? (
@@ -164,7 +166,9 @@ export default function Mates() {
             ))}
           </Stack>
         ) : (
-          <StatusText>Noch keine Mates – such oben nach deinen Freund*innen.</StatusText>
+          <StatusText>
+            Noch keine Mates – such oben nach deinen Freund*innen.
+          </StatusText>
         ))}
     </Stack>
   );
