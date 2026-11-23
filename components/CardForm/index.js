@@ -132,7 +132,6 @@ export default function CardForm({
             aria-label="Name der Aktivität"
             autoComplete="off"
             minLength="3"
-            maxLength="18"
             placeholder="Meine Aktivität"
             defaultValue={existingActivityData?.name || ""}
             autoFocus
