@@ -42,7 +42,7 @@ export const FormGrid = styled.div`
 
 /* Read-only value in a FormGrid (detail view) */
 export const FormValue = styled.span`
-  min-height: var(--control-s);
+  min-height: var(--field-height);
   display: flex;
   align-items: end;
   font-family: var(--font-heading);
@@ -52,7 +52,7 @@ export const FormValue = styled.span`
 
 export const TextInput = styled.input`
   width: 100%;
-  height: var(--control-s);
+  height: var(--field-height);
   padding: 0;
   font-family: var(--font-heading);
   background-color: transparent;
@@ -70,7 +70,7 @@ export const TextInput = styled.input`
 export const Select = styled.select`
   ${boxedStyles}
   width: 100%;
-  height: var(--control-s);
+  height: var(--field-height);
   padding: 0 var(--space-s);
   font-family: var(--font-heading);
 `;
@@ -94,7 +94,7 @@ const StyledSearchField = styled.label`
   flex: 1;
   align-items: center;
   gap: var(--space-s);
-  height: var(--control-m);
+  height: var(--field-height);
   padding: 0 var(--space-s);
   border-radius: var(--radius-m);
   cursor: text;

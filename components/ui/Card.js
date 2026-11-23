@@ -51,7 +51,7 @@ export const SplitCard = styled(Card)`
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--card-aside-width);
   min-height: ${({ $compact }) =>
-    $compact ? "var(--control-l)" : "var(--card-height)"};
+    $compact ? "var(--card-height-compact)" : "var(--card-height)"};
 `;
 
 export const SplitCardMain = styled.div`
@@ -105,8 +105,8 @@ const StyledJoinBadge = styled.span`
   position: absolute;
   top: calc(-1 * var(--space-m));
   left: var(--space-m);
-  width: var(--control-s);
-  height: var(--control-s);
+  width: var(--badge-size);
+  height: var(--badge-size);
   padding: var(--space-xs);
   background-color: var(--color-highlight);
   border: var(--border-medium) solid var(--color-text);

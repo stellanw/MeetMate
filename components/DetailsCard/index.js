@@ -83,6 +83,7 @@ export default function DetailsCard() {
             {ownActivity && (
               <Button
                 onClick={handleEditClick}
+                $size="l"
                 $square
                 aria-label="Aktivität bearbeiten"
               >
@@ -97,6 +98,7 @@ export default function DetailsCard() {
               </StyledOwnActivity>
             ) : (
               <Button
+                $size="l"
                 $fill
                 $variant={joined ? "alert" : "confirm"}
                 onClick={toggleJoin}
@@ -108,6 +110,7 @@ export default function DetailsCard() {
             )}
             {ownActivity && (
               <Button
+                $size="l"
                 $square
                 aria-label="Aktivität löschen"
                 onClick={() => {
@@ -162,7 +165,7 @@ const StyledOwnActivity = styled.div`
   align-items: center;
   justify-content: center;
   gap: var(--space-s);
-  height: var(--control-m);
+  height: var(--button-l);
   font-family: var(--font-heading);
   background-color: var(--color-confirm);
   border: var(--border-medium) solid var(--color-text);

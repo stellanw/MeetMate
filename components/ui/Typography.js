@@ -3,14 +3,14 @@ import styled from "styled-components";
 /*
  * Typography
  * ----------
- * PageTitle     one per page, centered
+ * PageTitle     one per page, in the header
  * SectionTitle  label above a group of content ("Deine nächste Aktivität", …)
  * StatusText    loading, empty and error states
  */
 
+/* Sits in the header next to the logo */
 export const PageTitle = styled.h1`
-  font-size: var(--font-size-l);
-  text-align: center;
+  font-size: var(--font-size-m);
 `;
 
 export const SectionTitle = styled.h2`

@@ -31,8 +31,8 @@ export default function UserProfile() {
 }
 
 const StyledAvatar = styled(Image)`
-  width: var(--control-l);
-  height: var(--control-l);
+  width: var(--avatar-size);
+  height: var(--avatar-size);
   object-fit: cover;
   border-radius: var(--radius-m);
 `;

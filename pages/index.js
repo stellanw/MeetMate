@@ -208,7 +208,7 @@ const StyledWeather = styled(Row)`
   font-size: var(--font-size-s);
 
   img {
-    width: var(--control-s);
-    height: var(--control-s);
+    width: var(--icon-xl);
+    height: var(--icon-xl);
   }
 `;

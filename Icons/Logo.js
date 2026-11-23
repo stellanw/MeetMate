@@ -4,12 +4,12 @@ import Face from "./Face";
 /*
  * MeetMate logo
  * -------------
- * The Face (XX + smile) in a frame that uses the same tokens as a
- * square button: size, border, radius and shadow.
+ * The Face (XX + smile) in a frame with the same size, border, radius
+ * and shadow as a large square button – it sits next to them in the header.
  */
-export default function Logo({ size = "m" }) {
+export default function Logo() {
   return (
-    <StyledLogo $size={size} aria-hidden="true">
+    <StyledLogo aria-hidden="true">
       <Face together />
     </StyledLogo>
   );
@@ -18,8 +18,8 @@ export default function Logo({ size = "m" }) {
 const StyledLogo = styled.span`
   display: inline-flex;
   flex-shrink: 0;
-  width: ${({ $size }) => `var(--control-${$size})`};
-  height: ${({ $size }) => `var(--control-${$size})`};
+  width: var(--button-l);
+  height: var(--button-l);
   color: var(--color-text);
   background-color: var(--color-bg);
   border: var(--border-medium) solid currentColor;

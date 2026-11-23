@@ -117,12 +117,12 @@ const StyledCalendarCard = styled(Card)`
 
   .react-calendar__navigation {
     display: flex;
-    height: var(--control-m);
+    height: var(--field-height);
     margin-bottom: var(--space-s);
   }
 
   .react-calendar__navigation button {
-    min-width: var(--control-m);
+    min-width: var(--field-height);
     border-radius: var(--radius-s);
   }
 
@@ -148,7 +148,7 @@ const StyledCalendarCard = styled(Card)`
     flex-direction: column;
     align-items: center;
     gap: var(--space-xs);
-    height: var(--control-l);
+    height: var(--calendar-tile-height);
     padding: var(--space-xs) 0;
     font-size: var(--font-size-xs);
     border-radius: var(--radius-s);

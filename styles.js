@@ -9,8 +9,9 @@ import { createGlobalStyle, css } from "styled-components";
  * Scales:
  *   spacing   xs · s · m · l · xl · xxl   (4px grid)
  *   font-size xs · s · m · l · xl
- *   control   s · m · l                   (fixed heights for buttons/inputs)
- *   icon      s · m · l
+ *   button    s (20px) · l (40px)          small actions · navigation & card actions
+ *   field     one height for inputs and picker options
+ *   icon      s · m · l · xl
  *   shadow    s · m · l                   (hard offset shadow, hover = one step smaller)
  */
 
@@ -85,19 +86,25 @@ const tokens = css`
     --shadow-l: 5px 5px 0 var(--color-text);
 
     /* Fixed sizes */
-    --control-s: 2rem;
-    --control-m: 2.5rem;
-    --control-l: 3.5rem;
-    --icon-s: 1rem;
+    --button-s: 1.25rem;
+    --button-l: 2.5rem;
+    --touch-target: 2.5rem; /* min. tap area, also for small buttons */
+    --field-height: 2rem;
+    --icon-s: 0.75rem;
     --icon-m: 1.25rem;
     --icon-l: 1.5rem;
+    --icon-xl: 2rem;
+    --avatar-size: var(--button-l);
+    --badge-size: 2rem;
+    --card-height-compact: 3.5rem;
+    --calendar-tile-height: 3.5rem;
     --card-height: 4.75rem;
     --card-aside-width: 7.5rem;
 
     /* Layout */
     --content-width: 28rem;
     --page-gutter: var(--space-m);
-    --nav-height: calc(var(--control-l) + 2 * var(--space-m));
+    --nav-height: calc(var(--button-l) + 2 * var(--space-m));
 
     /* Layers */
     --z-popover: 10;

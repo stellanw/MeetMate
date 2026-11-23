@@ -91,7 +91,7 @@ function TimeColumn({ label, options, selected, onSelect }) {
 const StyledPopover = styled.div`
   ${popoverStyles}
   display: grid;
-  grid-template-columns: repeat(2, var(--control-l));
+  grid-template-columns: repeat(2, var(--button-l));
   gap: var(--space-s);
 `;
 
@@ -112,7 +112,7 @@ const StyledOptions = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  max-height: calc(6 * var(--control-s));
+  max-height: calc(6 * var(--field-height));
   overflow-y: auto;
   scrollbar-width: none;
 `;
@@ -120,7 +120,7 @@ const StyledOptions = styled.div`
 const StyledOption = styled.button`
   ${pickerOptionStyles}
   flex-shrink: 0;
-  height: var(--control-s);
+  height: var(--field-height);
   padding: 0;
   background: none;
   border: none;

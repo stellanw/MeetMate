@@ -5,19 +5,34 @@ import styled, { css } from "styled-components";
  * Button
  * ------
  * The only button style in the app. Use the props instead of new styles:
- *   $size     "s" | "m" | "l"                (default "m")
+ *   $size     "s" (20px, default) | "l" (40px)
+ *             l only for navigation (header, tab bar) and card action rows
  *   $variant  "default" | "confirm" | "alert" (default "default")
  *   $square   true → icon button, width = height
  *   $wide     true → full width of the parent
  *   $fill     true → takes the remaining space in a row (flex: 1)
  *
+ * Small buttons keep a 40px touch target (invisible ::after).
  * Current page: set aria-current="page" → pressed look (no shadow)
  */
 
 const sizes = {
-  s: { height: "var(--control-s)", icon: "var(--icon-s)", shadow: "var(--shadow-s)", hover: "none" },
-  m: { height: "var(--control-m)", icon: "var(--icon-m)", shadow: "var(--shadow-m)", hover: "var(--shadow-s)" },
-  l: { height: "var(--control-l)", icon: "var(--icon-l)", shadow: "var(--shadow-l)", hover: "var(--shadow-m)" },
+  s: {
+    height: "var(--button-s)",
+    icon: "var(--icon-s)",
+    font: "var(--font-size-xs)",
+    radius: "var(--radius-s)",
+    shadow: "var(--shadow-s)",
+    hover: "none",
+  },
+  l: {
+    height: "var(--button-l)",
+    icon: "var(--icon-m)",
+    font: "var(--font-size-s)",
+    radius: "var(--radius-m)",
+    shadow: "var(--shadow-m)",
+    hover: "var(--shadow-s)",
+  },
 };
 
 const variants = {
@@ -27,9 +42,10 @@ const variants = {
 };
 
 export const buttonStyles = css`
-  ${({ $size = "m", $variant = "default", $square, $wide, $fill }) => {
+  ${({ $size = "s", $variant = "default", $square, $wide, $fill }) => {
     const size = sizes[$size];
     return css`
+      position: relative;
       display: inline-flex;
       flex: ${$fill ? "1" : "none"};
       align-items: center;
@@ -40,12 +56,12 @@ export const buttonStyles = css`
       width: ${$wide ? "100%" : $square ? size.height : "auto"};
       padding: ${$square ? "0" : "0 var(--space-m)"};
       font-family: var(--font-heading);
-      font-size: var(--font-size-s);
+      font-size: ${size.font};
       line-height: 1;
       color: var(--color-text);
       background-color: ${variants[$variant]};
       border: var(--border-medium) solid var(--color-text);
-      border-radius: var(--radius-m);
+      border-radius: ${size.radius};
       box-shadow: ${size.shadow};
       cursor: pointer;
       transition: box-shadow var(--transition-fast);
@@ -54,10 +70,7 @@ export const buttonStyles = css`
         box-shadow: ${size.hover};
       }
 
-      &:active {
-        box-shadow: none;
-      }
-
+      &:active,
       &[aria-current="page"] {
         box-shadow: none;
       }
@@ -67,6 +80,15 @@ export const buttonStyles = css`
         height: ${size.icon};
         flex-shrink: 0;
       }
+
+      ${$size === "s" &&
+      css`
+        &::after {
+          content: "";
+          position: absolute;
+          inset: calc((var(--button-s) - var(--touch-target)) / 2);
+        }
+      `}
     `;
   }}
 `;

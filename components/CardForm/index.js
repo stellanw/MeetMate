@@ -10,7 +10,6 @@ import { de } from "date-fns/locale";
 import { format } from "date-fns";
 import useStore from "@/store";
 import PageHeader from "@/components/Layout/PageHeader";
-import PageTitleBar from "@/components/Layout/PageTitleBar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -120,8 +119,7 @@ export default function CardForm({
           )
         }
       >
-        <PageHeader />
-        <PageTitleBar title={pageTitle} close={onCancel} />
+        <PageHeader title={pageTitle} close={onCancel} />
 
         <StyledNameCard $category={selectedCategory}>
           <StyledNameInput
@@ -238,7 +236,7 @@ export default function CardForm({
           </Stack>
         </Card>
 
-        <Button type="submit" $wide>
+        <Button type="submit" $size="l" $wide>
           Speichern
           <FiSave />
         </Button>
@@ -273,7 +271,7 @@ const StyledNameInput = styled.input`
 `;
 
 const StyledDayPicker = styled(DayPicker)`
-  --rdp-cell-size: var(--control-m);
+  --rdp-cell-size: var(--field-height);
 
   ${popoverStyles}
 
