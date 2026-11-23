@@ -31,7 +31,7 @@ export default function ActivityCard({ name, date, time, joined, category }) {
 
   return (
     <SplitCard $category={category} $interactive>
-      {joined && <JoinBadge aria-label="Dabei">XX</JoinBadge>}
+      {joined && <JoinBadge />}
       <SplitCardMain>
         <CardTitle ref={activityNameRef}>{name}</CardTitle>
       </SplitCardMain>

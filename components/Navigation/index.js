@@ -18,10 +18,10 @@ export default function Navigation({ onCreateClick }) {
         <ButtonLink href="/" $size="l" $square aria-label="Startseite" aria-current={current("/")}>
           <FiHome />
         </ButtonLink>
-        <StyledCreateButton onClick={onCreateClick} $size="l">
+        <Button onClick={onCreateClick} $size="l" $fill>
           Neue Aktivität
           <FiPlus />
-        </StyledCreateButton>
+        </Button>
         <ButtonLink
           href="/kalender"
           $size="l"
@@ -48,8 +48,4 @@ const StyledNavInner = styled(Container)`
   gap: var(--space-m);
   padding-block: var(--space-m);
   border-top: var(--border-thin) solid var(--color-text);
-`;
-
-const StyledCreateButton = styled(Button)`
-  flex: 1;
 `;

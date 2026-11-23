@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/Card";
 import { Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
 import { categoryColor } from "@/utils/categories";
+import Face from "@/Icons/Face";
 
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
@@ -52,7 +53,7 @@ const CalendarPage = () => {
       <StyledEntries>
         {dayActivities.map((activity, index) => (
           <StyledEntry key={activity._id} $index={index} $category={activity.category}>
-            XX
+            <Face together={activity.joined} />
           </StyledEntry>
         ))}
       </StyledEntries>
@@ -175,17 +176,17 @@ const StyledEntries = styled.span`
   position: relative;
   display: block;
   width: var(--icon-l);
-  height: var(--icon-m);
+  height: var(--icon-l);
 `;
 
-/* Stacked "XX" chips, one per activity, offset like a little pile of cards */
+/* Stacked face chips, one per activity, offset like a little pile of cards.
+   Smiling XX = you joined, single X = not (yet) */
 const StyledEntry = styled.span`
   position: absolute;
   top: calc(${({ $index }) => $index} * var(--space-xs) * -1);
   left: calc(${({ $index }) => $index} * var(--space-xs) * -1);
-  padding: 0 var(--space-xs);
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-tight);
+  width: var(--icon-l);
+  height: var(--icon-l);
   background-color: ${({ $category }) => categoryColor($category)};
   border: var(--border-thin) solid var(--color-text);
   border-radius: var(--radius-s);

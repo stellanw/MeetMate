@@ -107,6 +107,7 @@ const tokens = css`
     /* Motion */
     --transition-fast: 120ms ease-out;
     --transition-slide: 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    --transition-face: 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 `;
 

@@ -7,6 +7,10 @@ import { IoSearch } from "react-icons/io5";
  * Two input looks only:
  *   - "line"  → TextInput: underlined, sits inside cards/forms
  *   - "boxed" → Select, TextArea, SearchField: border + small shadow
+ *
+ * Focus never adds an outline on top of the border (no double lines):
+ *   line  → the underline turns solid
+ *   boxed → the shadow grows one step
  */
 
 const boxedStyles = css`
@@ -14,6 +18,14 @@ const boxedStyles = css`
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-s);
   box-shadow: var(--shadow-s);
+  transition: box-shadow var(--transition-fast);
+
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+    outline: none;
+    box-shadow: var(--shadow-m);
+  }
 `;
 
 export const FormLabel = styled.label`
@@ -52,6 +64,7 @@ export const TextInput = styled.input`
   border-bottom: var(--border-thin) solid var(--color-line-soft);
   border-radius: 0;
 
+  &:focus,
   &:focus-visible {
     outline: none;
     border-bottom-color: var(--color-text);
@@ -95,10 +108,6 @@ const StyledSearchField = styled.label`
     height: var(--icon-m);
     flex-shrink: 0;
   }
-
-  &:focus-within {
-    box-shadow: var(--shadow-m);
-  }
 `;
 
 const StyledSearchInput = styled.input`
@@ -108,8 +117,63 @@ const StyledSearchInput = styled.input`
   background-color: transparent;
   border: none;
 
+  &:focus,
   &:focus-visible {
     outline: none;
+  }
+`;
+
+/*
+ * Picker fields (date, time)
+ * --------------------------
+ * PickerField   wrapper: line input + icon toggle + popover
+ * PickerToggle  icon button at the right end of the line
+ * popoverStyles frame for every picker popover
+ */
+export const PickerField = styled.div`
+  position: relative;
+  display: flex;
+  align-items: end;
+`;
+
+export const PickerToggle = styled.button.attrs({ type: "button" })`
+  position: absolute;
+  right: 0;
+  bottom: var(--space-xs);
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+
+  svg {
+    width: var(--icon-m);
+    height: var(--icon-m);
+  }
+`;
+
+export const popoverStyles = css`
+  position: absolute;
+  top: calc(100% + var(--space-s));
+  right: 0;
+  z-index: var(--z-popover);
+  margin: 0;
+  padding: var(--space-s);
+  font-family: var(--font-heading);
+  background-color: var(--color-bg);
+  border: var(--border-medium) solid var(--color-text);
+  border-radius: var(--radius-m);
+`;
+
+/* Selectable option inside a picker (calendar day, hour, minute) */
+export const pickerOptionStyles = css`
+  border-radius: var(--radius-s);
+
+  &:hover {
+    background-color: var(--color-confirm-soft);
+  }
+
+  &[aria-pressed="true"] {
+    background-color: var(--color-confirm);
   }
 `;
 

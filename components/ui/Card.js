@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { categoryColor } from "@/utils/categories";
+import Face from "@/Icons/Face";
 
 /*
  * Card
@@ -89,14 +90,25 @@ export const CardTitle = styled.h2`
   text-overflow: ellipsis;
 `;
 
-/* Small "joined" badge sitting on the top edge of a card */
-export const JoinBadge = styled.span`
+/*
+ * JoinBadge – the Face on the top edge of a card.
+ * Alone (one X) or together (XX + smile); switching is animated.
+ */
+export function JoinBadge({ together = true }) {
+  return (
+    <StyledJoinBadge aria-label={together ? "Du bist dabei" : "Du bist nicht dabei"}>
+      <Face together={together} />
+    </StyledJoinBadge>
+  );
+}
+
+const StyledJoinBadge = styled.span`
   position: absolute;
-  top: calc(-1 * var(--space-s));
+  top: calc(-1 * var(--space-m));
   left: var(--space-m);
-  padding: 0 var(--space-xs);
-  font-family: var(--font-heading);
-  font-size: var(--font-size-xs);
+  width: var(--control-s);
+  height: var(--control-s);
+  padding: var(--space-xs);
   background-color: var(--color-highlight);
   border: var(--border-medium) solid var(--color-text);
   border-radius: var(--radius-s);

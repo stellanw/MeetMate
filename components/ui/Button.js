@@ -9,6 +9,7 @@ import styled, { css } from "styled-components";
  *   $variant  "default" | "confirm" | "alert" (default "default")
  *   $square   true → icon button, width = height
  *   $wide     true → full width of the parent
+ *   $fill     true → takes the remaining space in a row (flex: 1)
  *
  * Current page: set aria-current="page" → pressed look (no shadow)
  */
@@ -26,11 +27,11 @@ const variants = {
 };
 
 export const buttonStyles = css`
-  ${({ $size = "m", $variant = "default", $square, $wide }) => {
+  ${({ $size = "m", $variant = "default", $square, $wide, $fill }) => {
     const size = sizes[$size];
     return css`
       display: inline-flex;
-      flex-shrink: 0;
+      flex: ${$fill ? "1" : "none"};
       align-items: center;
       justify-content: center;
       gap: var(--space-s);

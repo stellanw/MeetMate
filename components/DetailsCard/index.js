@@ -8,6 +8,7 @@ import CardForm from "../CardForm";
 import PageLayout from "@/components/Layout/PageLayout";
 import { Button } from "@/components/ui/Button";
 import { Card, CardTitle, JoinBadge } from "@/components/ui/Card";
+import Face from "@/Icons/Face";
 import { FormGrid, FormLabel, FormValue } from "@/components/ui/Form";
 import { Overlay, Row, Stack } from "@/components/ui/Layout";
 import { StatusText } from "@/components/ui/Typography";
@@ -67,7 +68,7 @@ export default function DetailsCard() {
   return (
     <PageLayout title="Bist du dabei?" close>
       <StyledNameCard $category={activities.category}>
-        {joinState.isJoined && <JoinBadge aria-label="Dabei">XX</JoinBadge>}
+        <JoinBadge together={joinState.isJoined} />
         <CardTitle as="h2">{activities.name}</CardTitle>
       </StyledNameCard>
 
@@ -86,17 +87,18 @@ export default function DetailsCard() {
             </Stack>
           )}
 
-          <Button
-            $wide
-            $variant={joinState.isJoined ? "alert" : "confirm"}
-            onClick={() => handleJoin(setJoinState, joinState, endpoint, mutate)}
-          >
-            {joinState.isJoined ? "Doch nicht dabei" : "XX Ich bin dabei"}
-          </Button>
-
-          <Row $justify="center" $gap="m">
+          <Row $gap="m">
             <Button onClick={handleEditClick} $square aria-label="Aktivität bearbeiten">
               <FiEdit3 />
+            </Button>
+            <Button
+              $fill
+              $variant={joinState.isJoined ? "alert" : "confirm"}
+              onClick={() => handleJoin(setJoinState, joinState, endpoint, mutate)}
+            >
+              {/* icon shows the result: together (XX) or alone again (X) */}
+              <Face together={!joinState.isJoined} />
+              {joinState.isJoined ? "Nicht dabei" : "Bin dabei"}
             </Button>
             <Button
               $square

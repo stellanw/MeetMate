@@ -16,10 +16,15 @@ import { Card } from "@/components/ui/Card";
 import {
   FormGrid,
   FormLabel,
+  PickerField,
+  PickerToggle,
   Select,
   TextArea,
   TextInput,
+  pickerOptionStyles,
+  popoverStyles,
 } from "@/components/ui/Form";
+import TimePicker from "@/components/TimePicker";
 import { Container, Stack } from "@/components/ui/Layout";
 import handleSubmit from "@/utils/components/CardForm/handleSubmit";
 import getCurrentDate from "@/utils/components/CardForm/getCurrentDate";
@@ -63,6 +68,8 @@ export default function CardForm({
       setSelectedDate(date ? new Date(date) : null);
       setSelectedCategory(category || "");
       setSelectedTime(existingActivityData.time || getCurrentTime());
+    } else {
+      setSelectedTime(getCurrentTime());
     }
     handleChange();
   }, [
@@ -147,7 +154,7 @@ export default function CardForm({
               />
 
               <FormLabel htmlFor="date">Datum:</FormLabel>
-              <StyledDateField>
+              <PickerField>
                 <TextInput
                   type="text"
                   id="date"
@@ -165,14 +172,13 @@ export default function CardForm({
                   onChange={handleInputChange}
                   required
                 />
-                <StyledIconToggle
-                  type="button"
+                <PickerToggle
                   onClick={toggleDayPicker}
                   aria-label="Datum wählen"
                   aria-expanded={showDayPicker}
                 >
                   <FiCalendar />
-                </StyledIconToggle>
+                </PickerToggle>
                 {showDayPicker && (
                   <StyledDayPicker
                     onDayClick={handleDayClick}
@@ -181,16 +187,14 @@ export default function CardForm({
                     locale={de}
                   />
                 )}
-              </StyledDateField>
+              </PickerField>
 
               <FormLabel htmlFor="time">Uhrzeit:</FormLabel>
-              <TextInput
-                type="time"
+              <TimePicker
                 id="time"
                 name="time"
-                autoComplete="off"
-                defaultValue={existingActivityData?.time || selectedTime}
-                required
+                value={selectedTime}
+                onChange={setSelectedTime}
               />
 
               <FormLabel htmlFor="location">Ort:</FormLabel>
@@ -269,49 +273,31 @@ const StyledNameInput = styled.input`
   }
 `;
 
-const StyledDateField = styled.div`
-  position: relative;
-  display: flex;
-  align-items: end;
-`;
-
-const StyledIconToggle = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: var(--space-xs);
-  display: flex;
-  padding: 0;
-  background: none;
-  border: none;
-
-  svg {
-    width: var(--icon-m);
-    height: var(--icon-m);
-  }
-`;
-
 const StyledDayPicker = styled(DayPicker)`
   --rdp-cell-size: var(--control-m);
-  --rdp-accent-color: var(--color-confirm);
-  --rdp-background-color: var(--color-confirm-soft);
 
-  position: absolute;
-  top: calc(100% + var(--space-s));
-  right: 0;
-  z-index: var(--z-popover);
-  margin: 0;
-  padding: var(--space-s);
-  font-family: var(--font-heading);
-  background-color: var(--color-bg);
-  border: var(--border-medium) solid var(--color-text);
-  border-radius: var(--radius-m);
+  ${popoverStyles}
 
   .rdp-caption_label {
     font-size: var(--font-size-s);
   }
 
+  .rdp-button {
+    border: none;
+  }
+
+  .rdp-day {
+    ${pickerOptionStyles}
+  }
+
+  /* react-day-picker marks the selected day with its own class */
   .rdp-day_selected,
   .rdp-day_selected:hover {
     color: var(--color-text);
+    background-color: var(--color-confirm);
+  }
+
+  .rdp-day_today {
+    font-weight: 700;
   }
 `;

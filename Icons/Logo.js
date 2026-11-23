@@ -1,23 +1,16 @@
 import styled from "styled-components";
+import Face from "./Face";
 
 /*
  * MeetMate logo
  * -------------
- * Frame, radius and shadow use the same tokens as a square button,
- * the face is drawn with lines in the border width – so the logo always
- * matches the buttons next to it.
+ * The Face (XX + smile) in a frame that uses the same tokens as a
+ * square button: size, border, radius and shadow.
  */
 export default function Logo({ size = "m" }) {
   return (
     <StyledLogo $size={size} aria-hidden="true">
-      <svg viewBox="299 719 458 458" width="100%" height="100%">
-        {/* left eye */}
-        <path d="M361 819 L490 1032 M490 819 L361 1032" />
-        {/* right eye */}
-        <path d="M563 819 L692 1032 M692 819 L563 1032" />
-        {/* smile */}
-        <path d="M432 1090 Q528 1162 624 1090" />
-      </svg>
+      <Face together />
     </StyledLogo>
   );
 }
@@ -32,12 +25,4 @@ const StyledLogo = styled.span`
   border: var(--border-medium) solid currentColor;
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-m);
-
-  path {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: var(--border-medium);
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
-  }
 `;
