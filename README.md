@@ -6,9 +6,9 @@
 
 MeetMate started as the **capstone project of our web development bootcamp** (March – May 2024), built by a team of three:
 
-- [Stellan Wetzig](https://github.com/stellanw) – UI implementation & styling, calendar, activity form (date & time pickers), category colors, navigation, toasts, login page, Zustand state refactor
-- Alexander Stracke ([alex96dev](https://github.com/alex96dev)) – friends & friend requests, search, weather, refactoring
-- Timur Sakalli ([justincaze](https://github.com/justincaze)) – original app design, filters, user profile, friends page, sorting & hiding expired activities, navigation
+- [Stellan Wetzig](https://github.com/stellanw) – styling, calendar, activity cards, create & edit forms
+- Alexander Stracke ([alex96dev](https://github.com/alex96dev)) – backend, login & authentication, friend system
+- Timur Sakalli ([justincaze](https://github.com/justincaze)) – branding & design, home page, filter
 
 The original team repository lives at [alex96dev/MeetMate](https://github.com/alex96dev/MeetMate). This repository contains the full shared history.
 
